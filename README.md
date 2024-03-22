@@ -1,1 +1,1 @@
-# nft-rarity-inspector
+# metadata-assistant
