@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera Metadata Assistant
+ * Hedera NFT Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -24,10 +24,9 @@ import type { ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
 import { Hip412Validator } from 'hedera-nft-utilities/src/hip412-validator';
 import { SUPPORTED_FILE_TYPES_ARRAY, supportedFileTypes } from '@/components/pages/DropzonePage/supportedFileTypes';
 import { dictionary } from '@/libs/en';
-import { NFTGallery } from '@/components/pages/DropzonePage/NFTGallery';
+// import { NFTGallery } from '@/components/pages/DropzonePage/NFTGallery';
 import { Button } from '@/components/ui/button';
 import { saveMetadataObjectsAsJsonFiles } from '@/utils/helpers/saveMetadataObjectsAsJsonFiles';
-import { generateErrorLog } from '@/utils/helpers/generateErrorLog';
 import { MetadataRow } from '@/utils/types/metadataRow';
 import { processZipFile } from '@/components/pages/DropzonePage/processZipFile';
 import { processJsonFile } from '@/components/pages/DropzonePage/processJsonFile';
@@ -42,7 +41,7 @@ export default function DropzonePage() {
   const metadataObjects = metadata.map((m) => m.metadata);
   // This sorting is used because ZIP files don't keep files in order, so it makes sure everything is listed alphabetically
   const sortedMetadataRows = metadata.sort((a, b) => a.fileName.localeCompare(b.fileName, undefined, { numeric: true, sensitivity: 'base' }));
-  const errorLogURL = generateErrorLog(metadata, validationResponse, files[0]);
+  console.log('sortedMetadataRows:', sortedMetadataRows);
 
   const readFile = async (extFile: ExtFile) => {
     setMetadata([]);
@@ -125,7 +124,7 @@ export default function DropzonePage() {
               )}
             </div>
           </div>
-          <NFTGallery metadataRows={sortedMetadataRows} validationResponse={validationResponse} />
+          {/* <NFTGallery metadataRows={sortedMetadataRows} validationResponse={validationResponse} /> */}
         </div>
       )}
     </div>
