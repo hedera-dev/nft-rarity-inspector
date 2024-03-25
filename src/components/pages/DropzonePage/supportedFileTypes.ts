@@ -17,7 +17,9 @@
  * limitations under the License.
  *
  */
-export const SUPPORTED_FILE_TYPES_ARRAY = ['.zip'];
+export const SUPPORTED_FILE_TYPES_ARRAY: string[] = ['.zip'];
+
+export const SUPPORTED_IMAGE_TYPES: string[] = ['.png', '.jpg', '.jpeg', '.gif', '.webp'];
 
 export const supportedFileTypes = () => {
   return SUPPORTED_FILE_TYPES_ARRAY.join(', ');

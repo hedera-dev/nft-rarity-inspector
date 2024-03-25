@@ -23,6 +23,7 @@ import { MetadataRow } from '@/utils/types/metadataRow';
 import type { ExtFile } from '@dropzone-ui/react';
 import { MetadataObject } from 'hedera-nft-utilities';
 import { processCsvFile } from '@/components/pages/DropzonePage/processCSVFile';
+import { SUPPORTED_IMAGE_TYPES } from '@/components/pages/DropzonePage/supportedFileTypes';
 
 export async function processZipFile(extFile: ExtFile): Promise<MetadataRow[]> {
   if (!extFile.file) throw new Error(dictionary.errors.noFileProvided);
@@ -36,6 +37,7 @@ export async function processZipFile(extFile: ExtFile): Promise<MetadataRow[]> {
   let metadataFolderExists = false;
   let jsonOrCsvFilesFound = false;
 
+  // Iterating over all files in the zip to classify them into JSON, CSV, or media files
   Object.keys(content.files).forEach((fileName) => {
     const relativePath = fileName.split('/').slice(1).join('/');
     if (relativePath.startsWith('metadata/')) {
@@ -45,7 +47,7 @@ export async function processZipFile(extFile: ExtFile): Promise<MetadataRow[]> {
         if (relativePath.endsWith('.json')) jsonFiles.push(fileName);
         if (relativePath.endsWith('.csv')) csvFiles.push(fileName);
       }
-    } else if (relativePath.startsWith('media/') && /\.(png|jpe?g|gif)$/i.test(relativePath)) {
+    } else if (relativePath.startsWith('media/') && SUPPORTED_IMAGE_TYPES.some((ext) => relativePath.endsWith(ext))) {
       mediaFiles.push(fileName);
     }
   });
@@ -56,6 +58,7 @@ export async function processZipFile(extFile: ExtFile): Promise<MetadataRow[]> {
   const metadataRows: MetadataRow[] = [];
   const mediaMap = new Map();
 
+  // Processing each image inside /media folder to create a Blob URL and mapping it with its file name
   for (const fileName of mediaFiles) {
     const filePromise = await content.file(fileName)?.async('blob');
     if (filePromise) {
@@ -67,6 +70,7 @@ export async function processZipFile(extFile: ExtFile): Promise<MetadataRow[]> {
     }
   }
 
+  // Processing JSON files to extract metadata and link to the corresponding media file if available
   for (const fullFileName of jsonFiles) {
     const filePromise = content.file(fullFileName)?.async('string');
     if (filePromise) {
@@ -80,6 +84,7 @@ export async function processZipFile(extFile: ExtFile): Promise<MetadataRow[]> {
     }
   }
 
+  // Processing CSV files to extract metadata and link to the corresponding media file if available
   for (const fullFileName of csvFiles) {
     const filePromise = content.file(fullFileName)?.async('blob');
     if (filePromise) {
