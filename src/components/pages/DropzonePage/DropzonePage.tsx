@@ -20,28 +20,24 @@
 import { useEffect, useState } from 'react';
 import { Dropzone, FileMosaic } from '@dropzone-ui/react';
 import type { ExtFile } from '@dropzone-ui/react';
-import type { ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
-import { Hip412Validator } from 'hedera-nft-utilities/src/hip412-validator';
+// import { calculateRarityFromData } from 'hedera-nft-utilities';
 import { SUPPORTED_FILE_TYPES_ARRAY, supportedFileTypes } from '@/components/pages/DropzonePage/supportedFileTypes';
 import { dictionary } from '@/libs/en';
-// import { NFTGallery } from '@/components/pages/DropzonePage/NFTGallery';
-import { Button } from '@/components/ui/button';
-import { saveMetadataObjectsAsJsonFiles } from '@/utils/helpers/saveMetadataObjectsAsJsonFiles';
+import { NFTGallery } from '@/components/pages/DropzonePage/NFTGallery';
 import { MetadataRow } from '@/utils/types/metadataRow';
 import { processZipFile } from '@/components/pages/DropzonePage/processZipFile';
-import { processJsonFile } from '@/components/pages/DropzonePage/processJsonFile';
-import { processCsvFile } from '@/components/pages/DropzonePage/processCSVFile';
+import { Hip412Validator } from 'hedera-nft-utilities/src/hip412-validator';
+import { ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
 
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [metadata, setMetadata] = useState<MetadataRow[]>([]);
-  const [error, setError] = useState<string>('');
   const [validationResponse, setValidationResponse] = useState<ValidateArrayOfObjectsResult | undefined>(undefined);
-  const isCSVFile = files[0]?.type?.includes('csv') || files[0]?.name?.endsWith('.csv');
-  const metadataObjects = metadata.map((m) => m.metadata);
+  const [error, setError] = useState<string>('');
+
   // This sorting is used because ZIP files don't keep files in order, so it makes sure everything is listed alphabetically
   const sortedMetadataRows = metadata.sort((a, b) => a.fileName.localeCompare(b.fileName, undefined, { numeric: true, sensitivity: 'base' }));
-  console.log('sortedMetadataRows:', sortedMetadataRows);
+  const metadataObjects = sortedMetadataRows.map((m) => m.metadata);
 
   const readFile = async (extFile: ExtFile) => {
     setMetadata([]);
@@ -57,14 +53,6 @@ export default function DropzonePage() {
           setError(error.message);
         }
       }
-    } else if (extFile.file.type === 'application/json' || extFile.file.name.endsWith('.json')) {
-      processJsonFile(extFile)
-        .then((newMetadata) => setMetadata(newMetadata))
-        .catch((error) => setError(error.message));
-    } else if (extFile.file.type.includes('csv') || extFile.file.name.endsWith('.csv')) {
-      processCsvFile(extFile)
-        .then((newMetadata) => setMetadata(newMetadata))
-        .catch((error) => setError(error.message));
     } else {
       setError(dictionary.errors.unsupportedFileType);
       return;
@@ -85,6 +73,9 @@ export default function DropzonePage() {
     if (metadata.length > 0) {
       const validationResponse: ValidateArrayOfObjectsResult = Hip412Validator.validateArrayOfObjects(metadataObjects);
       setValidationResponse(validationResponse);
+      // TODO: calculate rarity here
+      // const rarity = calculateRarityFromData(metadataObjects);
+      // console.log('rarity:', rarity);
     }
   }, [metadata]);
 
@@ -116,16 +107,8 @@ export default function DropzonePage() {
         {error && <span className="mt-2 text-center font-bold text-red-500">{error}</span>}
       </div>
       {validationResponse && metadata.length > 0 && (
-        <div className="my-10">
-          <div className="mb-10 flex items-center justify-between px-4">
-            <div className="flex gap-4">
-              {isCSVFile && (
-                <Button onClick={() => saveMetadataObjectsAsJsonFiles(metadataObjects)}>{dictionary.nftTable.downloadJSONsButton}</Button>
-              )}
-            </div>
-          </div>
-          {/* <NFTGallery metadataRows={sortedMetadataRows} validationResponse={validationResponse} /> */}
-        </div>
+        // TODO: change NFTGallery view
+        <div className="my-10">{<NFTGallery metadataRows={sortedMetadataRows} validationResponse={validationResponse} />}</div>
       )}
     </div>
   );
