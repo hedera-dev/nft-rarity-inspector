@@ -21,7 +21,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { ImageWithLoading } from '@/components/ui/ImageWithLoading';
 import { dictionary } from '@/libs/en';
-import { MetadataObject, ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
+import { MetadataObject } from 'hedera-nft-utilities';
 import { Attribute } from '@/utils/types/nftDetails';
 import { getProperImageURL } from '@/utils/helpers/getProperImageURL';
 import { DialogTitle } from '@radix-ui/react-dialog';
@@ -33,7 +33,9 @@ export const NFTDetails = ({
   metadataLength,
   handlePrevious,
   handleNext,
-  validationResponse,
+  setIsModalOpen,
+  isModalOpen,
+  children,
 }: {
   metadataObject: MetadataObject;
   fileName: string;
@@ -41,20 +43,18 @@ export const NFTDetails = ({
   metadataLength: number;
   handlePrevious: () => void;
   handleNext: () => void;
-  validationResponse: ValidateArrayOfObjectsResult;
+  setIsModalOpen: (_isOpen: boolean) => void;
+  isModalOpen: boolean;
+  children: React.ReactNode;
 }) => {
   const name = metadataObject?.name as string;
   const description = metadataObject?.description as string;
   const image = getProperImageURL(metadataObject?.image as string);
   const attributes = metadataObject?.attributes as Attribute[];
-  const validationResult = validationResponse.results[activeId];
-  const errorsPresent = !validationResult?.isValid;
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="link">{dictionary.modal.details}</Button>
-      </DialogTrigger>
+    <Dialog onOpenChange={setIsModalOpen} open={isModalOpen}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="flex max-h-screen max-w-[1300px] flex-col justify-center md:h-[900px]">
         <DialogHeader>
           <DialogTitle>
@@ -66,12 +66,6 @@ export const NFTDetails = ({
           <div className="grid grid-cols-1 items-start md:grid-cols-2 md:items-center">
             <div className="mb-auto flex hidden flex-col items-center justify-center pr-8 md:flex">
               <ImageWithLoading src={image} alt={dictionary.modal.modalImageAlt} showSkeleton={false} />
-              {errorsPresent && (
-                <div className="mt-6 w-full text-red-600">
-                  <h3 className="font-semibold text-black">{dictionary.modal.thereAreErrors}:</h3>
-                  {validationResult?.errors.map((error, index) => <p key={error + index}>{`${index + 1}) ${error}`}</p>)}
-                </div>
-              )}
             </div>
             <div className="mb-auto flex flex-col">
               <h2 className="mb-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 md:mb-20">{name || '-'}</h2>

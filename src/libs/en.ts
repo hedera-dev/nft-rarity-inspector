@@ -51,7 +51,7 @@ export const dictionary = {
     zipFileStructureIncorrect: "The ZIP file structure is incorrect. Please ensure your ZIP file includes a 'metadata' folder",
   },
   modal: {
-    details: 'Details',
+    details: 'See more',
     modalTitle: 'NFT Preview',
     modalDescription: 'Preview how NFT will be displayed on a marketplace that follows HIP-412 standards.',
     modalImageAlt: 'NFT Image',
