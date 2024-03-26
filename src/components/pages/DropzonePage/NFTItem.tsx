@@ -55,7 +55,7 @@ export const NFTItem = ({ metadata, index, isModalOpen, setIsModalOpen }: NFTIte
       className="shadow-cardShadow group relative flex flex-col items-center overflow-hidden rounded-lg transition duration-200 md:hover:scale-105"
     >
       <div className="flex w-full items-center justify-center">
-        <ImageWithLoading showSkeleton={true} src={image} alt={name} className="max-w-full object-cover" />
+        <ImageWithLoading showSkeleton={false} src={image} alt={name} className="max-w-full object-cover" />
       </div>
       <div className="flex w-full flex-col justify-between rounded-b-lg bg-white p-4 text-left sm:flex-col">
         <div className="flex w-full flex-row justify-between">

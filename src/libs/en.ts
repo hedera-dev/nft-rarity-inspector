@@ -28,6 +28,7 @@ export const dictionary = {
     detailsButton: 'Details',
     imageAltText: 'Image of',
     invalidFilesCount: 'Invalid files count',
+    totalNftsNumber: 'Total number of nfts',
     headers: {
       number: 'No.',
       image: 'Image',

@@ -26,11 +26,13 @@ import { dictionary } from '@/libs/en';
 import { NFTGallery } from '@/components/pages/DropzonePage/NFTGallery';
 import { MetadataRow } from '@/utils/types/metadataRow';
 import { processZipFile } from '@/components/pages/DropzonePage/processZipFile';
+import SpinnerLoader from '@/components/ui/loader';
 
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [metadata, setMetadata] = useState<MetadataRow[]>([]);
   const [error, setError] = useState<string>('');
+  const [loading, setIsLoading] = useState(false);
 
   // This sorting is used because ZIP files don't keep files in order, so it makes sure everything is listed alphabetically
   const sortedMetadataRows = metadata.sort((a, b) => a.fileName.localeCompare(b.fileName, undefined, { numeric: true, sensitivity: 'base' }));
@@ -50,6 +52,8 @@ export default function DropzonePage() {
         if (error instanceof Error) {
           setError(error.message);
         }
+      } finally {
+        setIsLoading(false);
       }
     } else {
       setError(dictionary.errors.unsupportedFileType);
@@ -89,6 +93,7 @@ export default function DropzonePage() {
           behaviour="replace"
           max={1}
           className="dropzone-label"
+          onLoad={() => setIsLoading(true)}
         >
           {files.length > 0 &&
             files.map((file) => (
@@ -97,12 +102,25 @@ export default function DropzonePage() {
                 {...file}
                 valid={SUPPORTED_FILE_TYPES_ARRAY.some((type) => file.file?.name.endsWith(type)) ? undefined : false}
                 className="dropzone-label"
+                progress={55}
               />
             ))}
         </Dropzone>
         {error && <span className="mt-2 text-center font-bold text-red-500">{error}</span>}
       </div>
-      {metadata.length > 0 && <div className="my-10">{<NFTGallery metadataRows={sortedMetadataRows} />}</div>}
+      {metadata.length === 0 && loading && (
+        <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
+          <SpinnerLoader />
+        </div>
+      )}
+      {metadata.length > 0 && !loading && (
+        <div className="my-10">
+          <h3 className="ml-4">
+            {dictionary.nftTable.totalNftsNumber}: <span className="font-bold">{metadata.length}</span>
+          </h3>
+          <NFTGallery metadataRows={sortedMetadataRows} />
+        </div>
+      )}
     </div>
   );
 }
