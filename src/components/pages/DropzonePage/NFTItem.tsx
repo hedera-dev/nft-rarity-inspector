@@ -60,8 +60,7 @@ export const NFTItem = ({ metadata, index, isModalOpen, setIsModalOpen }: NFTIte
       <div className="flex w-full flex-col justify-between rounded-b-lg bg-white p-4 text-left sm:flex-col">
         <div className="flex w-full flex-row justify-between">
           <span>
-            {dictionary.nftTable.headers.number + ' '}
-            {index + 1}
+            {dictionary.nftTable.headers.number} {index + 1}
           </span>
           <span className="font-semibold">{truncateString(name, TRUNCATE_NAME_NUMBER)}</span>
         </div>

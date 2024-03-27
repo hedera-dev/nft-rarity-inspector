@@ -39,17 +39,18 @@ export const NFTItemWrapper = ({
   const handleNext = useCallback(() => setActiveId((oldId) => Math.min(oldId + 1, metadataRows.length - 1)), [metadataRows.length]);
 
   return (
-    <NFTDetails
-      metadataObject={metadataRows[activeId].metadata}
-      fileName={metadataRows[activeId].fileName}
-      metadataLength={metadataRows.length}
-      activeId={activeId}
-      handlePrevious={handlePrevious}
-      handleNext={handleNext}
-      setIsModalOpen={setIsModalOpen}
-      isModalOpen={isModalOpen}
-    >
+    <>
+      <NFTDetails
+        metadataObject={metadataRows[activeId].metadata}
+        fileName={metadataRows[activeId].fileName}
+        metadataLength={metadataRows.length}
+        activeId={activeId}
+        handlePrevious={handlePrevious}
+        handleNext={handleNext}
+        setIsModalOpen={setIsModalOpen}
+        isModalOpen={isModalOpen}
+      />
       <NFTItem key={index} metadata={singleMetadataObject} index={index} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
-    </NFTDetails>
+    </>
   );
 };

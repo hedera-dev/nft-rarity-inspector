@@ -33,7 +33,7 @@ export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [metadata, setMetadata] = useState<MetadataRow[]>([]);
   const [error, setError] = useState<string>('');
-  const [loading, setIsLoading] = useState(false);
+  const [loading, setIsLoading] = useState<boolean>(false);
 
   const readFile = async (extFile: ExtFile) => {
     setIsLoading(true);
@@ -68,6 +68,7 @@ export default function DropzonePage() {
         if (error instanceof Error) {
           setError(error.message);
         }
+        setIsLoading(false);
       } finally {
         setIsLoading(false);
       }
