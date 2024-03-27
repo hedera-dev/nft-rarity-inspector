@@ -31,7 +31,6 @@ import SpinnerLoader from '@/components/ui/loader';
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [metadata, setMetadata] = useState<MetadataRow[]>([]);
-  console.log('metadata:', metadata);
   const [error, setError] = useState<string>('');
   const [loading, setIsLoading] = useState(false);
 
