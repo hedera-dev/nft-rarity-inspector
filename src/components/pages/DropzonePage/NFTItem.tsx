@@ -52,7 +52,7 @@ export const NFTItem = ({ metadata, index, isModalOpen, setIsModalOpen }: NFTIte
       onMouseEnter={() => setHoverActive(true)}
       onMouseLeave={() => setHoverActive(false)}
       onClick={() => setIsModalOpen(true)}
-      className="shadow-cardShadow group relative flex cursor-pointer flex-col items-center overflow-hidden rounded-lg transition duration-200 md:hover:scale-105"
+      className="group relative flex cursor-pointer flex-col items-center overflow-hidden rounded-lg shadow-cardShadow transition duration-200 md:hover:scale-105"
     >
       <div className="flex w-full items-center justify-center">
         <ImageWithLoading showSkeleton={false} src={image} alt={name} className="max-w-full object-cover" />
