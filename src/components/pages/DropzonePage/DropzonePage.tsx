@@ -32,7 +32,7 @@ export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [metadata, setMetadata] = useState<MetadataRow[]>([]);
   const [error, setError] = useState<string>('');
-  const [loading, setIsLoading] = useState(false);
+  const [loading, setIsLoading] = useState<boolean>(false);
 
   // This sorting is used because ZIP files don't keep files in order, so it makes sure everything is listed alphabetically
   const sortedMetadataRows = metadata.sort((a, b) => a.fileName.localeCompare(b.fileName, undefined, { numeric: true, sensitivity: 'base' }));
