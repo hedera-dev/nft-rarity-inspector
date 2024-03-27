@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera Rarity Inspector
+ * NFT Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
