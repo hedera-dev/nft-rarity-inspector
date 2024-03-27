@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera Metadata Assistant
+ * Hedera NFT Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -23,8 +23,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { TABLE_HEADERS } from '@/utils/constants/nftTableHeaders';
 import { NFTItemWrapper } from '@/components/pages/DropzonePage/NFTItemWrapper';
-import { countInvalidObjects } from '@/utils/helpers/countInvalidMetadataObjects';
-import { dictionary } from '@/libs/en';
 import { MetadataRow } from '@/utils/types/metadataRow';
 
 const BATCH_SIZE = 10;

@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera Metadata Assistant
+ * Hedera NFT Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -47,7 +47,8 @@ export const dictionary = {
     parsingError: (fileName: string | undefined, err: string) => `Error parsing JSON from file ${fileName}: ${err}`,
     unsupportedFileType: 'This file type is unsupported',
     noFileProvided: 'No file provided',
-    zipFileWithoutJsonFiles: 'This zip file does not contain json files.',
+    zipFileWithoutJsonFiles: "The ZIP file's 'metadata' folder is empty or does not contain any JSON or CSV files",
+    zipFileStructureIncorrect: "The ZIP file structure is incorrect. Please ensure your ZIP file includes a 'metadata' folder",
   },
   modal: {
     details: 'Details',
