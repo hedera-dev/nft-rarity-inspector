@@ -31,6 +31,7 @@ import SpinnerLoader from '@/components/ui/loader';
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [metadata, setMetadata] = useState<MetadataRow[]>([]);
+  console.log('metadata:', metadata);
   const [error, setError] = useState<string>('');
   const [loading, setIsLoading] = useState(false);
 
@@ -40,6 +41,7 @@ export default function DropzonePage() {
   // const sortedMetadataObjects = sortedMetadataRows.map((m) => m.metadata);
 
   const readFile = async (extFile: ExtFile) => {
+    setIsLoading(true);
     setMetadata([]);
     setError('');
 
@@ -52,6 +54,7 @@ export default function DropzonePage() {
         if (error instanceof Error) {
           setError(error.message);
         }
+        setIsLoading(false);
       } finally {
         setIsLoading(false);
       }
@@ -93,7 +96,6 @@ export default function DropzonePage() {
           behaviour="replace"
           max={1}
           className="dropzone-label"
-          onLoad={() => setIsLoading(true)}
         >
           {files.length > 0 &&
             files.map((file) => (
