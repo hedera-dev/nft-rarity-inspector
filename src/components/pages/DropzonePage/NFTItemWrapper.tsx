@@ -20,27 +20,26 @@
 import { NFTItem } from '@/components/pages/DropzonePage/NFTItem';
 import { useCallback, useState } from 'react';
 import { NFTDetails } from '@/components/pages/NFTDetailsDialog/NFTDetails';
-import { MetadataObject, ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
+import { MetadataObject } from 'hedera-nft-utilities';
 import { MetadataRow } from '@/utils/types/metadataRow';
 
 export const NFTItemWrapper = ({
   singleMetadataObject,
   index,
   metadataRows,
-  validationResponse,
 }: {
   singleMetadataObject: MetadataObject;
   index: number;
   metadataRows: MetadataRow[];
-  validationResponse: ValidateArrayOfObjectsResult;
 }) => {
   const [activeId, setActiveId] = useState(index);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handlePrevious = useCallback(() => setActiveId((oldId) => Math.max(oldId - 1, 0)), []);
   const handleNext = useCallback(() => setActiveId((oldId) => Math.min(oldId + 1, metadataRows.length - 1)), [metadataRows.length]);
-  const validationResult = validationResponse?.results[index];
 
   return (
-    <NFTItem key={index} metadata={singleMetadataObject} validationResult={validationResult} index={index}>
+    <>
       <NFTDetails
         metadataObject={metadataRows[activeId].metadata}
         fileName={metadataRows[activeId].fileName}
@@ -48,8 +47,10 @@ export const NFTItemWrapper = ({
         activeId={activeId}
         handlePrevious={handlePrevious}
         handleNext={handleNext}
-        validationResponse={validationResponse}
+        setIsModalOpen={setIsModalOpen}
+        isModalOpen={isModalOpen}
       />
-    </NFTItem>
+      <NFTItem key={index} metadata={singleMetadataObject} index={index} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+    </>
   );
 };

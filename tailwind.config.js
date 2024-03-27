@@ -9,7 +9,7 @@ module.exports = {
       center: true,
       padding: '2rem',
       screens: {
-        '2xl': '1200px',
+        '2xl': '1920px',
       },
     },
     extend: {
@@ -69,6 +69,9 @@ module.exports = {
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+      },
+      boxShadow: {
+        cardShadow: '1px 1px 3px 0px rgba(66, 68, 90, 1)',
       },
     },
   },
