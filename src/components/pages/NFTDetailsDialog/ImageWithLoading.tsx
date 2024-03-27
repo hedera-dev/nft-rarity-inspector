@@ -51,11 +51,11 @@ export const ImageWithLoading = ({ src, alt, className }: { src: string; alt: st
   return (
     <>
       {isLoading && !error ? (
-        <div className={`flex h-[500px] w-1/2 flex-col space-y-3 ${className}`}>
+        <div className={`flex h-[400px] w-1/2 flex-col space-y-3 ${className}`}>
           <Skeleton className="h-full w-full rounded-xl" />
         </div>
       ) : (
-        <img className={`max-h-[400px] ${className}`} src={displayPlaceholderImage ? 'no-image-placeholder.webp' : src} alt={alt} />
+        <img className={`max-h-[400px] min-h-[400px] ${className}`} src={displayPlaceholderImage ? 'no-image-placeholder.webp' : src} alt={alt} />
       )}
     </>
   );

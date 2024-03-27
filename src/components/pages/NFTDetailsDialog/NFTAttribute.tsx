@@ -26,11 +26,12 @@ export interface NftAttributeProps {
 
 export const NFTAttribute: React.FC<NftAttributeProps> = ({ trait, value, occurrence }) => {
   return (
-    <li className="w-fit rounded-xl border border-solid p-2 text-sm">
-      <div className="flex justify-center font-bold">{`${trait}`}</div>
+    <li className="w-fit rounded-xl border border-solid px-5 py-2 text-sm">
+      <div className="flex justify-center font-bold text-muted-foreground">{`${trait}`}</div>
       <div className="flex justify-center">
-        <p className="font-bold">{value} - </p>
-        {occurrence}
+        <p className="font-bold">
+          {value}: <span className="text-muted-foreground">{occurrence}</span>
+        </p>
       </div>
     </li>
   );

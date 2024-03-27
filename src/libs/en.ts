@@ -52,7 +52,7 @@ export const dictionary = {
       yAxesLabelTooltip: 'The probability distribution defines the likelihood of obtaining an NFT with a rarity score equal to or higher than this.',
     },
     noData: '(no-data)',
-    noCreator: 'no-creator',
+    noCreator: '(no-creator)',
     rarityRank: 'Rarity rank: ',
     rarityScore: 'Rarity score: ',
     attributesOccurrence: 'Attributes occurrence',

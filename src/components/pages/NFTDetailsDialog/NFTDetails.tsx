@@ -19,17 +19,17 @@
  */
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
-import { ImageWithLoading } from '@/components/ui/ImageWithLoading';
 import { dictionary } from '@/libs/en';
-import { MetadataObject, RarityResult, TraitOccurrence, ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
+import { MetadataObject, RarityResult, TraitOccurrence } from 'hedera-nft-utilities';
 import { Attribute } from '@/utils/types/nftDetails';
 import { getProperImageURL } from '@/utils/helpers/getProperImageURL';
 import { DialogTitle } from '@radix-ui/react-dialog';
-import { AttributeWithOccurrence } from '@/utils/types/attributes';
+import { MetadataRow } from '@/utils/types/metadataRow';
 import { NFTAttribute } from '@/components/pages/NFTDetailsDialog/NFTAttribute';
 import { NFTAttributesRarity } from '@/components/pages/NFTDetailsDialog/NFTAttributesRarity';
-import { MetadataRow } from '@/utils/types/metadataRow';
 import { RarityCalculation } from '@/components/pages/NFTDetailsDialog/RarityCalculation';
+import { AttributeWithOccurrence } from '@/utils/types/attributes';
+import { ImageWithLoading } from '@/components/pages/NFTDetailsDialog/ImageWithLoading';
 
 export const NFTDetails = ({
   metadataObject,
@@ -40,7 +40,6 @@ export const NFTDetails = ({
   metadataRows,
   handlePrevious,
   handleNext,
-  validationResponse,
   traitOccurrence,
 }: {
   metadataObject: MetadataObject;
@@ -51,15 +50,12 @@ export const NFTDetails = ({
   metadataRows: MetadataRow[];
   handlePrevious: () => void;
   handleNext: () => void;
-  validationResponse: ValidateArrayOfObjectsResult;
   traitOccurrence: TraitOccurrence[];
 }) => {
   const name = metadataObject?.name as string;
   const description = metadataObject?.description as string;
   const image = getProperImageURL(metadataObject?.image as string);
   const creator = metadataObject?.creator as string;
-  const validationResult = validationResponse?.results[activeId];
-  const errorsPresent = !validationResult?.isValid;
   const totalRarityRank = `${metadataRows[activeId].rarityRank}/${metadataLength}`;
   const totalRarity = rarity?.totalRarity as string;
 
@@ -98,13 +94,7 @@ export const NFTDetails = ({
           <div className="grid grid-cols-1 items-start md:grid-cols-2 md:items-center">
             <div className="mb-auto hidden flex-col items-center justify-center pr-8 md:flex">
               <ImageWithLoading src={image} alt={dictionary.modal.modalImageAlt} />
-              {errorsPresent && (
-                <div className="mt-6 w-full text-red-600">
-                  <h3 className="font-semibold text-black">{dictionary.modal.thereAreErrors}:</h3>
-                  {validationResult?.errors.map((error, index) => <p key={error + index}>{`${index + 1}) ${error}`}</p>)}
-                </div>
-              )}
-              <div className="my-2 w-full">
+              <div className="mb-2 mt-5 w-full">
                 <p className="text-lg font-bold">{dictionary.modal.descriptionTitle}</p>
                 {description || '-'}
               </div>
@@ -112,16 +102,20 @@ export const NFTDetails = ({
             <div className="mb-auto flex flex-col">
               <p>#{activeId + 1}</p>
               <h2 className="text-3xl font-semibold tracking-tight first:mt-0 ">{name || '-'}</h2>
-              <p className="mb-10 scroll-m-20 border-b pb-2 md:mb-10">({creator || dictionary.nftPreviewPage.noCreator})</p>
+              <p className="mb-10 scroll-m-20 border-b pb-2 md:mb-10">{creator || dictionary.nftPreviewPage.noCreator}</p>
               <div className="flex flex-col">
-                <p className="text-lg font-bold">
-                  {dictionary.nftPreviewPage.rarityRank}
-                  <span className="font-normal">{totalRarityRank}</span>
-                </p>
-                <p className="text-lg font-bold">
-                  {dictionary.nftPreviewPage.rarityScore}
-                  <span className="font-normal">{totalRarity}</span>
-                </p>
+                {rarity && (
+                  <>
+                    <p className="text-lg font-bold">
+                      {dictionary.nftPreviewPage.rarityRank}
+                      <span className="font-normal">{totalRarityRank}</span>
+                    </p>
+                    <p className="text-lg font-bold">
+                      {dictionary.nftPreviewPage.rarityScore}
+                      <span className="font-normal">{totalRarity}</span>
+                    </p>
+                  </>
+                )}
               </div>
               <div className="mb-10 flex items-center justify-center md:hidden">
                 <ImageWithLoading src={image} alt={dictionary.modal.modalImageAlt} />

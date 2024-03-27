@@ -53,7 +53,6 @@ export const NFTItemWrapper = ({
         activeId={activeId}
         handlePrevious={handlePrevious}
         handleNext={handleNext}
-        validationResponse={validationResponse}
         traitOccurrence={traitOccurrence}
       />
     </NFTItem>
