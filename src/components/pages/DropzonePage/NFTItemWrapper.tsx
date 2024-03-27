@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera Metadata Assistant
+ * Hedera Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -22,6 +22,7 @@ import { useCallback, useState } from 'react';
 import { NFTDetails } from '@/components/pages/NFTDetailsDialog/NFTDetails';
 import { MetadataObject, ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
 import { MetadataRow } from '@/utils/types/metadataRow';
+import { calculateTraitOccurrenceFromData } from 'hedera-nft-utilities/src/rarity/index';
 
 export const NFTItemWrapper = ({
   singleMetadataObject,
@@ -38,17 +39,22 @@ export const NFTItemWrapper = ({
   const handlePrevious = useCallback(() => setActiveId((oldId) => Math.max(oldId - 1, 0)), []);
   const handleNext = useCallback(() => setActiveId((oldId) => Math.min(oldId + 1, metadataRows.length - 1)), [metadataRows.length]);
   const validationResult = validationResponse?.results[index];
+  const metadataList: MetadataObject[] = metadataRows.map((row) => row.metadata);
+  const traitOccurrence = calculateTraitOccurrenceFromData(metadataList);
 
   return (
     <NFTItem key={index} metadata={singleMetadataObject} validationResult={validationResult} index={index}>
       <NFTDetails
         metadataObject={metadataRows[activeId].metadata}
+        rarity={metadataRows[activeId].rarity}
         fileName={metadataRows[activeId].fileName}
         metadataLength={metadataRows.length}
+        metadataRows={metadataRows}
         activeId={activeId}
         handlePrevious={handlePrevious}
         handleNext={handleNext}
         validationResponse={validationResponse}
+        traitOccurrence={traitOccurrence}
       />
     </NFTItem>
   );

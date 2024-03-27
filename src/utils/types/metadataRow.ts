@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera Metadata Assistant
+ * Hedera Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -17,9 +17,11 @@
  * limitations under the License.
  *
  */
-import { MetadataObject } from 'hedera-nft-utilities';
+import { MetadataObject, RarityResult } from 'hedera-nft-utilities';
 
 export interface MetadataRow {
   metadata: MetadataObject;
   fileName: string;
+  rarity: RarityResult;
+  rarityRank: number;
 }

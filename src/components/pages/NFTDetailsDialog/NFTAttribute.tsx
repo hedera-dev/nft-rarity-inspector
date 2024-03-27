@@ -8,7 +8,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,12 +17,21 @@
  * limitations under the License.
  *
  */
-const PUBLIC_IPFS_GATEWAY_ADDRESS = 'https://gateway.pinata.cloud/ipfs/';
 
-export const getProperImageURL = (url: string): string => {
-  if (url?.startsWith('ipfs://')) {
-    const cidWithPath = url.replace('ipfs://', '');
-    return PUBLIC_IPFS_GATEWAY_ADDRESS + cidWithPath;
-  }
-  return url;
+export interface NftAttributeProps {
+  trait: string;
+  value: string | number | boolean;
+  occurrence?: string;
+}
+
+export const NFTAttribute: React.FC<NftAttributeProps> = ({ trait, value, occurrence }) => {
+  return (
+    <li className="w-fit rounded-xl border border-solid p-2 text-sm">
+      <div className="flex justify-center font-bold">{`${trait}`}</div>
+      <div className="flex justify-center">
+        <p className="font-bold">{value} - </p>
+        {occurrence}
+      </div>
+    </li>
+  );
 };

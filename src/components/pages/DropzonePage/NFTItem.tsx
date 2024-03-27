@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera Metadata Assistant
+ * Hedera Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -28,7 +28,7 @@ const TRUNCATE_DESCRIPTION_NUMBER = 180;
 
 interface NFTItemProps {
   metadata: MetadataObject;
-  validationResult: DetailedFileValidationResult;
+  validationResult?: DetailedFileValidationResult;
   children: React.ReactNode;
   index: number;
 }

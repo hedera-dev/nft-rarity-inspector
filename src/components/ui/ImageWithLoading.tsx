@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera Metadata Assistant
+ * Hedera Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -20,17 +20,7 @@
 import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export const ImageWithLoading = ({
-  src,
-  alt,
-  className,
-  showSkeleton = true,
-}: {
-  src: string;
-  alt: string;
-  className?: string;
-  showSkeleton?: boolean;
-}) => {
+export const ImageWithLoading = ({ src, alt, className }: { src: string; alt: string; className?: string }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -60,12 +50,13 @@ export const ImageWithLoading = ({
 
   return (
     <>
-      {showSkeleton && isLoading && !error && (
+      {isLoading && !error ? (
         <div className={`flex h-[500px] w-1/2 flex-col space-y-3 ${className}`}>
           <Skeleton className="h-full w-full rounded-xl" />
         </div>
+      ) : (
+        <img className={`max-h-[400px] ${className}`} src={displayPlaceholderImage ? 'no-image-placeholder.webp' : src} alt={alt} />
       )}
-      <img className={`max-h-[400px] ${className}`} src={displayPlaceholderImage ? 'no-image-placeholder.webp' : src} alt={alt} />
     </>
   );
 };

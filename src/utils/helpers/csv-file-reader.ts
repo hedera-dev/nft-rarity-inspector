@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera Metadata Assistant
+ * Hedera Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
