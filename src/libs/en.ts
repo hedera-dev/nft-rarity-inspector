@@ -38,6 +38,27 @@ export const dictionary = {
       errors: 'Errors',
     },
   },
+  nftPreviewPage: {
+    rarityChartLabels: {
+      mostRare: 'Most Rare',
+      rarity: 'Rarity',
+      leastRare: 'Least Rare',
+      yAxesLabel: 'Probability distribution ⓘ',
+    },
+    rarityChart: {
+      header: 'Rarity curve',
+      xAxisLabel: 'Rarity',
+      yAxisLabel: 'Probability distribution',
+      tooltipContent: (serial: number, totalRarityRank: string) => `Serial: #${serial}\nRarity rank: ${totalRarityRank}`,
+      yAxesLabelTooltip: 'The probability distribution defines the likelihood of obtaining an NFT with a rarity score equal to or higher than this.',
+    },
+    noData: '(no-data)',
+    noCreator: '(no-creator)',
+    rarityRank: 'Rarity rank: ',
+    rarityScore: 'Rarity score: ',
+    attributesOccurrence: 'Attributes occurrence',
+    rarityCurve: 'Rarity curve',
+  },
   errors: {
     unknownError: 'Unknown error occurred',
     jsonFileUpload: 'Error during processing the JSON file',

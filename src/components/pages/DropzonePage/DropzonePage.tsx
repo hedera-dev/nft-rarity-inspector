@@ -27,7 +27,7 @@ import { NFTGallery } from '@/components/pages/DropzonePage/NFTGallery';
 import { MetadataRow } from '@/utils/types/metadataRow';
 import { processZipFile } from '@/components/pages/DropzonePage/processZipFile';
 import SpinnerLoader from '@/components/ui/loader';
-import { findMostRareNFT } from '@/components/pages/DropzonePage/findMostRareNFT';
+import { NFTStatsDisplay } from '@/components/pages/DropzonePage/NFTStatsDisplay';
 
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
@@ -48,7 +48,6 @@ export default function DropzonePage() {
     if (extFile.file.type === 'application/zip' || extFile.file.name.endsWith('.zip')) {
       try {
         const newMetadata = await processZipFile(extFile);
-        console.log('newMetadata:', newMetadata);
         // This sorting is used because ZIP files don't keep files in order, so it makes sure everything is listed alphabetically
         const sortedMetadataWithoutRarity = newMetadata.sort((a, b) =>
           a.fileName.localeCompare(b.fileName, undefined, { numeric: true, sensitivity: 'base' }),
@@ -59,9 +58,6 @@ export default function DropzonePage() {
           ...metadataRow,
           rarity: rarityResults[index],
         }));
-
-        const mostRareNFT = findMostRareNFT(sortedMetadataWithRarity);
-        console.log('mostRareNFT:', mostRareNFT);
 
         setMetadata(metadataWithRarity);
       } catch (error) {
@@ -92,7 +88,6 @@ export default function DropzonePage() {
   const sortedMetadataWithRarity = [...metadata].sort((a, b) =>
     a.fileName.localeCompare(b.fileName, undefined, { numeric: true, sensitivity: 'base' }),
   );
-  console.log('sortedMetadataWithRarity:', sortedMetadataWithRarity);
 
   return (
     <div className="container mx-auto">
@@ -122,6 +117,7 @@ export default function DropzonePage() {
         </Dropzone>
         {error && <span className="mt-2 text-center font-bold text-red-500">{error}</span>}
       </div>
+
       {metadata.length === 0 && loading && (
         <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
           <SpinnerLoader />
@@ -129,10 +125,11 @@ export default function DropzonePage() {
       )}
       {metadata.length > 0 && !loading && (
         <div className="my-10">
+          <NFTStatsDisplay metadata={metadata} />
           <h3 className="ml-4">
             {dictionary.nftTable.totalNftsNumber}: <span className="font-bold">{metadata.length}</span>
           </h3>
-          <NFTGallery metadataRows={metadata} />
+          <NFTGallery metadataRows={sortedMetadataWithRarity} />
         </div>
       )}
     </div>
