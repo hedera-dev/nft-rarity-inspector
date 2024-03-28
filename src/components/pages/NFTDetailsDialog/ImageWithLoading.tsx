@@ -20,7 +20,7 @@
 import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export const ImageWithLoading = ({ src, alt, className }: { src: string; alt: string; className?: string }) => {
+export const ImageWithLoading = ({ src, alt, className, minHeight = 400 }: { src: string; alt: string; className?: string; minHeight?: number }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
 
@@ -51,11 +51,15 @@ export const ImageWithLoading = ({ src, alt, className }: { src: string; alt: st
   return (
     <>
       {isLoading && !error ? (
-        <div className={`flex h-[400px] w-1/2 flex-col space-y-3 ${className}`}>
+        <div className={`flex h-[${minHeight}px] w-1/2 flex-col space-y-3 ${className}`}>
           <Skeleton className="h-full w-full rounded-xl" />
         </div>
       ) : (
-        <img className={`max-h-[400px] min-h-[400px] ${className}`} src={displayPlaceholderImage ? 'no-image-placeholder.webp' : src} alt={alt} />
+        <img
+          className={`max-h-[400px] min-h-[${minHeight}px] ${className}`}
+          src={displayPlaceholderImage ? 'no-image-placeholder.webp' : src}
+          alt={alt}
+        />
       )}
     </>
   );

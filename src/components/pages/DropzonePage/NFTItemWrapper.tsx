@@ -20,14 +20,13 @@
 import { NFTItem } from '@/components/pages/DropzonePage/NFTItem';
 import { useCallback, useState } from 'react';
 import { NFTDetails } from '@/components/pages/NFTDetailsDialog/NFTDetails';
-import { MetadataObject, RarityResult, TraitOccurrence, ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
+import { MetadataObject, RarityResult, TraitOccurrence } from 'hedera-nft-utilities';
 import { MetadataRow } from '@/utils/types/metadataRow';
 
 export const NFTItemWrapper = ({
   singleMetadataObject,
   index,
   metadataRows,
-  validationResponse,
   metadataObject,
   rarity,
   fileName,
@@ -37,7 +36,6 @@ export const NFTItemWrapper = ({
 }: {
   singleMetadataObject: MetadataObject;
   index: number;
-  validationResponse: ValidateArrayOfObjectsResult;
   metadataObject: MetadataObject;
   rarity: RarityResult;
   fileName: string;
@@ -47,12 +45,13 @@ export const NFTItemWrapper = ({
   hasNextPrevButtons: boolean;
 }) => {
   const [activeId, setActiveId] = useState(index);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const handlePrevious = useCallback(() => setActiveId((oldId) => Math.max(oldId - 1, 0)), []);
   const handleNext = useCallback(() => setActiveId((oldId) => Math.min(oldId + 1, metadataLength - 1)), [metadataLength]);
-  const validationResult = validationResponse?.results[index];
 
   return (
-    <NFTItem key={index} metadata={singleMetadataObject} validationResult={validationResult} index={index}>
+    <>
       <NFTDetails
         metadataObject={activeId === index ? metadataObject : (metadataRows?.[activeId].metadata as MetadataObject)}
         rarity={activeId === index ? rarity : (metadataRows?.[activeId].rarity as RarityResult)}
@@ -64,7 +63,10 @@ export const NFTItemWrapper = ({
         handleNext={handleNext}
         traitOccurrence={traitOccurrence}
         hasNextPrevButtons={hasNextPrevButtons}
+        setIsModalOpen={setIsModalOpen}
+        isModalOpen={isModalOpen}
       />
-    </NFTItem>
+      <NFTItem key={index} metadata={singleMetadataObject} index={index} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+    </>
   );
 };

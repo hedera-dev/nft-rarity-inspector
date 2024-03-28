@@ -26,20 +26,21 @@ import { dictionary } from '@/libs/en';
 import { NFTGallery } from '@/components/pages/DropzonePage/NFTGallery';
 import { MetadataRow } from '@/utils/types/metadataRow';
 import { processZipFile } from '@/components/pages/DropzonePage/processZipFile';
-import { Hip412Validator } from 'hedera-nft-utilities/src/hip412-validator';
-import { ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
+import SpinnerLoader from '@/components/ui/loader';
 
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [metadata, setMetadata] = useState<MetadataRow[]>([]);
-  const [validationResponse, setValidationResponse] = useState<ValidateArrayOfObjectsResult | undefined>(undefined);
   const [error, setError] = useState<string>('');
+  const [loading, setIsLoading] = useState<boolean>(false);
 
   // This sorting is used because ZIP files don't keep files in order, so it makes sure everything is listed alphabetically
   const sortedMetadataRows = metadata.sort((a, b) => a.fileName.localeCompare(b.fileName, undefined, { numeric: true, sensitivity: 'base' }));
-  const metadataObjects = sortedMetadataRows.map((m) => m.metadata);
+  // TODO: use sortedMetadataObjects for calculateRarityFromData function later on
+  // const sortedMetadataObjects = sortedMetadataRows.map((m) => m.metadata);
 
   const readFile = async (extFile: ExtFile) => {
+    setIsLoading(true);
     setMetadata([]);
     setError('');
 
@@ -52,6 +53,9 @@ export default function DropzonePage() {
         if (error instanceof Error) {
           setError(error.message);
         }
+        setIsLoading(false);
+      } finally {
+        setIsLoading(false);
       }
     } else {
       setError(dictionary.errors.unsupportedFileType);
@@ -71,8 +75,6 @@ export default function DropzonePage() {
 
   useEffect(() => {
     if (metadata.length > 0) {
-      const validationResponse: ValidateArrayOfObjectsResult = Hip412Validator.validateArrayOfObjects(metadataObjects);
-      setValidationResponse(validationResponse);
       // TODO: calculate rarity here
       // const rarity = calculateRarityFromData(metadataObjects);
       // console.log('rarity:', rarity);
@@ -101,14 +103,24 @@ export default function DropzonePage() {
                 {...file}
                 valid={SUPPORTED_FILE_TYPES_ARRAY.some((type) => file.file?.name.endsWith(type)) ? undefined : false}
                 className="dropzone-label"
+                progress={55}
               />
             ))}
         </Dropzone>
         {error && <span className="mt-2 text-center font-bold text-red-500">{error}</span>}
       </div>
-      {validationResponse && metadata.length > 0 && (
-        // TODO: change NFTGallery view
-        <div className="my-10">{<NFTGallery metadataRows={sortedMetadataRows} validationResponse={validationResponse} />}</div>
+      {metadata.length === 0 && loading && (
+        <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
+          <SpinnerLoader />
+        </div>
+      )}
+      {metadata.length > 0 && !loading && (
+        <div className="my-10">
+          <h3 className="ml-4">
+            {dictionary.nftTable.totalNftsNumber}: <span className="font-bold">{metadata.length}</span>
+          </h3>
+          <NFTGallery metadataRows={sortedMetadataRows} />
+        </div>
       )}
     </div>
   );

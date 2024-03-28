@@ -18,7 +18,6 @@
  *
  */
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
 import { dictionary } from '@/libs/en';
 import { MetadataObject, RarityResult, TraitOccurrence } from 'hedera-nft-utilities';
 import { Attribute } from '@/utils/types/nftDetails';
@@ -29,6 +28,7 @@ import { NFTAttribute } from '@/components/pages/NFTDetailsDialog/NFTAttribute';
 import { NFTAttributesRarity } from '@/components/pages/NFTDetailsDialog/NFTAttributesRarity';
 import { RarityCalculation } from '@/components/pages/NFTDetailsDialog/RarityCalculation';
 import { AttributeWithOccurrence } from '@/utils/types/attributes';
+import { Dialog, DialogContent, DialogFooter, DialogHeader } from '@/components/ui/dialog';
 import { ImageWithLoading } from '@/components/pages/NFTDetailsDialog/ImageWithLoading';
 
 export const NFTDetails = ({
@@ -42,6 +42,8 @@ export const NFTDetails = ({
   handleNext,
   traitOccurrence,
   hasNextPrevButtons,
+  setIsModalOpen,
+  isModalOpen,
 }: {
   metadataObject: MetadataObject;
   rarity: RarityResult;
@@ -53,6 +55,8 @@ export const NFTDetails = ({
   handleNext: () => void;
   traitOccurrence: TraitOccurrence[];
   hasNextPrevButtons: boolean;
+  setIsModalOpen: (_isOpen: boolean) => void;
+  isModalOpen: boolean;
 }) => {
   const name = metadataObject?.name as string;
   const description = metadataObject?.description as string;
@@ -81,10 +85,7 @@ export const NFTDetails = ({
   const attributes = attributesWithTraitOccurrences.length > 0 ? attributesWithTraitOccurrences : (metadataObject?.attributes as Attribute[]);
 
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        <Button variant="link">{dictionary.modal.details}</Button>
-      </DialogTrigger>
+    <Dialog onOpenChange={setIsModalOpen} open={isModalOpen}>
       <DialogContent className="flex max-h-screen max-w-[1300px] flex-col justify-center md:h-[900px]">
         <DialogHeader>
           <DialogTitle>

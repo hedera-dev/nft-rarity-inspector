@@ -17,23 +17,20 @@
  * limitations under the License.
  *
  */
-import { MetadataObject, ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
+import { MetadataObject } from 'hedera-nft-utilities';
 import { calculateTraitOccurrenceFromData } from 'hedera-nft-utilities/src/rarity/index';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useCallback, useEffect, useState } from 'react';
-import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { TABLE_HEADERS } from '@/utils/constants/nftTableHeaders';
 import { NFTItemWrapper } from '@/components/pages/DropzonePage/NFTItemWrapper';
 import { MetadataRow } from '@/utils/types/metadataRow';
 
-const BATCH_SIZE = 10;
+const BATCH_SIZE = 20;
 
 interface NFTGalleryProps {
   metadataRows: MetadataRow[];
-  validationResponse: ValidateArrayOfObjectsResult;
 }
 
-export const NFTGallery = ({ metadataRows, validationResponse }: NFTGalleryProps) => {
+export const NFTGallery = ({ metadataRows }: NFTGalleryProps) => {
   const metadataObjects = metadataRows.map((m) => m.metadata);
   const [visibleItems, setVisibleItems] = useState(metadataObjects.slice(0, BATCH_SIZE));
   const [hasMore, setHasMore] = useState<boolean>(metadataObjects.length > BATCH_SIZE);
@@ -54,38 +51,26 @@ export const NFTGallery = ({ metadataRows, validationResponse }: NFTGalleryProps
     }
 
     setVisibleItems(metadataObjects.slice(0, nextItemsCount));
-  }, [visibleItems.length]);
+  }, [metadataObjects, metadataRows.length, visibleItems.length]);
 
   return (
     <InfiniteScroll dataLength={visibleItems.length} next={fetchMoreData} hasMore={hasMore} loader={<></>}>
-      <Table>
-        <TableHeader className="font-semibold">
-          <TableRow>
-            {TABLE_HEADERS.map((head, index) => (
-              <TableHead className="whitespace-nowrap font-semibold text-black" key={index}>
-                {head}
-              </TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {visibleItems.map((item, index) => (
-            <NFTItemWrapper
-              key={index}
-              singleMetadataObject={item}
-              index={index}
-              metadataRows={metadataRows}
-              validationResponse={validationResponse}
-              metadataObject={metadataRows[index].metadata}
-              rarity={metadataRows[index].rarity}
-              fileName={metadataRows[index].fileName}
-              metadataLength={metadataRows.length}
-              traitOccurrence={traitOccurrence}
-              hasNextPrevButtons={true}
-            />
-          ))}
-        </TableBody>
-      </Table>
+      <div className="grid grid-cols-2 gap-4 p-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+        {visibleItems.map((item, index) => (
+          <NFTItemWrapper
+            key={index}
+            singleMetadataObject={item}
+            index={index}
+            metadataRows={metadataRows}
+            metadataObject={metadataRows[index].metadata}
+            rarity={metadataRows[index].rarity}
+            fileName={metadataRows[index].fileName}
+            metadataLength={metadataRows.length}
+            traitOccurrence={traitOccurrence}
+            hasNextPrevButtons={true}
+          />
+        ))}
+      </div>
     </InfiniteScroll>
   );
 };
