@@ -20,40 +20,50 @@
 import { NFTItem } from '@/components/pages/DropzonePage/NFTItem';
 import { useCallback, useState } from 'react';
 import { NFTDetails } from '@/components/pages/NFTDetailsDialog/NFTDetails';
-import { MetadataObject, ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
+import { MetadataObject, RarityResult, TraitOccurrence, ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
 import { MetadataRow } from '@/utils/types/metadataRow';
-import { calculateTraitOccurrenceFromData } from 'hedera-nft-utilities/src/rarity/index';
 
 export const NFTItemWrapper = ({
   singleMetadataObject,
   index,
   metadataRows,
   validationResponse,
+  metadataObject,
+  rarity,
+  fileName,
+  metadataLength,
+  traitOccurrence,
+  hasNextPrevButtons,
 }: {
   singleMetadataObject: MetadataObject;
   index: number;
-  metadataRows: MetadataRow[];
   validationResponse: ValidateArrayOfObjectsResult;
+  metadataObject: MetadataObject;
+  rarity: RarityResult;
+  fileName: string;
+  metadataLength: number;
+  metadataRows?: MetadataRow[];
+  traitOccurrence: TraitOccurrence[];
+  hasNextPrevButtons: boolean;
 }) => {
   const [activeId, setActiveId] = useState(index);
   const handlePrevious = useCallback(() => setActiveId((oldId) => Math.max(oldId - 1, 0)), []);
-  const handleNext = useCallback(() => setActiveId((oldId) => Math.min(oldId + 1, metadataRows.length - 1)), [metadataRows.length]);
+  const handleNext = useCallback(() => setActiveId((oldId) => Math.min(oldId + 1, metadataLength - 1)), [metadataLength]);
   const validationResult = validationResponse?.results[index];
-  const metadataList: MetadataObject[] = metadataRows.map((row) => row.metadata);
-  const traitOccurrence = calculateTraitOccurrenceFromData(metadataList);
 
   return (
     <NFTItem key={index} metadata={singleMetadataObject} validationResult={validationResult} index={index}>
       <NFTDetails
-        metadataObject={metadataRows[activeId].metadata}
-        rarity={metadataRows[activeId].rarity}
-        fileName={metadataRows[activeId].fileName}
-        metadataLength={metadataRows.length}
+        metadataObject={activeId === index ? metadataObject : (metadataRows?.[activeId].metadata as MetadataObject)}
+        rarity={activeId === index ? rarity : (metadataRows?.[activeId].rarity as RarityResult)}
+        fileName={activeId === index ? fileName : (metadataRows?.[activeId].fileName as string)}
+        metadataLength={metadataLength}
         metadataRows={metadataRows}
         activeId={activeId}
         handlePrevious={handlePrevious}
         handleNext={handleNext}
         traitOccurrence={traitOccurrence}
+        hasNextPrevButtons={hasNextPrevButtons}
       />
     </NFTItem>
   );

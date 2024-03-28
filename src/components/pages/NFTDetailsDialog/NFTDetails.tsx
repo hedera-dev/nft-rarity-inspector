@@ -41,22 +41,24 @@ export const NFTDetails = ({
   handlePrevious,
   handleNext,
   traitOccurrence,
+  hasNextPrevButtons,
 }: {
   metadataObject: MetadataObject;
   rarity: RarityResult;
   fileName: string;
   activeId: number;
   metadataLength: number;
-  metadataRows: MetadataRow[];
+  metadataRows?: MetadataRow[];
   handlePrevious: () => void;
   handleNext: () => void;
   traitOccurrence: TraitOccurrence[];
+  hasNextPrevButtons: boolean;
 }) => {
   const name = metadataObject?.name as string;
   const description = metadataObject?.description as string;
   const image = getProperImageURL(metadataObject?.image as string);
   const creator = metadataObject?.creator as string;
-  const totalRarityRank = `${metadataRows[activeId].rarityRank}/${metadataLength}`;
+  const totalRarityRank = metadataRows ? `${metadataRows[activeId].rarityRank}/${metadataLength}` : '';
   const totalRarity = rarity?.totalRarity as string;
 
   const attributesWithTraitOccurrences: AttributeWithOccurrence[] = [];
@@ -140,7 +142,7 @@ export const NFTDetails = ({
                   </ul>
                 </div>
               )}
-              {rarity && (
+              {rarity && metadataRows && (
                 <>
                   <NFTAttributesRarity attributesData={attributesWithTraitOccurrences} />
                   <RarityCalculation
@@ -156,14 +158,16 @@ export const NFTDetails = ({
           </div>
         </div>
 
-        <DialogFooter className="flex flex-row items-center gap-1">
-          <Button className="w-full md:w-[100px]" disabled={activeId === 0} onClick={handlePrevious}>
-            {dictionary.modal.previousButton}
-          </Button>
-          <Button className="w-full md:w-[100px]" disabled={activeId === metadataLength - 1} onClick={handleNext}>
-            {dictionary.modal.nextButton}
-          </Button>
-        </DialogFooter>
+        {hasNextPrevButtons && (
+          <DialogFooter className="flex flex-row items-center gap-1">
+            <Button className="w-full md:w-[100px]" disabled={activeId === 0} onClick={handlePrevious}>
+              {dictionary.modal.previousButton}
+            </Button>
+            <Button className="w-full md:w-[100px]" disabled={activeId === metadataLength - 1} onClick={handleNext}>
+              {dictionary.modal.nextButton}
+            </Button>
+          </DialogFooter>
+        )}
       </DialogContent>
     </Dialog>
   );

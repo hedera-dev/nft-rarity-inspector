@@ -17,7 +17,8 @@
  * limitations under the License.
  *
  */
-import { ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
+import { MetadataObject, ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
+import { calculateTraitOccurrenceFromData } from 'hedera-nft-utilities/src/rarity/index';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useCallback, useEffect, useState } from 'react';
 import { Table, TableBody, TableHead, TableHeader, TableRow } from '@/components/ui/table';
@@ -35,12 +36,14 @@ interface NFTGalleryProps {
 export const NFTGallery = ({ metadataRows, validationResponse }: NFTGalleryProps) => {
   const metadataObjects = metadataRows.map((m) => m.metadata);
   const [visibleItems, setVisibleItems] = useState(metadataObjects.slice(0, BATCH_SIZE));
-  const [hasMore, setHasMore] = useState(metadataObjects.length > BATCH_SIZE);
+  const [hasMore, setHasMore] = useState<boolean>(metadataObjects.length > BATCH_SIZE);
+  const metadataList: MetadataObject[] | undefined = metadataRows?.map((row) => row.metadata);
+  const traitOccurrence = metadataList ? calculateTraitOccurrenceFromData(metadataList) : [];
 
   useEffect(() => {
     setVisibleItems(metadataObjects.slice(0, BATCH_SIZE));
     setHasMore(metadataRows.length > BATCH_SIZE);
-  }, [metadataRows.length]);
+  }, [metadataObjects, metadataRows.length]);
 
   const fetchMoreData = useCallback(() => {
     const nextItemsCount = Math.min(visibleItems.length + BATCH_SIZE, metadataRows.length);
@@ -73,6 +76,12 @@ export const NFTGallery = ({ metadataRows, validationResponse }: NFTGalleryProps
               index={index}
               metadataRows={metadataRows}
               validationResponse={validationResponse}
+              metadataObject={metadataRows[index].metadata}
+              rarity={metadataRows[index].rarity}
+              fileName={metadataRows[index].fileName}
+              metadataLength={metadataRows.length}
+              traitOccurrence={traitOccurrence}
+              hasNextPrevButtons={true}
             />
           ))}
         </TableBody>

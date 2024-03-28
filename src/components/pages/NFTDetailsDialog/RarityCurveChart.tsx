@@ -73,13 +73,14 @@ const drawCustomLabelsOnXAxis = (chart: Chart): void => {
 export const RarityCurveChart: React.FC<{
   rarities: string[];
   probabilityDistribution: number[];
-  rarityScore: number;
-  tooltipData: {
-    name: string;
-    serial: number;
-    totalRarityRank: string;
+  rarityScore?: number;
+  tooltipData?: {
+    name?: string;
+    serial?: number;
+    totalRarityRank?: string;
   };
-}> = ({ rarities, probabilityDistribution, rarityScore, tooltipData: { serial, totalRarityRank, name } }) => {
+}> = ({ rarities, probabilityDistribution, rarityScore, tooltipData }) => {
+  const { serial, totalRarityRank, name } = tooltipData || {};
   const handleDrawLines = (chart: Chart): void => {
     const { ctx } = chart;
     const xAxis = chart.scales['x'];
@@ -108,8 +109,9 @@ export const RarityCurveChart: React.FC<{
     return rarities.map((rarity) => (Number(rarity) === rarityScore ? 5 : undefined));
   };
 
-  const displayTooltipContent = (): string => dictionary.nftPreviewPage.rarityChart.tooltipContent(serial, totalRarityRank);
-  const displayTooltipTitle = (): string => name;
+  const displayTooltipContent = (): string =>
+    tooltipData && serial && totalRarityRank ? dictionary.nftPreviewPage.rarityChart.tooltipContent(serial, totalRarityRank) : '';
+  const displayTooltipTitle = (): string => (tooltipData && name ? name : '');
   const removeDefaultTooltipLabel = (): string => '';
 
   return (

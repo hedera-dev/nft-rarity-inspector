@@ -24,10 +24,10 @@ import { MetadataRow } from '@/utils/types/metadataRow';
 import { dictionary } from '@/libs/en';
 
 export const RarityCalculation: React.FC<{
-  name: string;
-  serial: number;
-  rarityScore: number;
-  totalRarityRank: string;
+  name?: string;
+  serial?: number;
+  rarityScore?: number;
+  totalRarityRank?: string;
   metadataRows: MetadataRow[];
 }> = ({ name, serial, rarityScore, totalRarityRank, metadataRows }) => {
   const rarityOccurrence = metadataRows.reduce<{ [key: string]: number }>((acc, nft) => {
