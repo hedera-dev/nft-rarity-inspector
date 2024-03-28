@@ -40,7 +40,7 @@ export const NFTGallery = ({ metadataRows }: NFTGalleryProps) => {
   useEffect(() => {
     setVisibleItems(metadataObjects.slice(0, BATCH_SIZE));
     setHasMore(metadataRows.length > BATCH_SIZE);
-  }, [metadataObjects, metadataRows.length]);
+  }, [metadataRows.length]);
 
   const fetchMoreData = useCallback(() => {
     const nextItemsCount = Math.min(visibleItems.length + BATCH_SIZE, metadataRows.length);
@@ -51,7 +51,7 @@ export const NFTGallery = ({ metadataRows }: NFTGalleryProps) => {
     }
 
     setVisibleItems(metadataObjects.slice(0, nextItemsCount));
-  }, [metadataObjects, metadataRows.length, visibleItems.length]);
+  }, [visibleItems.length]);
 
   return (
     <InfiniteScroll dataLength={visibleItems.length} next={fetchMoreData} hasMore={hasMore} loader={<></>}>
