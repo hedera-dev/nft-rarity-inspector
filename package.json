@@ -21,7 +21,7 @@
     "clsx": "^2.1.0",
     "file-saver": "^2.0.5",
     "file-type": "^19.0.0",
-    "hedera-nft-utilities": "../hedera-nft-utilities",
+    "hedera-nft-utilities": "../../hedera-nft-utilities",
     "jszip": "^3.10.1",
     "lucide-react": "^0.341.0",
     "next-themes": "^0.2.1",
@@ -33,7 +33,10 @@
     "react-tooltip": "^5.26.3",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
-    "vite-tsconfig-paths": "^4.2.1"
+    "vite-tsconfig-paths": "^4.2.1",
+    "chart.js": "4.4.2",
+    "react-chartjs-2": "5.2.0",
+    "react-tooltip": "5.26.3"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.8.4",

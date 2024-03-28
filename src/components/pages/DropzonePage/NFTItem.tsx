@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera NFT Rarity Inspector
+ * NFT Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -20,11 +20,11 @@
 import { MetadataObject } from 'hedera-nft-utilities';
 import { truncateString } from '@/utils/helpers/truncateString';
 import { dictionary } from '@/libs/en';
-import { ImageWithLoading } from '@/components/ui/ImageWithLoading';
 import { useEffect, useState } from 'react';
 import { cn } from '@/utils/helpers/cn';
 import { Button } from '@/components/ui/button';
 import { getProperImageURL } from '@/utils/helpers/getProperImageURL';
+import { ImageWithLoading } from '@/components/pages/NFTDetailsDialog/ImageWithLoading';
 
 const TRUNCATE_NAME_NUMBER = 13;
 
@@ -55,7 +55,7 @@ export const NFTItem = ({ metadata, index, isModalOpen, setIsModalOpen }: NFTIte
       className="group relative flex cursor-pointer flex-col items-center overflow-hidden rounded-lg shadow-cardShadow transition duration-200 md:hover:scale-105"
     >
       <div className="flex w-full items-center justify-center">
-        <ImageWithLoading showSkeleton={false} src={image} alt={name} className="max-w-full object-cover" />
+        <ImageWithLoading src={image} alt={name} className="max-w-full object-cover" minHeight={250} />
       </div>
       <div className="flex w-full flex-col justify-between rounded-b-lg bg-white p-4 text-left sm:flex-col">
         <div className="flex w-full flex-row justify-between">

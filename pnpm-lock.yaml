@@ -21,7 +21,11 @@ dependencies:
     specifier: 5.24.1
     version: 5.24.1(react@18.2.0)
   chart.js:
+<<<<<<< HEAD
     specifier: ^4.4.2
+=======
+    specifier: 4.4.2
+>>>>>>> origin/1-nft-rarity-inspector-details-view
     version: 4.4.2
   class-variance-authority:
     specifier: ^0.7.0
@@ -36,8 +40,8 @@ dependencies:
     specifier: ^19.0.0
     version: 19.0.0
   hedera-nft-utilities:
-    specifier: ../hedera-nft-utilities
-    version: link:../hedera-nft-utilities
+    specifier: ../../hedera-nft-utilities
+    version: link:../../hedera-nft-utilities
   jszip:
     specifier: ^3.10.1
     version: 3.10.1
@@ -54,7 +58,11 @@ dependencies:
     specifier: ^18.2.0
     version: 18.2.0
   react-chartjs-2:
+<<<<<<< HEAD
     specifier: ^5.2.0
+=======
+    specifier: 5.2.0
+>>>>>>> origin/1-nft-rarity-inspector-details-view
     version: 5.2.0(chart.js@4.4.2)(react@18.2.0)
   react-dom:
     specifier: ^18.2.0
@@ -63,7 +71,11 @@ dependencies:
     specifier: ^6.1.0
     version: 6.1.0(react@18.2.0)
   react-tooltip:
+<<<<<<< HEAD
     specifier: ^5.26.3
+=======
+    specifier: 5.26.3
+>>>>>>> origin/1-nft-rarity-inspector-details-view
     version: 5.26.3(react-dom@18.2.0)(react@18.2.0)
   tailwind-merge:
     specifier: ^2.2.1

@@ -8,7 +8,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -17,22 +17,8 @@
  * limitations under the License.
  *
  */
-export type Attribute = {
-  trait_type: string;
-  value: string | number | boolean;
-};
-
-type Properties = {
-  external_url: string;
-  url: string;
-};
-
-export type NFTDetailsType = {
-  name: string;
-  image: string;
-  type: string;
-  creator?: string;
-  description?: string;
-  properties?: Properties;
-  attributes?: Attribute[];
+export type AttributeWithOccurrence = {
+  occurrence: number;
+  traitValue: string;
+  traitName: string;
 };

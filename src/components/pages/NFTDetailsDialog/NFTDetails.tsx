@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera NFT Rarity Inspector
+ * NFT Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -8,7 +8,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  *
- *      http://www.apache.org/licenses/LICENSE-2.0
+ *    http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -18,37 +18,71 @@
  *
  */
 import { Button } from '@/components/ui/button';
-import { Dialog, DialogContent, DialogFooter, DialogHeader } from '@/components/ui/dialog';
-import { ImageWithLoading } from '@/components/ui/ImageWithLoading';
 import { dictionary } from '@/libs/en';
-import { MetadataObject } from 'hedera-nft-utilities';
+import { MetadataObject, RarityResult, TraitOccurrence } from 'hedera-nft-utilities';
 import { Attribute } from '@/utils/types/nftDetails';
 import { getProperImageURL } from '@/utils/helpers/getProperImageURL';
 import { DialogTitle } from '@radix-ui/react-dialog';
+import { MetadataRow } from '@/utils/types/metadataRow';
+import { NFTAttribute } from '@/components/pages/NFTDetailsDialog/NFTAttribute';
+import { NFTAttributesRarity } from '@/components/pages/NFTDetailsDialog/NFTAttributesRarity';
+import { RarityCalculation } from '@/components/pages/NFTDetailsDialog/RarityCalculation';
+import { AttributeWithOccurrence } from '@/utils/types/attributes';
+import { Dialog, DialogContent, DialogFooter, DialogHeader } from '@/components/ui/dialog';
+import { ImageWithLoading } from '@/components/pages/NFTDetailsDialog/ImageWithLoading';
 
 export const NFTDetails = ({
   metadataObject,
+  rarity,
   fileName,
   activeId,
   metadataLength,
+  metadataRows,
   handlePrevious,
   handleNext,
+  traitOccurrence,
+  hasNextPrevButtons,
   setIsModalOpen,
   isModalOpen,
 }: {
   metadataObject: MetadataObject;
+  rarity: RarityResult;
   fileName: string;
   activeId: number;
   metadataLength: number;
+  metadataRows?: MetadataRow[];
   handlePrevious: () => void;
   handleNext: () => void;
+  traitOccurrence: TraitOccurrence[];
+  hasNextPrevButtons: boolean;
   setIsModalOpen: (_isOpen: boolean) => void;
   isModalOpen: boolean;
 }) => {
   const name = metadataObject?.name as string;
   const description = metadataObject?.description as string;
   const image = getProperImageURL(metadataObject?.image as string);
-  const attributes = metadataObject?.attributes as Attribute[];
+  const creator = metadataObject?.creator as string;
+  const totalRarityRank = metadataRows ? `${metadataRows[activeId].rarityRank}/${metadataLength}` : '';
+  const totalRarity = rarity?.totalRarity as string;
+
+  const attributesWithTraitOccurrences: AttributeWithOccurrence[] = [];
+
+  (metadataObject.attributes as Attribute[])?.forEach(({ trait_type, value }) => {
+    const occurrence = traitOccurrence.find(({ trait }) => trait_type === trait);
+    if (occurrence) {
+      const result = occurrence.values.find(({ value: valueFromSummary }) => valueFromSummary === value);
+
+      if (result) {
+        attributesWithTraitOccurrences.push({
+          occurrence: Number(result.occurence),
+          traitValue: result.value,
+          traitName: trait_type,
+        });
+      }
+    }
+  });
+
+  const attributes = attributesWithTraitOccurrences.length > 0 ? attributesWithTraitOccurrences : (metadataObject?.attributes as Attribute[]);
 
   return (
     <Dialog onOpenChange={setIsModalOpen} open={isModalOpen}>
@@ -59,43 +93,82 @@ export const NFTDetails = ({
             {fileName}
           </DialogTitle>
         </DialogHeader>
-        <div className="h-full gap-4 py-4">
+        <div className="h-full gap-4 overflow-y-scroll py-4">
           <div className="grid grid-cols-1 items-start md:grid-cols-2 md:items-center">
-            <div className="mb-auto flex hidden flex-col items-center justify-center pr-8 md:flex">
-              <ImageWithLoading src={image} alt={dictionary.modal.modalImageAlt} showSkeleton={false} />
-            </div>
-            <div className="mb-auto flex flex-col">
-              <h2 className="mb-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0 md:mb-20">{name || '-'}</h2>
-              <div className="mb-10 flex items-center justify-center md:hidden">
-                <ImageWithLoading src={image} alt={dictionary.modal.modalImageAlt} showSkeleton={false} />
-              </div>
-              <div className="mb-6">
-                <p className="mb-2 text-lg font-bold">{dictionary.modal.descriptionTitle}</p>
+            <div className="mb-auto hidden flex-col items-center justify-center pr-8 md:flex">
+              <ImageWithLoading src={image} alt={dictionary.modal.modalImageAlt} />
+              <div className="mb-2 mt-5 w-full">
+                <p className="text-lg font-bold">{dictionary.modal.descriptionTitle}</p>
                 {description || '-'}
               </div>
+            </div>
+            <div className="mb-auto flex flex-col">
+              <p>#{activeId + 1}</p>
+              <h2 className="text-3xl font-semibold tracking-tight first:mt-0 ">{name || '-'}</h2>
+              <p className="mb-10 scroll-m-20 border-b pb-2 md:mb-10">{creator || dictionary.nftPreviewPage.noCreator}</p>
+              <div className="flex flex-col">
+                {rarity && (
+                  <>
+                    <p className="text-lg font-bold">
+                      {dictionary.nftPreviewPage.rarityRank}
+                      <span className="font-normal">{totalRarityRank}</span>
+                    </p>
+                    <p className="text-lg font-bold">
+                      {dictionary.nftPreviewPage.rarityScore}
+                      <span className="font-normal">{totalRarity}</span>
+                    </p>
+                  </>
+                )}
+              </div>
+              <div className="mb-10 flex items-center justify-center md:hidden">
+                <ImageWithLoading src={image} alt={dictionary.modal.modalImageAlt} />
+              </div>
+              <div className="flex flex-col md:hidden">
+                <p className="text-lg font-bold ">{dictionary.modal.descriptionTitle}</p>
+                <p>{description || '-'}</p>
+              </div>
               {attributes?.length > 0 && (
-                <div className="mb-6">
+                <div className="my-6">
                   <p className="text-lg font-bold">{dictionary.modal.attributesTitle}</p>
-                  <ul className="ml-6 list-disc [&>li]:mt-2">
-                    {attributes.map(({ trait_type, value }) => (
-                      <li key={trait_type}>
-                        {trait_type}: {value}
-                      </li>
-                    ))}
+                  <ul className="flex flex-wrap gap-2 [&>li]:mt-2">
+                    {attributes.map((attribute, index) => {
+                      if ('occurrence' in attribute) {
+                        const { traitName, traitValue, occurrence } = attribute;
+                        return <NFTAttribute key={index} trait={traitName} value={traitValue} occurrence={`${occurrence}%`} />;
+                      }
+
+                      const { trait_type, value } = attribute;
+                      return <NFTAttribute key={index} trait={trait_type} value={value} />;
+                    })}
                   </ul>
                 </div>
+              )}
+              {rarity && metadataRows && (
+                <>
+                  <NFTAttributesRarity attributesData={attributesWithTraitOccurrences} />
+                  <RarityCalculation
+                    name={(metadataObject?.name as string) || dictionary.nftPreviewPage.noData}
+                    serial={activeId + 1}
+                    rarityScore={Number(totalRarity)}
+                    totalRarityRank={totalRarityRank}
+                    metadataRows={metadataRows}
+                  />
+                </>
               )}
             </div>
           </div>
         </div>
-        <DialogFooter className="flex flex-row items-center gap-1">
-          <Button className="w-full md:w-[100px]" disabled={activeId === 0} onClick={handlePrevious}>
-            {dictionary.modal.previousButton}
-          </Button>
-          <Button className="w-full md:w-[100px]" disabled={activeId === metadataLength - 1} onClick={handleNext}>
-            {dictionary.modal.nextButton}
-          </Button>
-        </DialogFooter>
+
+        {hasNextPrevButtons && (
+          <DialogFooter className="flex flex-row items-center gap-1">
+            <Button className="w-full md:w-[100px]" disabled={activeId === 0} onClick={handlePrevious}>
+              {dictionary.modal.previousButton}
+            </Button>
+            <Button className="w-full md:w-[100px]" disabled={activeId === metadataLength - 1} onClick={handleNext}>
+              {dictionary.modal.nextButton}
+            </Button>
+          </DialogFooter>
+        )}
       </DialogContent>
     </Dialog>
   );

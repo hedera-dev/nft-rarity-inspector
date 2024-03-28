@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera NFT Rarity Inspector
+ * NFT Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -117,7 +117,6 @@ export default function DropzonePage() {
         </Dropzone>
         {error && <span className="mt-2 text-center font-bold text-red-500">{error}</span>}
       </div>
-
       {metadata.length === 0 && loading && (
         <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
           <SpinnerLoader />

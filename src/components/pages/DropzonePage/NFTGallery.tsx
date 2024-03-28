@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera NFT Rarity Inspector
+ * NFT Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -17,6 +17,8 @@
  * limitations under the License.
  *
  */
+import { MetadataObject } from 'hedera-nft-utilities';
+import { calculateTraitOccurrenceFromData } from 'hedera-nft-utilities/src/rarity/index';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useCallback, useEffect, useState } from 'react';
 import { NFTItemWrapper } from '@/components/pages/DropzonePage/NFTItemWrapper';
@@ -31,7 +33,9 @@ interface NFTGalleryProps {
 export const NFTGallery = ({ metadataRows }: NFTGalleryProps) => {
   const metadataObjects = metadataRows.map((m) => m.metadata);
   const [visibleItems, setVisibleItems] = useState(metadataObjects.slice(0, BATCH_SIZE));
-  const [hasMore, setHasMore] = useState(metadataObjects.length > BATCH_SIZE);
+  const [hasMore, setHasMore] = useState<boolean>(metadataObjects.length > BATCH_SIZE);
+  const metadataList: MetadataObject[] | undefined = metadataRows?.map((row) => row.metadata);
+  const traitOccurrence = metadataList ? calculateTraitOccurrenceFromData(metadataList) : [];
 
   useEffect(() => {
     setVisibleItems(metadataObjects.slice(0, BATCH_SIZE));
@@ -53,7 +57,18 @@ export const NFTGallery = ({ metadataRows }: NFTGalleryProps) => {
     <InfiniteScroll dataLength={visibleItems.length} next={fetchMoreData} hasMore={hasMore} loader={<></>}>
       <div className="grid grid-cols-2 gap-4 p-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
         {visibleItems.map((item, index) => (
-          <NFTItemWrapper key={index} singleMetadataObject={item} index={index} metadataRows={metadataRows} />
+          <NFTItemWrapper
+            key={index}
+            singleMetadataObject={item}
+            index={index}
+            metadataRows={metadataRows}
+            metadataObject={metadataRows[index].metadata}
+            rarity={metadataRows[index].rarity}
+            fileName={metadataRows[index].fileName}
+            metadataLength={metadataRows.length}
+            traitOccurrence={traitOccurrence}
+            hasNextPrevButtons={true}
+          />
         ))}
       </div>
     </InfiniteScroll>
