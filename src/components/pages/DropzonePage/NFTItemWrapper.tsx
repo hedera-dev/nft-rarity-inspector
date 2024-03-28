@@ -65,6 +65,7 @@ export const NFTItemWrapper = ({
         hasNextPrevButtons={hasNextPrevButtons}
         setIsModalOpen={setIsModalOpen}
         isModalOpen={isModalOpen}
+        rarityRank={rarityRank}
       />
       <NFTItem
         key={index}

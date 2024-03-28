@@ -44,6 +44,7 @@ export const NFTDetails = ({
   hasNextPrevButtons,
   setIsModalOpen,
   isModalOpen,
+  rarityRank,
 }: {
   metadataObject: MetadataObject;
   totalRarity: string;
@@ -57,12 +58,13 @@ export const NFTDetails = ({
   hasNextPrevButtons: boolean;
   setIsModalOpen: (_isOpen: boolean) => void;
   isModalOpen: boolean;
+  rarityRank: number;
 }) => {
   const name = metadataObject?.name as string;
   const description = metadataObject?.description as string;
   const image = getProperImageURL(metadataObject?.image as string);
   const creator = metadataObject?.creator as string;
-  const totalRarityRank = metadataRows ? `${metadataRows[activeId].rarityRank}/${metadataLength}` : '';
+  const totalRarityRank = metadataRows ? `${rarityRank}/${metadataLength}` : '';
   const attributesWithTraitOccurrences: AttributeWithOccurrence[] = [];
 
   (metadataObject.attributes as Attribute[])?.forEach(({ trait_type, value }) => {
