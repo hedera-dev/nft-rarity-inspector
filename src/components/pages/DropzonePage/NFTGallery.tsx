@@ -59,15 +59,15 @@ export const NFTGallery = ({ metadataRows }: NFTGalleryProps) => {
         {visibleItems.map((item, index) => (
           <NFTItemWrapper
             key={index}
-            singleMetadataObject={item}
+            metadataObject={item}
             index={index}
             metadataRows={metadataRows}
-            metadataObject={metadataRows[index].metadata}
-            rarity={metadataRows[index].rarity}
+            totalRarity={metadataRows[index].rarity.totalRarity}
             fileName={metadataRows[index].fileName}
             metadataLength={metadataRows.length}
             traitOccurrence={traitOccurrence}
             hasNextPrevButtons={true}
+            rarityRank={metadataRows[index].rarityRank}
           />
         ))}
       </div>

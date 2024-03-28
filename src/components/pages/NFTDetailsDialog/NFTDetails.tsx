@@ -19,7 +19,7 @@
  */
 import { Button } from '@/components/ui/button';
 import { dictionary } from '@/libs/en';
-import { MetadataObject, RarityResult, TraitOccurrence } from 'hedera-nft-utilities';
+import { MetadataObject, TraitOccurrence } from 'hedera-nft-utilities';
 import { Attribute } from '@/utils/types/nftDetails';
 import { getProperImageURL } from '@/utils/helpers/getProperImageURL';
 import { DialogTitle } from '@radix-ui/react-dialog';
@@ -33,7 +33,7 @@ import { ImageWithLoading } from '@/components/pages/NFTDetailsDialog/ImageWithL
 
 export const NFTDetails = ({
   metadataObject,
-  rarity,
+  totalRarity,
   fileName,
   activeId,
   metadataLength,
@@ -46,7 +46,7 @@ export const NFTDetails = ({
   isModalOpen,
 }: {
   metadataObject: MetadataObject;
-  rarity: RarityResult;
+  totalRarity: string;
   fileName: string;
   activeId: number;
   metadataLength: number;
@@ -63,8 +63,6 @@ export const NFTDetails = ({
   const image = getProperImageURL(metadataObject?.image as string);
   const creator = metadataObject?.creator as string;
   const totalRarityRank = metadataRows ? `${metadataRows[activeId].rarityRank}/${metadataLength}` : '';
-  const totalRarity = rarity?.totalRarity as string;
-
   const attributesWithTraitOccurrences: AttributeWithOccurrence[] = [];
 
   (metadataObject.attributes as Attribute[])?.forEach(({ trait_type, value }) => {
@@ -107,7 +105,7 @@ export const NFTDetails = ({
               <h2 className="text-3xl font-semibold tracking-tight first:mt-0 ">{name || '-'}</h2>
               <p className="mb-10 scroll-m-20 border-b pb-2 md:mb-10">{creator || dictionary.nftPreviewPage.noCreator}</p>
               <div className="flex flex-col">
-                {rarity && (
+                {totalRarity && (
                   <>
                     <p className="text-lg font-bold">
                       {dictionary.nftPreviewPage.rarityRank}
@@ -143,7 +141,7 @@ export const NFTDetails = ({
                   </ul>
                 </div>
               )}
-              {rarity && metadataRows && (
+              {totalRarity && metadataRows && (
                 <>
                   <NFTAttributesRarity attributesData={attributesWithTraitOccurrences} />
                   <RarityCalculation

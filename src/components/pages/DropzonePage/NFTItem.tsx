@@ -29,16 +29,17 @@ import { ImageWithLoading } from '@/components/pages/NFTDetailsDialog/ImageWithL
 const TRUNCATE_NAME_NUMBER = 13;
 
 interface NFTItemProps {
-  metadata: MetadataObject;
+  metadataObject: MetadataObject;
   index: number;
   isModalOpen: boolean;
   setIsModalOpen: (_isOpen: boolean) => void;
+  rarityRank: number;
 }
 
-export const NFTItem = ({ metadata, index, isModalOpen, setIsModalOpen }: NFTItemProps) => {
+export const NFTItem = ({ metadataObject, index, isModalOpen, setIsModalOpen, rarityRank }: NFTItemProps) => {
   const [hoverActive, setHoverActive] = useState(false);
-  const name = metadata.name as string;
-  const image = getProperImageURL(metadata.image as string);
+  const name = metadataObject.name as string;
+  const image = getProperImageURL(metadataObject.image as string);
 
   useEffect(() => {
     isModalOpen && setHoverActive(false);
@@ -65,7 +66,7 @@ export const NFTItem = ({ metadata, index, isModalOpen, setIsModalOpen }: NFTIte
           <span className="font-semibold">{truncateString(name, TRUNCATE_NAME_NUMBER)}</span>
         </div>
         {/* TODO - change mocked rarity rank */}
-        <div className="mt-2">Rarity rank: 100</div>
+        <div className="mt-2">Rarity rank: {rarityRank}</div>
       </div>
       <div
         className={cn(

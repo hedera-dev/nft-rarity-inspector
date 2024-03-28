@@ -20,29 +20,29 @@
 import { NFTItem } from '@/components/pages/DropzonePage/NFTItem';
 import { useCallback, useState } from 'react';
 import { NFTDetails } from '@/components/pages/NFTDetailsDialog/NFTDetails';
-import { MetadataObject, RarityResult, TraitOccurrence } from 'hedera-nft-utilities';
+import { MetadataObject, TraitOccurrence } from 'hedera-nft-utilities';
 import { MetadataRow } from '@/utils/types/metadataRow';
 
 export const NFTItemWrapper = ({
-  singleMetadataObject,
   index,
   metadataRows,
   metadataObject,
-  rarity,
+  totalRarity,
   fileName,
   metadataLength,
   traitOccurrence,
-  hasNextPrevButtons,
+  hasNextPrevButtons = true,
+  rarityRank,
 }: {
-  singleMetadataObject: MetadataObject;
   index: number;
   metadataObject: MetadataObject;
-  rarity: RarityResult;
+  totalRarity: string;
   fileName: string;
   metadataLength: number;
   metadataRows?: MetadataRow[];
   traitOccurrence: TraitOccurrence[];
-  hasNextPrevButtons: boolean;
+  hasNextPrevButtons?: boolean;
+  rarityRank: number;
 }) => {
   const [activeId, setActiveId] = useState(index);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,7 +54,7 @@ export const NFTItemWrapper = ({
     <>
       <NFTDetails
         metadataObject={activeId === index ? metadataObject : (metadataRows?.[activeId].metadata as MetadataObject)}
-        rarity={activeId === index ? rarity : (metadataRows?.[activeId].rarity as RarityResult)}
+        totalRarity={activeId === index ? totalRarity : (metadataRows?.[activeId].rarity.totalRarity as string)}
         fileName={activeId === index ? fileName : (metadataRows?.[activeId].fileName as string)}
         metadataLength={metadataLength}
         metadataRows={metadataRows}
@@ -66,7 +66,14 @@ export const NFTItemWrapper = ({
         setIsModalOpen={setIsModalOpen}
         isModalOpen={isModalOpen}
       />
-      <NFTItem key={index} metadata={singleMetadataObject} index={index} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <NFTItem
+        key={index}
+        metadataObject={metadataObject}
+        index={index}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        rarityRank={rarityRank}
+      />
     </>
   );
 };

@@ -59,7 +59,14 @@ export default function DropzonePage() {
           rarity: rarityResults[index],
         }));
 
-        setMetadata(metadataWithRarity);
+        const sortedByRarity = metadataWithRarity.sort((a, b) => parseFloat(b.rarity.totalRarity) - parseFloat(a.rarity.totalRarity));
+
+        const updatedMetadataWithRarityRank = sortedByRarity.map((metadataRow, index) => ({
+          ...metadataRow,
+          rarityRank: index + 1,
+        }));
+
+        setMetadata(updatedMetadataWithRarityRank);
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message);
