@@ -23,7 +23,7 @@ import { DialogTitle } from '@radix-ui/react-dialog';
 
 export const Header = ({ fileName }: { fileName: string }) => {
   return (
-    <DialogHeader>
+    <DialogHeader className="px-6">
       <DialogTitle>
         <span className="font-bold">{dictionary.modal.fileName}: </span>
         {fileName}
