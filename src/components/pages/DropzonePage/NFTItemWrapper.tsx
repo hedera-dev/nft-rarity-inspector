@@ -22,6 +22,7 @@ import { useCallback, useState } from 'react';
 import { NFTDetails } from '@/components/pages/NFTDetailsDialog/Dialog/NFTDetails';
 import { MetadataObject, TraitOccurrence } from 'hedera-nft-utilities';
 import { MetadataRow } from '@/utils/types/metadataRow';
+import { AttributeOccurrence } from '@/utils/types/attributeOccurrence';
 
 export const NFTItemWrapper = ({
   index,
@@ -33,6 +34,9 @@ export const NFTItemWrapper = ({
   traitOccurrence,
   hasNextPrevButtons = true,
   rarityRank,
+  featuredCard = false,
+  usesCount,
+  attribute,
 }: {
   index: number;
   metadataObject: MetadataObject;
@@ -43,6 +47,9 @@ export const NFTItemWrapper = ({
   traitOccurrence: TraitOccurrence[];
   hasNextPrevButtons?: boolean;
   rarityRank: number;
+  featuredCard?: boolean;
+  usesCount?: number;
+  attribute?: AttributeOccurrence;
 }) => {
   const [activeId, setActiveId] = useState(index);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -70,10 +77,13 @@ export const NFTItemWrapper = ({
       <NFTItem
         key={index}
         metadataObject={metadataObject}
+        metadataLength={metadataLength}
         index={index}
-        isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         rarityRank={rarityRank}
+        featuredCard={featuredCard}
+        attribute={attribute}
+        usesCount={usesCount}
       />
     </>
   );

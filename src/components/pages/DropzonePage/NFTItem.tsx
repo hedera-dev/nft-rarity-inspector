@@ -20,38 +20,40 @@
 import { MetadataObject } from 'hedera-nft-utilities';
 import { truncateString } from '@/utils/helpers/truncateString';
 import { dictionary } from '@/libs/en';
-import { useEffect, useState } from 'react';
-import { cn } from '@/utils/helpers/cn';
 import { Button } from '@/components/ui/button';
 import { getProperImageURL } from '@/utils/helpers/getProperImageURL';
 import { ImageWithLoading } from '@/components/shared/ImageWithLoading';
+import { AttributeOccurrence } from '@/utils/types/attributeOccurrence';
 
 const TRUNCATE_NAME_NUMBER = 13;
 
 interface NFTItemProps {
   metadataObject: MetadataObject;
+  metadataLength: number;
   index: number;
-  isModalOpen: boolean;
   setIsModalOpen: (_isOpen: boolean) => void;
   rarityRank: number;
+  featuredCard: boolean;
+  attribute?: AttributeOccurrence;
+  usesCount?: number;
 }
 
-export const NFTItem = ({ metadataObject, index, isModalOpen, setIsModalOpen, rarityRank }: NFTItemProps) => {
-  const [hoverActive, setHoverActive] = useState(false);
+export const NFTItem = ({
+  metadataObject,
+  metadataLength,
+  index,
+  setIsModalOpen,
+  rarityRank,
+  featuredCard = false,
+  attribute,
+  usesCount,
+}: NFTItemProps) => {
   const name = metadataObject.name as string;
   const image = getProperImageURL(metadataObject.image as string);
-
-  useEffect(() => {
-    isModalOpen && setHoverActive(false);
-  }, [isModalOpen]);
-
-  const showButton = !isModalOpen && hoverActive;
+  const { trait, value } = attribute || {};
 
   return (
     <div
-      key={index}
-      onMouseEnter={() => setHoverActive(true)}
-      onMouseLeave={() => setHoverActive(false)}
       onClick={() => setIsModalOpen(true)}
       className="group relative flex cursor-pointer flex-col items-center overflow-hidden rounded-lg shadow-cardShadow transition duration-200 md:hover:scale-105"
     >
@@ -60,21 +62,14 @@ export const NFTItem = ({ metadataObject, index, isModalOpen, setIsModalOpen, ra
       </div>
       <div className="flex w-full flex-col justify-between rounded-b-lg bg-white p-4 text-left sm:flex-col">
         <div className="flex w-full flex-row justify-between">
-          <span>
-            {dictionary.nftTable.headers.number} {index + 1}
-          </span>
-          <span className="font-semibold">{truncateString(name, TRUNCATE_NAME_NUMBER)}</span>
+          <span>{featuredCard ? trait : `${dictionary.nftTable.headers.number} ${index + 1}`}</span>
+          <span className="font-semibold">{featuredCard ? value : truncateString(name, TRUNCATE_NAME_NUMBER)}</span>
         </div>
         <div className="mt-2">
-          {dictionary.nftTable.rarityRank}: {rarityRank}
+          {featuredCard ? `Used in: ${usesCount}/${metadataLength} NFTs` : `${dictionary.nftTable.rarityRank}: ${rarityRank}`}
         </div>
       </div>
-      <div
-        className={cn(
-          showButton ? 'translate-y-0' : 'translate-y-full',
-          'absolute bottom-0 w-full bg-white text-center transition duration-300 ease-in-out',
-        )}
-      >
+      <div className="absolute bottom-0 w-full translate-y-full bg-white text-center transition-transform duration-300 ease-in-out group-hover:translate-y-0">
         <Button className="w-full rounded-none rounded-b-lg">{dictionary.modal.details}</Button>
       </div>
     </div>
