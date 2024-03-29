@@ -19,7 +19,7 @@
  */
 import { NFTItem } from '@/components/pages/DropzonePage/NFTItem';
 import { useCallback, useState } from 'react';
-import { NFTDetails } from '@/components/pages/NFTDetailsDialog/NFTDetails';
+import { NFTDetails } from '@/components/pages/NFTDetailsDialog/Dialog/NFTDetails';
 import { MetadataObject, TraitOccurrence } from 'hedera-nft-utilities';
 import { MetadataRow } from '@/utils/types/metadataRow';
 

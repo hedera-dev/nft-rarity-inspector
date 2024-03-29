@@ -17,14 +17,17 @@
  * limitations under the License.
  *
  */
-import { MetadataRow } from '@/utils/types/metadataRow';
-import { RarityType } from '@/utils/types/rarityType';
+import { dictionary } from '@/libs/en';
+import { DialogHeader } from '@/components/ui/dialog';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
-export const findNFTRarity = (metadata: MetadataRow[], rarityType: RarityType): MetadataRow => {
-  const sortedMetadata = metadata.sort((a, b) => {
-    const rarityA = a.rarity ? parseFloat(a.rarity.totalRarity) : 0;
-    const rarityB = b.rarity ? parseFloat(b.rarity.totalRarity) : 0;
-    return rarityType === 'most-rare' ? rarityB - rarityA : rarityA - rarityB;
-  });
-  return sortedMetadata[0];
+export const Header = ({ fileName }: { fileName: string }) => {
+  return (
+    <DialogHeader>
+      <DialogTitle>
+        <span className="font-bold">{dictionary.modal.fileName}: </span>
+        {fileName}
+      </DialogTitle>
+    </DialogHeader>
+  );
 };

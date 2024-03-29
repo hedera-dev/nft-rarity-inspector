@@ -24,7 +24,7 @@ import { useEffect, useState } from 'react';
 import { cn } from '@/utils/helpers/cn';
 import { Button } from '@/components/ui/button';
 import { getProperImageURL } from '@/utils/helpers/getProperImageURL';
-import { ImageWithLoading } from '@/components/pages/NFTDetailsDialog/ImageWithLoading';
+import { ImageWithLoading } from '@/components/shared/ImageWithLoading';
 
 const TRUNCATE_NAME_NUMBER = 13;
 
@@ -65,8 +65,9 @@ export const NFTItem = ({ metadataObject, index, isModalOpen, setIsModalOpen, ra
           </span>
           <span className="font-semibold">{truncateString(name, TRUNCATE_NAME_NUMBER)}</span>
         </div>
-        {/* TODO - change mocked rarity rank */}
-        <div className="mt-2">Rarity rank: {rarityRank}</div>
+        <div className="mt-2">
+          {dictionary.nftTable.rarityRank}: {rarityRank}
+        </div>
       </div>
       <div
         className={cn(

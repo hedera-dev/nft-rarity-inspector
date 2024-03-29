@@ -26,11 +26,7 @@ import { MetadataRow } from '@/utils/types/metadataRow';
 
 const BATCH_SIZE = 20;
 
-interface NFTGalleryProps {
-  metadataRows: MetadataRow[];
-}
-
-export const NFTGallery = ({ metadataRows }: NFTGalleryProps) => {
+export const NFTGallery = ({ metadataRows }: { metadataRows: MetadataRow[] }) => {
   const metadataObjects = metadataRows.map((m) => m.metadata);
   const [visibleItems, setVisibleItems] = useState(metadataObjects.slice(0, BATCH_SIZE));
   const [hasMore, setHasMore] = useState<boolean>(metadataObjects.length > BATCH_SIZE);
@@ -40,17 +36,17 @@ export const NFTGallery = ({ metadataRows }: NFTGalleryProps) => {
   useEffect(() => {
     setVisibleItems(metadataObjects.slice(0, BATCH_SIZE));
     setHasMore(metadataRows.length > BATCH_SIZE);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [metadataRows.length]);
 
   const fetchMoreData = useCallback(() => {
     const nextItemsCount = Math.min(visibleItems.length + BATCH_SIZE, metadataRows.length);
-
     if (visibleItems.length >= metadataRows.length) {
       setHasMore(false);
       return;
     }
-
     setVisibleItems(metadataObjects.slice(0, nextItemsCount));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visibleItems.length]);
 
   return (

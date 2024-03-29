@@ -18,12 +18,12 @@
  *
  */
 
-import { RarityCurveChart } from '@/components/pages/NFTDetailsDialog/RarityCurveChart';
+import { RarityCurveChart } from '@/components/pages/NFTDetailsDialog/Charts/RarityCurveChart';
 import { frictionToPercents } from '@/utils/helpers/frictionToPercents';
 import { MetadataRow } from '@/utils/types/metadataRow';
 import { dictionary } from '@/libs/en';
 
-export const RarityCalculation: React.FC<{
+export const RarityCurveCalculation: React.FC<{
   name?: string;
   serial?: number;
   rarityScore?: number;

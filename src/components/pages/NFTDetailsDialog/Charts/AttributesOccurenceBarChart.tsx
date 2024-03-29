@@ -25,7 +25,7 @@ import { dictionary } from '@/libs/en';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip);
 
-export const NFTAttributesRarity: React.FC<{ attributesData: AttributeWithOccurrence[] }> = ({ attributesData }) => {
+export const AttributesOccurenceBarChart: React.FC<{ attributesData: AttributeWithOccurrence[] }> = ({ attributesData }) => {
   const labels = attributesData.map(({ traitName }) => traitName);
   const maxValueOnYAxis = Math.floor(Math.max(...attributesData.map(({ occurrence }) => occurrence)) * 1.2);
   return (

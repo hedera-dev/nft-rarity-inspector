@@ -30,7 +30,7 @@ import {
   type CoreScaleOptions,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { YAxisDescription } from '@/components/pages/NFTDetailsDialog/YAxisDescription';
+import { YAxisDescription } from '@/components/pages/NFTDetailsDialog/Charts/YAxisDescription';
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title);
 

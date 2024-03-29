@@ -21,14 +21,11 @@ export const dictionary = {
   header: { title: 'NFT Rarity Inspector', description: 'Upload either a CSV file or a directory of JSONs...' },
   dropzone: { description: 'Upload a file' },
   nftTable: {
-    title: 'Validation result',
-    description: 'Here is a list of all validated NFTs. Youu can filter them by validation status and number of errors.',
-    downloadJSONsButton: 'Download JSONs',
-    downloadErrorLogButton: 'Download error log',
     detailsButton: 'Details',
     imageAltText: 'Image of',
     invalidFilesCount: 'Invalid files count',
     totalNftsNumber: 'Total number of nfts',
+    rarityRank: 'Rarity rank',
     headers: {
       number: 'No.',
       image: 'Image',
@@ -37,6 +34,13 @@ export const dictionary = {
       validationStatus: 'Validation status',
       errors: 'Errors',
     },
+  },
+  nftStatsDisplay: {
+    mostRareNFT: 'Most rare NFT',
+    mostCommonNFT: 'Most common NFT',
+    mostRareAttribute: 'Most rare attribute',
+    mostCommonAttribute: 'Most common attribute',
+    usedIn: (nftsNumber: number) => `Used in ${nftsNumber} NFTs`,
   },
   nftPreviewPage: {
     rarityChartLabels: {

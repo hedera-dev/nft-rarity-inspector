@@ -1,17 +1,38 @@
+/*-
+ *
+ * NFT Rarity Inspector
+ *
+ * Copyright (C) 2024 Hedera Hashgraph, LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
 import { MetadataRow } from '@/utils/types/metadataRow';
 import { NFTItemWrapper } from '@/components/pages/DropzonePage/NFTItemWrapper';
-import { RarityCalculation } from '@/components/pages/NFTDetailsDialog/RarityCalculation';
+import { RarityCurveCalculation } from '@/components/pages/NFTDetailsDialog/Charts/RarityCurveCalculation';
 import { findNFTRarity } from '@/components/pages/DropzonePage/findNFTRarity';
 import { findMostAndLeastCommonAttribute } from '@/components/pages/DropzonePage/findMostAndLeastCommonAttribute';
 import { findNFTsWithAttribute } from '@/components/pages/DropzonePage/findNFTsWithAttribute';
 import { calculateTraitOccurrenceFromData } from 'hedera-nft-utilities/src/rarity';
+import { dictionary } from '@/libs/en';
+import { useMemo } from 'react';
 
 interface NFTStatsDisplayProps {
   metadata: MetadataRow[];
 }
 
 export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) => {
-  const traitOccurrence = calculateTraitOccurrenceFromData(metadata.map((m) => m.metadata));
+  const traitOccurrence = useMemo(() => calculateTraitOccurrenceFromData(metadata.map((m) => m.metadata)), [metadata]);
   const mostRareNFT = findNFTRarity(metadata, 'most-rare');
   const leastRareNFT = findNFTRarity(metadata, 'least-rare');
   const { mostCommon, leastCommon } = findMostAndLeastCommonAttribute(metadata);
@@ -33,7 +54,7 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             metadataRows={metadata}
             rarityRank={mostRareNFT.rarityRank}
           />
-          <p className="p-2 font-semibold">MOST RARE NFT</p>
+          <p className="p-2 font-semibold">{dictionary.nftStatsDisplay.mostRareNFT}</p>
         </div>
 
         <div className="w-[75%] text-center">
@@ -48,7 +69,7 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             metadataRows={metadata}
             rarityRank={leastRareNFT.rarityRank}
           />
-          <p className="p-2 font-semibold">MOST COMMON NFT</p>
+          <p className="p-2 font-semibold">{dictionary.nftStatsDisplay.mostCommonNFT}</p>
         </div>
         <div className="w-[75%] text-center">
           <NFTItemWrapper
@@ -62,8 +83,8 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             metadataRows={metadata}
             rarityRank={nftsWithMostRareAttribute[0].rarityRank}
           />
-          <p className="p-2 font-semibold">MOST RARE ATTRIBUTE</p>
-          <p className="p-2 font-semibold">Used in {countLeastCommon} NFTs</p>
+          <p className="p-2 font-semibold">{dictionary.nftStatsDisplay.mostRareAttribute}</p>
+          <p className="p-2 font-semibold">{dictionary.nftStatsDisplay.usedIn(countLeastCommon)}</p>
         </div>
         <div className="w-[75%] text-center">
           <NFTItemWrapper
@@ -77,12 +98,12 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             metadataRows={metadata}
             rarityRank={nftsWithLeastRareAttribute[0].rarityRank}
           />
-          <p className="p-2 font-semibold">MOST COMMON ATTRIBUTE</p>
-          <p className="p-2 font-semibold">Used in {countMostCommon} NFTs</p>
+          <p className="p-2 font-semibold">{dictionary.nftStatsDisplay.mostCommonAttribute}</p>
+          <p className="p-2 font-semibold">{dictionary.nftStatsDisplay.usedIn(countMostCommon)}</p>
         </div>
       </div>
       <div className="mx-auto my-10 w-1/2">
-        <RarityCalculation metadataRows={metadata} />
+        <RarityCurveCalculation metadataRows={metadata} />
       </div>
     </>
   );

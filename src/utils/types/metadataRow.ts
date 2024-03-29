@@ -19,6 +19,11 @@
  */
 import { MetadataObject, RarityResult } from 'hedera-nft-utilities';
 
+export interface SimpleMetadataRow {
+  metadata: MetadataObject;
+  fileName: string;
+}
+
 export interface MetadataRow {
   metadata: MetadataObject;
   fileName: string;
