@@ -34,9 +34,7 @@ import { YAxisDescription } from '@/components/pages/NFTDetailsDialog/Charts/YAx
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title);
 
-const indicatingLinesColor = '#3b95f6c2';
-const darkPink = 'rgba(255, 99, 132, 0.5)';
-const pink = 'rgb(255, 99, 132)';
+const indicatingLinesColor = '#f00';
 const defaultColor = ChartJS.defaults.color.toString();
 const tooltipTitleFontSize = 16;
 const tooltipFooterFontSize = 14;
@@ -168,11 +166,11 @@ export const RarityCurveChart: React.FC<{
           datasets: [
             {
               data: probabilityDistribution,
-              borderColor: pink,
-              backgroundColor: darkPink,
+              borderColor: 'black',
+              backgroundColor: 'gray',
               pointRadius: createDot(),
-              pointBackgroundColor: indicatingLinesColor,
-              pointBorderColor: indicatingLinesColor,
+              pointBackgroundColor: 'red',
+              pointBorderColor: 'black',
             },
           ],
         }}
