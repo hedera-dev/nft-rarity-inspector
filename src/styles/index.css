@@ -79,6 +79,20 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  /* SCROLLBAR STYLES */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #c0c0c0;
+    border-radius: 4px;
+  }
 }
 
 @layer components {
