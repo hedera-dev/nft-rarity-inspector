@@ -20,7 +20,9 @@
 import { AttributeOccurrence } from '@/utils/types/attributeOccurrence';
 import { MetadataRow } from '@/utils/types/metadataRow';
 
-export const findMostAndLeastCommonAttribute = (metadata: MetadataRow[]): { mostCommon: AttributeOccurrence; leastCommon: AttributeOccurrence } => {
+export const findMostAndLeastRareAttribute = (
+  metadata: MetadataRow[],
+): { leastRareAttribute: AttributeOccurrence; mostRareAttribute: AttributeOccurrence } => {
   const attributeOccurrences: Record<string, number> = {};
 
   metadata.forEach((nft) => {
@@ -33,21 +35,21 @@ export const findMostAndLeastCommonAttribute = (metadata: MetadataRow[]): { most
     }
   });
 
-  let mostCommon: AttributeOccurrence | null = null;
-  let leastCommon: AttributeOccurrence | null = null;
+  let leastRare: AttributeOccurrence | null = null;
+  let mostRare: AttributeOccurrence | null = null;
 
   Object.entries(attributeOccurrences).forEach(([key, count]) => {
     const [trait, value] = key.split(':');
-    if (!mostCommon || count > mostCommon.occurrence) {
-      mostCommon = { trait, value, occurrence: count };
+    if (!leastRare || count > leastRare.occurrence) {
+      leastRare = { trait, value, occurrence: count };
     }
-    if (!leastCommon || count < leastCommon.occurrence) {
-      leastCommon = { trait, value, occurrence: count };
+    if (!mostRare || count < mostRare.occurrence) {
+      mostRare = { trait, value, occurrence: count };
     }
   });
 
   return {
-    mostCommon: mostCommon || { trait: '', value: '', occurrence: 0 },
-    leastCommon: leastCommon || { trait: '', value: '', occurrence: 0 },
+    leastRareAttribute: leastRare || { trait: '', value: '', occurrence: 0 },
+    mostRareAttribute: mostRare || { trait: '', value: '', occurrence: 0 },
   };
 };
