@@ -31,7 +31,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { YAxisDescription } from '@/components/pages/NFTDetailsDialog/Charts/YAxisDescription';
-
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title);
 
 const indicatingLinesColor = '#3b95f6c2';
@@ -90,7 +89,7 @@ export const RarityCurveChart: React.FC<{
     ctx.lineWidth = 3;
     ctx.beginPath();
 
-    const rarityIndex = rarities.indexOf(String(rarityScore));
+    const rarityIndex = rarities.indexOf(String(rarityScore?.toFixed(2)));
     const tickSpacing = xAxis.width / (rarities.length - 1);
 
     const xPosition = xAxis.left + rarityIndex * tickSpacing;
