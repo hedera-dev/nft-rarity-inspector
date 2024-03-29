@@ -75,7 +75,6 @@ export const NFTItemWrapper = ({
         rarityRank={rarityRank}
       />
       <NFTItem
-        key={index}
         metadataObject={metadataObject}
         metadataLength={metadataLength}
         index={index}

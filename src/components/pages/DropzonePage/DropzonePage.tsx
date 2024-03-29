@@ -133,7 +133,7 @@ export default function DropzonePage() {
         <div className="my-10">
           <NFTStatsDisplay metadata={metadata} />
           <h3 className="ml-4">
-            {dictionary.nftTable.totalNftsNumber}: <span className="font-bold">{metadata.length}</span>
+            {dictionary.nftGallery.totalNftsNumber}: <span className="font-bold">{metadata.length}</span>
           </h3>
           <NFTGallery metadataRows={sortedMetadataWithRarity} />
         </div>

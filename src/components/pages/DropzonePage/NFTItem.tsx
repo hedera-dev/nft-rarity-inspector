@@ -62,11 +62,22 @@ export const NFTItem = ({
       </div>
       <div className="flex w-full flex-col justify-between rounded-b-lg bg-white p-4 text-left sm:flex-col">
         <div className="flex w-full flex-row justify-between">
-          <span>{featuredCard ? trait : `${dictionary.nftTable.headers.number} ${index + 1}`}</span>
+          <span>{featuredCard ? trait : `${dictionary.nftGallery.headers.number} ${index + 1}`}</span>
           <span className="font-semibold">{featuredCard ? value : truncateString(name, TRUNCATE_NAME_NUMBER)}</span>
         </div>
         <div className="mt-2">
-          {featuredCard ? `Used in: ${usesCount}/${metadataLength} NFTs` : `${dictionary.nftTable.rarityRank}: ${rarityRank}`}
+          {featuredCard ? (
+            <div>
+              <span>{dictionary.nftGallery.nftCard.usedIn}: </span>
+              <span>
+                {usesCount}/{metadataLength} {dictionary.nftGallery.nftCard.nfts}
+              </span>
+            </div>
+          ) : (
+            <span>
+              {dictionary.nftGallery.rarityRank}: {rarityRank}
+            </span>
+          )}
         </div>
       </div>
       <div className="absolute bottom-0 w-full translate-y-full bg-white text-center transition-transform duration-300 ease-in-out group-hover:translate-y-0">
