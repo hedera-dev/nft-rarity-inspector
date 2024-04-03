@@ -24,14 +24,15 @@ import { dictionary } from '@/libs/en';
 import { useNFTRarityData } from '@/components/pages/DropzonePage/useNFTRarityData';
 import { Combobox } from '@/components/pages/DropzonePage/NFTStatsDisplay/Combobox';
 import { useState } from 'react';
+import { AttributesTableBrowser } from '@/components/pages/DropzonePage/NFTStatsDisplay/AttributesTableBrowser';
 
 interface NFTStatsDisplayProps {
   metadata: MetadataRow[];
 }
 
 export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) => {
-  const [open, setOpen] = useState(false);
-  const [value, setValue] = useState('');
+  const [open, setOpen] = useState<boolean>(false);
+  const [traitSelected, setTraitSelected] = useState<string>('');
 
   const {
     traitOccurrence,
@@ -47,7 +48,7 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
   } = useNFTRarityData(metadata);
 
   const handleSelect = (trait: string): void => {
-    setValue(trait);
+    setTraitSelected(trait);
     setOpen(false);
   };
 
@@ -117,12 +118,14 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
           <p className="mt-2 p-2 font-semibold uppercase xl:whitespace-nowrap">{dictionary.nftStatsDisplay.mostCommonAttribute}</p>
         </div>
       </div>
-      <div className="mx-auto my-10 flex">
-        <div className="w-1/2">
+      <div className="mx-auto mb-10 mt-10 flex max-w-[1600px] flex-col lg:mt-20 lg:flex-row">
+        <div className="mx-auto flex w-full flex-col gap-4 px-4 sm:w-2/3 md:w-full lg:ml-auto lg:w-1/2 xl:w-[40%]">
           <RarityCurveCalculation metadataRows={metadata} />
         </div>
-        <div className="mb-2 mt-8 w-1/2 border-2 border-red-600 text-lg font-bold">
-          <Combobox attributesTraits={attributesTraits} open={open} setOpen={setOpen} handleSelect={handleSelect} value={value} />
+        <div className="mx-auto mb-2 flex h-[400px] w-[260px] flex-col gap-4 px-2 text-lg font-bold sm:w-[400px] sm:px-10">
+          <p className="text-lg font-bold">{dictionary.nftStatsDisplay.table.title}</p>
+          <Combobox attributesTraits={attributesTraits} open={open} setOpen={setOpen} handleSelect={handleSelect} traitSelected={traitSelected} />
+          <AttributesTableBrowser traitOccurrence={traitOccurrence} traitSelected={traitSelected} />
         </div>
       </div>
     </>

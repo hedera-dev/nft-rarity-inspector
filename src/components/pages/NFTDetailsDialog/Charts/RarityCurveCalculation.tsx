@@ -17,7 +17,6 @@
  * limitations under the License.
  *
  */
-
 import { RarityCurveChart } from '@/components/pages/NFTDetailsDialog/Charts/RarityCurveChart';
 import { frictionToPercents } from '@/utils/helpers/frictionToPercents';
 import { MetadataRow } from '@/utils/types/metadataRow';
@@ -50,7 +49,7 @@ export const RarityCurveCalculation: React.FC<{
 
   return (
     <>
-      <p className="mb-2 mt-8 text-lg font-bold">{dictionary.nftPreviewPage.rarityCurve}</p>
+      <p className="text-lg font-bold">{dictionary.nftPreviewPage.rarityCurve}</p>
       <RarityCurveChart
         key={serial}
         rarityScore={rarityScore}

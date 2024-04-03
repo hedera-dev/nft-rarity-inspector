@@ -45,6 +45,13 @@ export const dictionary = {
     mostRareAttribute: 'Most rare attribute',
     mostCommonAttribute: 'Most common attribute',
     usedIn: (nftsNumber: number) => `Used in ${nftsNumber} NFTs`,
+    table: {
+      title: 'Attributes rarity',
+      selectPlaceholder: 'Select an attribute...',
+      selectEmptyData: 'No attributes found',
+      selectSearch: 'Search for attribute...',
+      value: 'Value',
+    },
   },
   nftPreviewPage: {
     rarityChartLabels: {
