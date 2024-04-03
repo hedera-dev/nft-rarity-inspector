@@ -55,12 +55,8 @@ export const AttributesTableBrowser = ({ traitOccurrence, traitSelected }: Attri
       <TableBody className="divide-y divide-gray-200 bg-white">
         {selectedTraitValues.map(({ value, occurence }, index) => (
           <TableRow key={index}>
-            <TableCell className="w-[100px] whitespace-nowrap border-r border-black px-6 py-4 text-center text-sm font-medium text-gray-900">
-              {value}
-            </TableCell>
-            <TableCell className="w-[100px] whitespace-nowrap border-l border-black px-6 py-4 text-center text-sm text-gray-500">
-              {occurence}
-            </TableCell>
+            <TableCell className="whitespace-nowrap border-r border-black px-6 py-4 text-center text-sm font-medium text-gray-900">{value}</TableCell>
+            <TableCell className="whitespace-nowrap border-l border-black px-6 py-4 text-center text-sm text-gray-500">{occurence}</TableCell>
           </TableRow>
         ))}
       </TableBody>
