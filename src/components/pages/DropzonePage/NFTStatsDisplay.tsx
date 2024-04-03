@@ -20,29 +20,30 @@
 import { MetadataRow } from '@/utils/types/metadataRow';
 import { NFTItemWrapper } from '@/components/pages/DropzonePage/NFTItemWrapper';
 import { RarityCurveCalculation } from '@/components/pages/NFTDetailsDialog/Charts/RarityCurveCalculation';
-import { findNFTRarity } from '@/components/pages/DropzonePage/findNFTRarity';
-import { findMostAndLeastCommonAttribute } from '@/components/pages/DropzonePage/findMostAndLeastCommonAttribute';
-import { findNFTsWithAttribute } from '@/components/pages/DropzonePage/findNFTsWithAttribute';
-import { calculateTraitOccurrenceFromData } from 'hedera-nft-utilities/src/rarity';
 import { dictionary } from '@/libs/en';
-import { useMemo } from 'react';
+import { useNFTRarityData } from '@/components/pages/DropzonePage/useNFTRarityData';
 
 interface NFTStatsDisplayProps {
   metadata: MetadataRow[];
 }
 
 export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) => {
-  const traitOccurrence = useMemo(() => calculateTraitOccurrenceFromData(metadata.map((m) => m.metadata)), [metadata]);
-  const mostRareNFT = findNFTRarity(metadata, 'most-rare');
-  const leastRareNFT = findNFTRarity(metadata, 'least-rare');
-  const { mostCommon, leastCommon } = findMostAndLeastCommonAttribute(metadata);
-  const { nftsWithAttribute: nftsWithLeastRareAttribute, count: countMostCommon } = findNFTsWithAttribute(metadata, mostCommon);
-  const { nftsWithAttribute: nftsWithMostRareAttribute, count: countLeastCommon } = findNFTsWithAttribute(metadata, leastCommon);
+  const {
+    traitOccurrence,
+    mostRareNFT,
+    leastRareNFT,
+    mostRareAttribute,
+    leastRareAttribute,
+    nftsWithLeastRareAttribute,
+    nftsWithMostRareAttribute,
+    countLeastRare,
+    countMostRare,
+  } = useNFTRarityData(metadata);
 
   return (
     <>
-      <div className="mt-6 grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
-        <div className="w-[75%] text-center">
+      <div className="mt-6 grid grid-cols-1 gap-4 px-4 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mx-auto w-[75%] text-center">
           <NFTItemWrapper
             index={mostRareNFT.rarity.NFT - 1}
             metadataObject={mostRareNFT.metadata}
@@ -54,10 +55,10 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             metadataRows={metadata}
             rarityRank={mostRareNFT.rarityRank}
           />
-          <p className="p-2 font-semibold">{dictionary.nftStatsDisplay.mostRareNFT}</p>
+          <p className="mt-2 p-2 font-semibold uppercase xl:whitespace-nowrap">{dictionary.nftStatsDisplay.mostRareNFT}</p>
         </div>
 
-        <div className="w-[75%] text-center">
+        <div className="mx-auto w-[75%] text-center">
           <NFTItemWrapper
             index={leastRareNFT.rarity.NFT - 1}
             metadataObject={leastRareNFT.metadata}
@@ -69,9 +70,9 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             metadataRows={metadata}
             rarityRank={leastRareNFT.rarityRank}
           />
-          <p className="p-2 font-semibold">{dictionary.nftStatsDisplay.mostCommonNFT}</p>
+          <p className="mt-2 p-2 font-semibold uppercase xl:whitespace-nowrap">{dictionary.nftStatsDisplay.mostCommonNFT}</p>
         </div>
-        <div className="w-[75%] text-center">
+        <div className="mx-auto w-[75%] text-center">
           <NFTItemWrapper
             index={nftsWithMostRareAttribute[0].rarity.NFT - 1}
             metadataObject={nftsWithMostRareAttribute[0].metadata}
@@ -82,11 +83,13 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             hasNextPrevButtons={false}
             metadataRows={metadata}
             rarityRank={nftsWithMostRareAttribute[0].rarityRank}
+            attribute={mostRareAttribute}
+            usesCount={countMostRare}
+            featuredCard
           />
-          <p className="p-2 font-semibold">{dictionary.nftStatsDisplay.mostRareAttribute}</p>
-          <p className="p-2 font-semibold">{dictionary.nftStatsDisplay.usedIn(countLeastCommon)}</p>
+          <p className="mt-2 p-2 font-semibold uppercase xl:whitespace-nowrap">{dictionary.nftStatsDisplay.mostRareAttribute}</p>
         </div>
-        <div className="w-[75%] text-center">
+        <div className="mx-auto w-[75%] text-center">
           <NFTItemWrapper
             index={nftsWithLeastRareAttribute[0].rarity.NFT - 1}
             metadataObject={nftsWithLeastRareAttribute[0].metadata}
@@ -97,9 +100,11 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             hasNextPrevButtons={false}
             metadataRows={metadata}
             rarityRank={nftsWithLeastRareAttribute[0].rarityRank}
+            attribute={leastRareAttribute}
+            usesCount={countLeastRare}
+            featuredCard
           />
-          <p className="p-2 font-semibold">{dictionary.nftStatsDisplay.mostCommonAttribute}</p>
-          <p className="p-2 font-semibold">{dictionary.nftStatsDisplay.usedIn(countMostCommon)}</p>
+          <p className="mt-2 p-2 font-semibold uppercase xl:whitespace-nowrap">{dictionary.nftStatsDisplay.mostCommonAttribute}</p>
         </div>
       </div>
       <div className="mx-auto my-10 w-1/2">

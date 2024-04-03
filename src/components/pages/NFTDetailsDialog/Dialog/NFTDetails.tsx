@@ -55,7 +55,7 @@ export const NFTDetails = ({
 }) => {
   return (
     <Dialog onOpenChange={setIsModalOpen} open={isModalOpen}>
-      <DialogContent className="flex max-h-screen max-w-[1300px] flex-col justify-center md:h-[900px]">
+      <DialogContent className="flex max-h-screen max-w-[1600px] flex-col justify-center md:h-[900px]">
         <Header fileName={fileName} />
         <MainContent
           activeId={activeId}

@@ -67,7 +67,7 @@ export const AttributesOccurenceBarChart: React.FC<{ attributesData: AttributeWi
           datasets: [
             {
               data: attributesData.map((item) => item),
-              backgroundColor: 'rgba(255, 99, 132, 0.5)',
+              backgroundColor: 'darkgray',
             },
           ],
         }}

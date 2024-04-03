@@ -57,7 +57,7 @@ export const MainContent = ({
   const attributes = attributesWithTraitOccurrences.length > 0 ? attributesWithTraitOccurrences : (metadataObject?.attributes as Attribute[]);
 
   return (
-    <div className="h-full gap-4 overflow-y-scroll py-4">
+    <div className="h-full gap-4 overflow-y-scroll px-6">
       <div className="grid grid-cols-1 items-start md:grid-cols-2 md:items-center">
         <div className="mb-auto hidden flex-col items-center justify-center pr-8 md:flex">
           <ImageWithLoading src={image} alt={dictionary.modal.modalImageAlt} />

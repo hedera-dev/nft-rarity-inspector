@@ -20,7 +20,7 @@
 export const dictionary = {
   header: { title: 'NFT Rarity Inspector', description: 'Upload either a CSV file or a directory of JSONs...' },
   dropzone: { description: 'Upload a file' },
-  nftTable: {
+  nftGallery: {
     detailsButton: 'Details',
     imageAltText: 'Image of',
     invalidFilesCount: 'Invalid files count',
@@ -33,6 +33,10 @@ export const dictionary = {
       description: 'Description',
       validationStatus: 'Validation status',
       errors: 'Errors',
+    },
+    nftCard: {
+      usedIn: 'Used in',
+      nfts: 'NFTs',
     },
   },
   nftStatsDisplay: {

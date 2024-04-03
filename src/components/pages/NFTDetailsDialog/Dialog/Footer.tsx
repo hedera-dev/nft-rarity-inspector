@@ -30,7 +30,7 @@ interface FooterProps {
 
 export const Footer = ({ activeId, handlePrevious, handleNext, metadataLength }: FooterProps) => {
   return (
-    <DialogFooter className="flex flex-row items-center gap-1">
+    <DialogFooter className="mt-4 flex flex-row items-center gap-1 px-7">
       <Button className="w-full md:w-[100px]" disabled={activeId === 0} onClick={handlePrevious}>
         {dictionary.modal.previousButton}
       </Button>
