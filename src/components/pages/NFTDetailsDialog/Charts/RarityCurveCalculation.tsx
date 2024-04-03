@@ -52,6 +52,7 @@ export const RarityCurveCalculation: React.FC<{
     <>
       <p className="mb-2 mt-8 text-lg font-bold">{dictionary.nftPreviewPage.rarityCurve}</p>
       <RarityCurveChart
+        key={serial}
         rarityScore={rarityScore}
         probabilityDistribution={probabilityDistribution}
         rarities={rarities}

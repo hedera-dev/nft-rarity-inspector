@@ -88,7 +88,7 @@ export const RarityCurveChart: React.FC<{
     ctx.lineWidth = 3;
     ctx.beginPath();
 
-    const rarityIndex = rarities.indexOf(String(rarityScore));
+    const rarityIndex = rarities.indexOf(String(rarityScore?.toFixed(2)));
     const tickSpacing = xAxis.width / (rarities.length - 1);
 
     const xPosition = xAxis.left + rarityIndex * tickSpacing;

@@ -72,17 +72,17 @@ export const NFTItemWrapper = ({
         hasNextPrevButtons={hasNextPrevButtons}
         setIsModalOpen={setIsModalOpen}
         isModalOpen={isModalOpen}
-        rarityRank={rarityRank}
+        rarityRank={activeId === index ? rarityRank : (metadataRows?.[activeId].rarityRank as number)}
       />
       <NFTItem
         metadataObject={metadataObject}
         metadataLength={metadataLength}
         index={index}
         setIsModalOpen={setIsModalOpen}
-        rarityRank={rarityRank}
         featuredCard={featuredCard}
         attribute={attribute}
         usesCount={usesCount}
+        rarityRank={activeId === index ? rarityRank : (metadataRows?.[activeId].rarityRank as number)}
       />
     </>
   );
