@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera NFT Rarity Inspector
+ * NFT Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -19,13 +19,13 @@
  */
 import JSZip from 'jszip';
 import { dictionary } from '@/libs/en';
-import { MetadataRow } from '@/utils/types/metadataRow';
 import type { ExtFile } from '@dropzone-ui/react';
 import { MetadataObject } from 'hedera-nft-utilities';
 import { processCsvFile } from '@/components/pages/DropzonePage/processCSVFile';
 import { SUPPORTED_IMAGE_TYPES } from '@/components/pages/DropzonePage/supportedFileTypes';
+import { SimpleMetadataRow } from '@/utils/types/metadataRow';
 
-export async function processZipFile(extFile: ExtFile): Promise<MetadataRow[]> {
+export async function processZipFile(extFile: ExtFile): Promise<SimpleMetadataRow[]> {
   if (!extFile.file) throw new Error(dictionary.errors.noFileProvided);
 
   const zip = new JSZip();
@@ -55,7 +55,7 @@ export async function processZipFile(extFile: ExtFile): Promise<MetadataRow[]> {
   if (!metadataFolderExists) throw new Error(dictionary.errors.zipFileStructureIncorrect);
   if (metadataFolderExists && !jsonOrCsvFilesFound) throw new Error(dictionary.errors.zipFileWithoutJsonFiles);
 
-  const metadataRows: MetadataRow[] = [];
+  const metadataRows: SimpleMetadataRow[] = [];
   const mediaMap = new Map();
 
   // Processing each image inside /media folder to create a Blob URL and mapping it with its file name
@@ -80,7 +80,8 @@ export async function processZipFile(extFile: ExtFile): Promise<MetadataRow[]> {
       if (fileKey && mediaMap.has(fileKey)) {
         json.image = mediaMap.get(fileKey);
       }
-      metadataRows.push({ metadata: json, fileName: `${fileKey}.json` });
+      // Użyj SimpleMetadataRow zamiast MetadataRow
+      metadataRows.push({ metadata: json, fileName: `${fileKey}.json` } as SimpleMetadataRow);
     }
   }
 

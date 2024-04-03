@@ -17,22 +17,17 @@
  * limitations under the License.
  *
  */
-export type Attribute = {
-  trait_type: string;
-  value: string | number | boolean;
-};
+import { dictionary } from '@/libs/en';
+import { DialogHeader } from '@/components/ui/dialog';
+import { DialogTitle } from '@radix-ui/react-dialog';
 
-type Properties = {
-  external_url: string;
-  url: string;
-};
-
-export type NFTDetailsType = {
-  name: string;
-  image: string;
-  type: string;
-  creator?: string;
-  description?: string;
-  properties?: Properties;
-  attributes?: Attribute[];
+export const Header = ({ fileName }: { fileName: string }) => {
+  return (
+    <DialogHeader>
+      <DialogTitle>
+        <span className="font-bold">{dictionary.modal.fileName}: </span>
+        {fileName}
+      </DialogTitle>
+    </DialogHeader>
+  );
 };

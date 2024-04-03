@@ -17,22 +17,14 @@
  * limitations under the License.
  *
  */
-export type Attribute = {
-  trait_type: string;
-  value: string | number | boolean;
-};
+import { MetadataRow } from '@/utils/types/metadataRow';
+import { RarityType } from '@/utils/types/rarityType';
 
-type Properties = {
-  external_url: string;
-  url: string;
-};
-
-export type NFTDetailsType = {
-  name: string;
-  image: string;
-  type: string;
-  creator?: string;
-  description?: string;
-  properties?: Properties;
-  attributes?: Attribute[];
+export const findNFTRarity = (metadata: MetadataRow[], rarityType: RarityType): MetadataRow => {
+  const sortedMetadata = metadata.sort((a, b) => {
+    const rarityA = a.rarity ? parseFloat(a.rarity.totalRarity) : 0;
+    const rarityB = b.rarity ? parseFloat(b.rarity.totalRarity) : 0;
+    return rarityType === 'most-rare' ? rarityB - rarityA : rarityA - rarityB;
+  });
+  return sortedMetadata[0];
 };

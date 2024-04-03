@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera NFT Rarity Inspector
+ * NFT Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -19,8 +19,14 @@
  */
 import { MetadataObject, RarityResult } from 'hedera-nft-utilities';
 
+export interface SimpleMetadataRow {
+  metadata: MetadataObject;
+  fileName: string;
+}
+
 export interface MetadataRow {
   metadata: MetadataObject;
   fileName: string;
-  rarity?: RarityResult;
+  rarity: RarityResult;
+  rarityRank: number;
 }

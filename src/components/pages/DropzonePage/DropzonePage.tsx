@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera NFT Rarity Inspector
+ * NFT Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -20,13 +20,14 @@
 import { useEffect, useState } from 'react';
 import { Dropzone, FileMosaic } from '@dropzone-ui/react';
 import type { ExtFile } from '@dropzone-ui/react';
-// import { calculateRarityFromData } from 'hedera-nft-utilities';
+import { calculateRarityFromData } from 'hedera-nft-utilities/src/rarity';
 import { SUPPORTED_FILE_TYPES_ARRAY, supportedFileTypes } from '@/components/pages/DropzonePage/supportedFileTypes';
 import { dictionary } from '@/libs/en';
 import { NFTGallery } from '@/components/pages/DropzonePage/NFTGallery';
 import { MetadataRow } from '@/utils/types/metadataRow';
 import { processZipFile } from '@/components/pages/DropzonePage/processZipFile';
 import SpinnerLoader from '@/components/ui/loader';
+import { NFTStatsDisplay } from '@/components/pages/DropzonePage/NFTStatsDisplay';
 
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
@@ -34,21 +35,38 @@ export default function DropzonePage() {
   const [error, setError] = useState<string>('');
   const [loading, setIsLoading] = useState<boolean>(false);
 
-  // This sorting is used because ZIP files don't keep files in order, so it makes sure everything is listed alphabetically
-  const sortedMetadataRows = metadata.sort((a, b) => a.fileName.localeCompare(b.fileName, undefined, { numeric: true, sensitivity: 'base' }));
-  // TODO: use sortedMetadataObjects for calculateRarityFromData function later on
-  // const sortedMetadataObjects = sortedMetadataRows.map((m) => m.metadata);
-
   const readFile = async (extFile: ExtFile) => {
     setIsLoading(true);
     setMetadata([]);
     setError('');
 
-    if (!extFile.file) return;
+    if (!extFile.file) {
+      setIsLoading(false);
+      return;
+    }
+
     if (extFile.file.type === 'application/zip' || extFile.file.name.endsWith('.zip')) {
       try {
         const newMetadata = await processZipFile(extFile);
-        setMetadata(newMetadata);
+        // This sorting is used because ZIP files don't keep files in order, so it makes sure everything is listed alphabetically
+        const sortedMetadataWithoutRarity = newMetadata.sort((a, b) =>
+          a.fileName.localeCompare(b.fileName, undefined, { numeric: true, sensitivity: 'base' }),
+        );
+
+        const rarityResults = calculateRarityFromData(sortedMetadataWithoutRarity.map((item) => item.metadata));
+        const metadataWithRarity = newMetadata.map((metadataRow, index) => ({
+          ...metadataRow,
+          rarity: rarityResults[index],
+        }));
+
+        const sortedByRarity = metadataWithRarity.sort((a, b) => parseFloat(b.rarity.totalRarity) - parseFloat(a.rarity.totalRarity));
+
+        const updatedMetadataWithRarityRank = sortedByRarity.map((metadataRow, index) => ({
+          ...metadataRow,
+          rarityRank: index + 1,
+        }));
+
+        setMetadata(updatedMetadataWithRarityRank);
       } catch (error) {
         if (error instanceof Error) {
           setError(error.message);
@@ -59,6 +77,7 @@ export default function DropzonePage() {
       }
     } else {
       setError(dictionary.errors.unsupportedFileType);
+      setIsLoading(false);
       return;
     }
   };
@@ -73,13 +92,9 @@ export default function DropzonePage() {
     }
   }, [files]);
 
-  useEffect(() => {
-    if (metadata.length > 0) {
-      // TODO: calculate rarity here
-      // const rarity = calculateRarityFromData(metadataObjects);
-      // console.log('rarity:', rarity);
-    }
-  }, [metadata]);
+  const sortedMetadataWithRarity = [...metadata].sort((a, b) =>
+    a.fileName.localeCompare(b.fileName, undefined, { numeric: true, sensitivity: 'base' }),
+  );
 
   return (
     <div className="container mx-auto">
@@ -116,10 +131,11 @@ export default function DropzonePage() {
       )}
       {metadata.length > 0 && !loading && (
         <div className="my-10">
+          <NFTStatsDisplay metadata={metadata} />
           <h3 className="ml-4">
             {dictionary.nftTable.totalNftsNumber}: <span className="font-bold">{metadata.length}</span>
           </h3>
-          <NFTGallery metadataRows={sortedMetadataRows} />
+          <NFTGallery metadataRows={sortedMetadataWithRarity} />
         </div>
       )}
     </div>

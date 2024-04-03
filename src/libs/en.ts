@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera NFT Rarity Inspector
+ * NFT Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -21,14 +21,11 @@ export const dictionary = {
   header: { title: 'NFT Rarity Inspector', description: 'Upload either a CSV file or a directory of JSONs...' },
   dropzone: { description: 'Upload a file' },
   nftTable: {
-    title: 'Validation result',
-    description: 'Here is a list of all validated NFTs. Youu can filter them by validation status and number of errors.',
-    downloadJSONsButton: 'Download JSONs',
-    downloadErrorLogButton: 'Download error log',
     detailsButton: 'Details',
     imageAltText: 'Image of',
     invalidFilesCount: 'Invalid files count',
     totalNftsNumber: 'Total number of nfts',
+    rarityRank: 'Rarity rank',
     headers: {
       number: 'No.',
       image: 'Image',
@@ -37,6 +34,34 @@ export const dictionary = {
       validationStatus: 'Validation status',
       errors: 'Errors',
     },
+  },
+  nftStatsDisplay: {
+    mostRareNFT: 'Most rare NFT',
+    mostCommonNFT: 'Most common NFT',
+    mostRareAttribute: 'Most rare attribute',
+    mostCommonAttribute: 'Most common attribute',
+    usedIn: (nftsNumber: number) => `Used in ${nftsNumber} NFTs`,
+  },
+  nftPreviewPage: {
+    rarityChartLabels: {
+      mostRare: 'Most Rare',
+      rarity: 'Rarity',
+      leastRare: 'Least Rare',
+      yAxesLabel: 'Probability distribution ⓘ',
+    },
+    rarityChart: {
+      header: 'Rarity curve',
+      xAxisLabel: 'Rarity',
+      yAxisLabel: 'Probability distribution',
+      tooltipContent: (serial: number, totalRarityRank: string) => `Serial: #${serial}\nRarity rank: ${totalRarityRank}`,
+      yAxesLabelTooltip: 'The probability distribution defines the likelihood of obtaining an NFT with a rarity score equal to or higher than this.',
+    },
+    noData: '(no-data)',
+    noCreator: '(no-creator)',
+    rarityRank: 'Rarity rank: ',
+    rarityScore: 'Rarity score: ',
+    attributesOccurrence: 'Attributes occurrence',
+    rarityCurve: 'Rarity curve',
   },
   errors: {
     unknownError: 'Unknown error occurred',

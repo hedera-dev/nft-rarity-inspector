@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera NFT Rarity Inspector
+ * NFT Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -19,38 +19,62 @@
  */
 import { NFTItem } from '@/components/pages/DropzonePage/NFTItem';
 import { useCallback, useState } from 'react';
-import { NFTDetails } from '@/components/pages/NFTDetailsDialog/NFTDetails';
-import { MetadataObject } from 'hedera-nft-utilities';
+import { NFTDetails } from '@/components/pages/NFTDetailsDialog/Dialog/NFTDetails';
+import { MetadataObject, TraitOccurrence } from 'hedera-nft-utilities';
 import { MetadataRow } from '@/utils/types/metadataRow';
 
 export const NFTItemWrapper = ({
-  singleMetadataObject,
   index,
   metadataRows,
+  metadataObject,
+  totalRarity,
+  fileName,
+  metadataLength,
+  traitOccurrence,
+  hasNextPrevButtons = true,
+  rarityRank,
 }: {
-  singleMetadataObject: MetadataObject;
   index: number;
-  metadataRows: MetadataRow[];
+  metadataObject: MetadataObject;
+  totalRarity: string;
+  fileName: string;
+  metadataLength: number;
+  metadataRows?: MetadataRow[];
+  traitOccurrence: TraitOccurrence[];
+  hasNextPrevButtons?: boolean;
+  rarityRank: number;
 }) => {
   const [activeId, setActiveId] = useState(index);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handlePrevious = useCallback(() => setActiveId((oldId) => Math.max(oldId - 1, 0)), []);
-  const handleNext = useCallback(() => setActiveId((oldId) => Math.min(oldId + 1, metadataRows.length - 1)), [metadataRows.length]);
+  const handleNext = useCallback(() => setActiveId((oldId) => Math.min(oldId + 1, metadataLength - 1)), [metadataLength]);
 
   return (
     <>
       <NFTDetails
-        metadataObject={metadataRows[activeId].metadata}
-        fileName={metadataRows[activeId].fileName}
-        metadataLength={metadataRows.length}
+        metadataObject={activeId === index ? metadataObject : (metadataRows?.[activeId].metadata as MetadataObject)}
+        totalRarity={activeId === index ? totalRarity : (metadataRows?.[activeId].rarity.totalRarity as string)}
+        fileName={activeId === index ? fileName : (metadataRows?.[activeId].fileName as string)}
+        metadataLength={metadataLength}
+        metadataRows={metadataRows}
         activeId={activeId}
         handlePrevious={handlePrevious}
         handleNext={handleNext}
+        traitOccurrence={traitOccurrence}
+        hasNextPrevButtons={hasNextPrevButtons}
         setIsModalOpen={setIsModalOpen}
         isModalOpen={isModalOpen}
+        rarityRank={activeId === index ? rarityRank : (metadataRows?.[activeId].rarityRank as number)}
       />
-      <NFTItem key={index} metadata={singleMetadataObject} index={index} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+      <NFTItem
+        key={index}
+        metadataObject={metadataObject}
+        index={index}
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        rarityRank={activeId === index ? rarityRank : (metadataRows?.[activeId].rarityRank as number)}
+      />
     </>
   );
 };

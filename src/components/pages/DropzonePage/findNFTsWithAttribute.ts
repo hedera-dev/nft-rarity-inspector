@@ -17,22 +17,20 @@
  * limitations under the License.
  *
  */
-export type Attribute = {
-  trait_type: string;
-  value: string | number | boolean;
-};
+import { AttributeOccurrence } from '@/utils/types/attributeOccurrence';
+import { MetadataRow } from '@/utils/types/metadataRow';
 
-type Properties = {
-  external_url: string;
-  url: string;
-};
+export const findNFTsWithAttribute = (
+  metadata: MetadataRow[],
+  attribute: AttributeOccurrence,
+): { nftsWithAttribute: MetadataRow[]; count: number } => {
+  const nftsWithAttribute = metadata.filter((nft) => {
+    const attributes = nft.metadata['attributes'];
+    return Array.isArray(attributes) && attributes.some((attr) => attr.trait_type === attribute.trait && attr.value === attribute.value);
+  });
 
-export type NFTDetailsType = {
-  name: string;
-  image: string;
-  type: string;
-  creator?: string;
-  description?: string;
-  properties?: Properties;
-  attributes?: Attribute[];
+  return {
+    nftsWithAttribute: nftsWithAttribute,
+    count: nftsWithAttribute.length,
+  };
 };

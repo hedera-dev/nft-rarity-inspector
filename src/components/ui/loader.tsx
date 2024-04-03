@@ -1,6 +1,6 @@
 /*-
  *
- * Hedera NFT Rarity Inspector
+ * NFT Rarity Inspector
  *
  * Copyright (C) 2024 Hedera Hashgraph, LLC
  *
@@ -17,6 +17,7 @@
  * limitations under the License.
  *
  */
+
 import type { FC } from 'react';
 import { cn } from '@/utils/helpers/cn';
 
@@ -41,3 +42,14 @@ const SpinnerLoader: FC<SpinnerLoaderProps> = ({ className }) => {
 };
 
 export default SpinnerLoader;
+
+import { ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
+
+export const countInvalidObjects = (validationResponse: ValidateArrayOfObjectsResult): number => {
+  return Object.values(validationResponse.results).reduce((acc, current) => {
+    if (current.errorsCount > 0) {
+      acc += 1;
+    }
+    return acc;
+  }, 0);
+};
