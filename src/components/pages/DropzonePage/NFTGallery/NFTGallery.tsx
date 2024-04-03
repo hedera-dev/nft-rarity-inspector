@@ -21,7 +21,7 @@ import { MetadataObject } from 'hedera-nft-utilities';
 import { calculateTraitOccurrenceFromData } from 'hedera-nft-utilities/src/rarity/index';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useCallback, useEffect, useState } from 'react';
-import { NFTItemWrapper } from '@/components/pages/DropzonePage/NFTItemWrapper';
+import { NFTItemWrapper } from '@/components/pages/DropzonePage/NFTGallery/NFTItemWrapper';
 import { MetadataRow } from '@/utils/types/metadataRow';
 
 const BATCH_SIZE = 20;

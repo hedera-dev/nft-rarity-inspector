@@ -21,13 +21,13 @@ import { useEffect, useState } from 'react';
 import { Dropzone, FileMosaic } from '@dropzone-ui/react';
 import type { ExtFile } from '@dropzone-ui/react';
 import { calculateRarityFromData } from 'hedera-nft-utilities/src/rarity';
-import { SUPPORTED_FILE_TYPES_ARRAY, supportedFileTypes } from '@/components/pages/DropzonePage/supportedFileTypes';
+import { SUPPORTED_FILE_TYPES_ARRAY, supportedFileTypes } from '@/components/pages/DropzonePage/utils/supportedFileTypes';
 import { dictionary } from '@/libs/en';
-import { NFTGallery } from '@/components/pages/DropzonePage/NFTGallery';
+import { NFTGallery } from '@/components/pages/DropzonePage/NFTGallery/NFTGallery';
 import { MetadataRow } from '@/utils/types/metadataRow';
-import { processZipFile } from '@/components/pages/DropzonePage/processZipFile';
+import { processZipFile } from '@/components/pages/DropzonePage/file-management/processZipFile';
 import SpinnerLoader from '@/components/ui/loader';
-import { NFTStatsDisplay } from '@/components/pages/DropzonePage/NFTStatsDisplay';
+import { NFTStatsDisplay } from '@/components/pages/DropzonePage/NFTStatsDisplay/NFTStatsDisplay';
 
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);

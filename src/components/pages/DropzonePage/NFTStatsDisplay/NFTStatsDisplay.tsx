@@ -18,16 +18,21 @@
  *
  */
 import { MetadataRow } from '@/utils/types/metadataRow';
-import { NFTItemWrapper } from '@/components/pages/DropzonePage/NFTItemWrapper';
+import { NFTItemWrapper } from '@/components/pages/DropzonePage/NFTGallery/NFTItemWrapper';
 import { RarityCurveCalculation } from '@/components/pages/NFTDetailsDialog/Charts/RarityCurveCalculation';
 import { dictionary } from '@/libs/en';
 import { useNFTRarityData } from '@/components/pages/DropzonePage/useNFTRarityData';
+import { Combobox } from '@/components/pages/DropzonePage/NFTStatsDisplay/Combobox';
+import { useState } from 'react';
 
 interface NFTStatsDisplayProps {
   metadata: MetadataRow[];
 }
 
 export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState('');
+
   const {
     traitOccurrence,
     mostRareNFT,
@@ -38,7 +43,13 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
     nftsWithMostRareAttribute,
     countLeastRare,
     countMostRare,
+    attributesTraits,
   } = useNFTRarityData(metadata);
+
+  const handleSelect = (trait: string): void => {
+    setValue(trait);
+    setOpen(false);
+  };
 
   return (
     <>
@@ -57,7 +68,6 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
           />
           <p className="mt-2 p-2 font-semibold uppercase xl:whitespace-nowrap">{dictionary.nftStatsDisplay.mostRareNFT}</p>
         </div>
-
         <div className="mx-auto w-[75%] text-center">
           <NFTItemWrapper
             index={leastRareNFT.rarity.NFT - 1}
@@ -107,8 +117,13 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
           <p className="mt-2 p-2 font-semibold uppercase xl:whitespace-nowrap">{dictionary.nftStatsDisplay.mostCommonAttribute}</p>
         </div>
       </div>
-      <div className="mx-auto my-10 w-1/2">
-        <RarityCurveCalculation metadataRows={metadata} />
+      <div className="mx-auto my-10 flex">
+        <div className="w-1/2">
+          <RarityCurveCalculation metadataRows={metadata} />
+        </div>
+        <div className="mb-2 mt-8 w-1/2 border-2 border-red-600 text-lg font-bold">
+          <Combobox attributesTraits={attributesTraits} open={open} setOpen={setOpen} handleSelect={handleSelect} value={value} />
+        </div>
       </div>
     </>
   );
