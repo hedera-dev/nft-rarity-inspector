@@ -40,13 +40,13 @@ export const AttributesTableBrowser = ({ traitOccurrence, traitSelected }: Attri
         <TableRow className="text-center">
           <TableHead
             scope="col"
-            className="w-1/2 border-r border-black px-6 py-3 text-left text-center text-xs font-bold uppercase tracking-wider text-gray-500"
+            className="w-1/2 border-r border-black px-6 py-3 text-left text-center text-xs font-semibold uppercase tracking-wider text-black"
           >
             {dictionary.nftStatsDisplay.table.value}
           </TableHead>
           <TableHead
             scope="col"
-            className="w-1/2 border-l border-black px-6 py-3 text-left text-center text-xs font-bold uppercase tracking-wider text-gray-500"
+            className="w-1/2 border-l border-black px-6 py-3 text-left text-center text-xs font-semibold uppercase tracking-wider text-black"
           >
             %
           </TableHead>
@@ -55,8 +55,10 @@ export const AttributesTableBrowser = ({ traitOccurrence, traitSelected }: Attri
       <TableBody className="divide-y divide-gray-200 bg-white">
         {selectedTraitValues.map(({ value, occurence }, index) => (
           <TableRow key={index}>
-            <TableCell className="whitespace-nowrap border-r border-black px-6 py-4 text-center text-sm font-medium text-gray-900">{value}</TableCell>
-            <TableCell className="whitespace-nowrap border-l border-black px-6 py-4 text-center text-sm text-gray-500">{occurence}</TableCell>
+            <TableCell className="border-r border-black px-2 py-4 text-center text-sm font-medium text-black sm:px-6">{value}</TableCell>
+            <TableCell className="whitespace-nowrap border-l border-black px-2 py-4 text-center text-sm font-medium text-black sm:px-6">
+              {occurence}
+            </TableCell>
           </TableRow>
         ))}
       </TableBody>
