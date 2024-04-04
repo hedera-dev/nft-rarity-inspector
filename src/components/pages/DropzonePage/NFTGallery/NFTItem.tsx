@@ -17,6 +17,7 @@
  * limitations under the License.
  *
  */
+import { useRef } from 'react';
 import { MetadataObject } from 'hedera-nft-utilities';
 import { truncateString } from '@/utils/helpers/truncateString';
 import { dictionary } from '@/libs/en';
@@ -47,6 +48,7 @@ export const NFTItem = ({
   attribute,
   usesCount,
 }: NFTItemProps) => {
+  const ref = useRef(null);
   const name = metadataObject.name as string;
   const image = getProperImageURL(metadataObject.image as string);
   const { trait, value } = attribute || {};
@@ -60,9 +62,8 @@ export const NFTItem = ({
       onClick={() => setIsModalOpen(true)}
       className="group relative flex cursor-pointer flex-col items-center overflow-hidden rounded-lg shadow-cardShadow transition duration-200 md:hover:scale-105"
     >
-      <div className="flex w-full items-center justify-center">
-        <ImageWithLoading src={image} alt={name} className="max-w-full object-cover" minHeight={190} />
-        {/* TODO: take the container height using useRef */}
+      <div ref={ref} className="flex max-h-[220px] w-full items-center justify-center">
+        <ImageWithLoading src={image} alt={name} className="max-w-full object-cover" parentRef={ref} />
       </div>
       <div className="flex w-full flex-col justify-between rounded-b-lg bg-white p-4 text-left sm:flex-col">
         <div className="flex w-full flex-col justify-between gap-4 sm:flex-row">
