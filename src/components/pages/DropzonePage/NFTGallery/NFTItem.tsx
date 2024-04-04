@@ -61,7 +61,7 @@ export const NFTItem = ({
         <ImageWithLoading src={image} alt={name} className="max-w-full object-cover" minHeight={250} />
       </div>
       <div className="flex w-full flex-col justify-between rounded-b-lg bg-white p-4 text-left sm:flex-col">
-        <div className="flex w-full flex-row justify-between">
+        <div className="flex w-full flex-col justify-between sm:flex-row">
           <span>{featuredCard ? trait : `${dictionary.nftGallery.headers.number} ${index + 1}`}</span>
           <span className="font-semibold">{featuredCard ? value : truncateString(name, TRUNCATE_NAME_NUMBER)}</span>
         </div>

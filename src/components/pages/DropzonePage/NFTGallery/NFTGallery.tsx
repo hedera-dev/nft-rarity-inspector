@@ -21,7 +21,7 @@ import { MetadataObject } from 'hedera-nft-utilities';
 import { calculateTraitOccurrenceFromData } from 'hedera-nft-utilities/src/rarity/index';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useCallback, useEffect, useState } from 'react';
-import { NFTItemWrapper } from '@/components/pages/DropzonePage/NFTItemWrapper';
+import { NFTItemWrapper } from '@/components/pages/DropzonePage/NFTGallery/NFTItemWrapper';
 import { MetadataRow } from '@/utils/types/metadataRow';
 
 const BATCH_SIZE = 20;
@@ -51,7 +51,7 @@ export const NFTGallery = ({ metadataRows }: { metadataRows: MetadataRow[] }) =>
 
   return (
     <InfiniteScroll dataLength={visibleItems.length} next={fetchMoreData} hasMore={hasMore} loader={<></>}>
-      <div className="grid grid-cols-2 gap-4 p-4 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+      <div className="grid grid-cols-2 gap-4 px-0 py-4 sm:grid-cols-2 sm:px-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
         {visibleItems.map((item, index) => (
           <NFTItemWrapper
             key={index}

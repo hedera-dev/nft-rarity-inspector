@@ -21,13 +21,13 @@ import { useEffect, useState } from 'react';
 import { Dropzone, FileMosaic } from '@dropzone-ui/react';
 import type { ExtFile } from '@dropzone-ui/react';
 import { calculateRarityFromData } from 'hedera-nft-utilities/src/rarity';
-import { SUPPORTED_FILE_TYPES_ARRAY, supportedFileTypes } from '@/components/pages/DropzonePage/supportedFileTypes';
+import { SUPPORTED_FILE_TYPES_ARRAY, supportedFileTypes } from '@/components/pages/DropzonePage/utils/supportedFileTypes';
 import { dictionary } from '@/libs/en';
-import { NFTGallery } from '@/components/pages/DropzonePage/NFTGallery';
+import { NFTGallery } from '@/components/pages/DropzonePage/NFTGallery/NFTGallery';
 import { MetadataRow } from '@/utils/types/metadataRow';
-import { processZipFile } from '@/components/pages/DropzonePage/processZipFile';
+import { processZipFile } from '@/components/pages/DropzonePage/file-management/processZipFile';
 import SpinnerLoader from '@/components/ui/loader';
-import { NFTStatsDisplay } from '@/components/pages/DropzonePage/NFTStatsDisplay';
+import { NFTStatsDisplay } from '@/components/pages/DropzonePage/NFTStatsDisplay/NFTStatsDisplay';
 
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
@@ -97,10 +97,12 @@ export default function DropzonePage() {
   );
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto px-3 sm:px-5 lg:px-8">
       <div className="relative mx-auto flex max-w-[600px] flex-col items-center justify-center">
-        <h1 className="mt-20 scroll-m-20 text-center text-4xl font-extrabold tracking-tight lg:text-5xl">{dictionary.header.title}</h1>
-        <p className="mb-10 text-center leading-7 [&:not(:first-child)]:mt-6">{dictionary.header.description}</p>
+        <h1 className="mt-20 scroll-m-20 text-center text-[28px] font-extrabold tracking-tight sm:text-4xl md:text-5xl">{dictionary.header.title}</h1>
+        <p className="mb-10 text-center text-[12px] leading-7 sm:text-[14px] md:text-[16px] [&:not(:first-child)]:mt-6">
+          {dictionary.header.description}
+        </p>
         <Dropzone
           onChange={updateFilesReplace}
           accept={supportedFileTypes()}
