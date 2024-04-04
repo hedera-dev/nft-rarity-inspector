@@ -17,7 +17,7 @@
  * limitations under the License.
  *
  */
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Dropzone, FileMosaic } from '@dropzone-ui/react';
 import type { ExtFile } from '@dropzone-ui/react';
 import { calculateRarityFromData } from 'hedera-nft-utilities/src/rarity';
@@ -28,12 +28,15 @@ import { MetadataRow } from '@/utils/types/metadataRow';
 import { processZipFile } from '@/components/pages/DropzonePage/file-management/processZipFile';
 import SpinnerLoader from '@/components/ui/loader';
 import { NFTStatsDisplay } from '@/components/pages/DropzonePage/NFTStatsDisplay/NFTStatsDisplay';
+import { NFTSorting, SortingOptionsType } from '@/components/pages/DropzonePage/NFTGallery/NFTSorting';
 
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [metadata, setMetadata] = useState<MetadataRow[]>([]);
   const [error, setError] = useState<string>('');
   const [loading, setIsLoading] = useState<boolean>(false);
+  const [sortingOpen, setSortingOpen] = useState<boolean>(false);
+  const [sorting, setSorting] = useState<SortingOptionsType>('Serial ASC');
 
   const readFile = async (extFile: ExtFile) => {
     setIsLoading(true);
@@ -86,15 +89,44 @@ export default function DropzonePage() {
     setFiles(incomingFiles);
   };
 
+  const handleSort = (selectedSorting: SortingOptionsType): void => {
+    setSorting(selectedSorting);
+    setSortingOpen(false);
+  };
+
   useEffect(() => {
     if (files.length > 0) {
       void readFile(files[0]);
     }
   }, [files]);
 
-  const sortedMetadataWithRarity = [...metadata].sort((a, b) =>
-    a.fileName.localeCompare(b.fileName, undefined, { numeric: true, sensitivity: 'base' }),
-  );
+  useEffect(() => {
+    console.log('metadata:', metadata);
+    console.log('sortedMetadata:', sortedMetadata);
+  }, [sorting]);
+
+  // TODO: refactor this component and create context for it
+  const sortedMetadata = useMemo(() => {
+    const sortedData = [...metadata];
+    switch (sorting) {
+      case 'Serial ASC':
+        sortedData.sort((a, b) => a.rarity.NFT - b.rarity.NFT);
+        break;
+      case 'Serial DESC':
+        sortedData.sort((a, b) => b.rarity.NFT - a.rarity.NFT);
+        break;
+      case 'Most Rare':
+        sortedData.sort((a, b) => parseFloat(b.rarity.totalRarity) - parseFloat(a.rarity.totalRarity));
+        break;
+      case 'Least Rare':
+        sortedData.sort((a, b) => parseFloat(a.rarity.totalRarity) - parseFloat(b.rarity.totalRarity));
+        break;
+      default:
+        [...metadata];
+        break;
+    }
+    return sortedData;
+  }, [metadata, sorting]);
 
   return (
     <div className="container mx-auto px-3 sm:px-5 lg:px-8">
@@ -134,10 +166,13 @@ export default function DropzonePage() {
       {metadata.length > 0 && !loading && (
         <div className="my-10">
           <NFTStatsDisplay metadata={metadata} />
-          <h3 className="ml-4">
-            {dictionary.nftGallery.totalNftsNumber}: <span className="font-bold">{metadata.length}</span>
-          </h3>
-          <NFTGallery metadataRows={sortedMetadataWithRarity} />
+          <div className="flex flex-col items-center justify-between gap-4 sm:mx-4 sm:flex-row">
+            <h3 className="whitespace-nowrap">
+              {dictionary.nftGallery.totalNftsNumber}: <span className="font-bold">{metadata.length}</span>
+            </h3>
+            <NFTSorting sortingOpen={sortingOpen} setSortingOpen={setSortingOpen} handleSort={handleSort} sorting={sorting} />
+          </div>
+          <NFTGallery key={sorting} metadataRows={sortedMetadata} />
         </div>
       )}
     </div>
