@@ -24,8 +24,7 @@ import { Button } from '@/components/ui/button';
 import { getProperImageURL } from '@/utils/helpers/getProperImageURL';
 import { ImageWithLoading } from '@/components/shared/ImageWithLoading';
 import { AttributeOccurrence } from '@/utils/types/attributeOccurrence';
-
-const TRUNCATE_NAME_NUMBER = 13;
+import { useBreakpoint } from '@/utils/hooks/useBreakpoint';
 
 interface NFTItemProps {
   metadataObject: MetadataObject;
@@ -51,6 +50,10 @@ export const NFTItem = ({
   const name = metadataObject.name as string;
   const image = getProperImageURL(metadataObject.image as string);
   const { trait, value } = attribute || {};
+  const { isMobile } = useBreakpoint();
+
+  const TRUNCATE_NAME_NUMBER = isMobile ? 50 : 13;
+  const TRUNCATE_ATTRIBUTE_VALUE = isMobile ? 50 : 7;
 
   return (
     <div
@@ -62,9 +65,11 @@ export const NFTItem = ({
         {/* TODO: take the container height using useRef */}
       </div>
       <div className="flex w-full flex-col justify-between rounded-b-lg bg-white p-4 text-left sm:flex-col">
-        <div className="flex w-full flex-col justify-between sm:flex-row">
-          <span>{featuredCard ? trait : `${dictionary.nftGallery.headers.number} ${index + 1}`}</span>
-          <span className="font-semibold">{featuredCard ? value : truncateString(name, TRUNCATE_NAME_NUMBER)}</span>
+        <div className="flex w-full flex-col justify-between gap-4 sm:flex-row">
+          <span>{featuredCard ? truncateString(trait!, TRUNCATE_ATTRIBUTE_VALUE) : `${dictionary.nftGallery.headers.number} ${index + 1}`}</span>
+          <span className="font-semibold">
+            {featuredCard ? truncateString(value!, TRUNCATE_ATTRIBUTE_VALUE) : truncateString(name, TRUNCATE_NAME_NUMBER)}
+          </span>
         </div>
         <div className="mt-2">
           {featuredCard ? (
