@@ -28,13 +28,13 @@ const BATCH_SIZE = 20;
 
 export const NFTGallery = ({ metadataRows }: { metadataRows: MetadataRow[] }) => {
   const metadataObjects = metadataRows.map((m) => m.metadata);
-  const [visibleItems, setVisibleItems] = useState(metadataObjects.slice(0, BATCH_SIZE));
+  const [visibleItems, setVisibleItems] = useState(metadataRows.slice(0, BATCH_SIZE));
   const [hasMore, setHasMore] = useState<boolean>(metadataObjects.length > BATCH_SIZE);
   const metadataList: MetadataObject[] | undefined = metadataRows?.map((row) => row.metadata);
   const traitOccurrence = metadataList ? calculateTraitOccurrenceFromData(metadataList) : [];
 
   useEffect(() => {
-    setVisibleItems(metadataObjects.slice(0, BATCH_SIZE));
+    setVisibleItems(metadataRows.slice(0, BATCH_SIZE));
     setHasMore(metadataRows.length > BATCH_SIZE);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [metadataRows.length]);
@@ -45,7 +45,7 @@ export const NFTGallery = ({ metadataRows }: { metadataRows: MetadataRow[] }) =>
       setHasMore(false);
       return;
     }
-    setVisibleItems(metadataObjects.slice(0, nextItemsCount));
+    setVisibleItems(metadataRows.slice(0, nextItemsCount));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [visibleItems.length]);
 
@@ -54,8 +54,8 @@ export const NFTGallery = ({ metadataRows }: { metadataRows: MetadataRow[] }) =>
       <div className="grid grid-cols-2 gap-4 px-0 py-4 sm:grid-cols-2 sm:px-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
         {visibleItems.map((item, index) => (
           <NFTItemWrapper
-            key={index}
-            metadataObject={item}
+            key={`${item.fileName}-${item.rarityRank}-${item.rarity.NFT}`}
+            metadataObject={item.metadata}
             index={index}
             metadataRows={metadataRows}
             totalRarity={metadataRows[index].rarity.totalRarity}

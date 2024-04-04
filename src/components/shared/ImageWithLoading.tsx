@@ -19,6 +19,7 @@
  */
 import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
+import { cn } from '@/utils/helpers/cn';
 
 export const ImageWithLoading = ({ src, alt, className, minHeight = 400 }: { src: string; alt: string; className?: string; minHeight?: number }) => {
   const [isLoading, setIsLoading] = useState(true);
@@ -51,7 +52,8 @@ export const ImageWithLoading = ({ src, alt, className, minHeight = 400 }: { src
   return (
     <>
       {isLoading && !error ? (
-        <div className={`flex h-[${minHeight}px] w-1/2 flex-col space-y-3 ${className}`}>
+        // TODO: take the container height using useRef
+        <div style={{ height: `${minHeight}px`, width: '100%' }} className={cn('flex', 'flex-col', 'space-y-3', className)}>
           <Skeleton className="h-full w-full rounded-xl" />
         </div>
       ) : (
