@@ -86,6 +86,7 @@ export const dictionary = {
     noFileProvided: 'No file provided',
     zipFileWithoutJsonFiles: "The ZIP file's 'metadata' folder is empty or does not contain any JSON or CSV files",
     zipFileStructureIncorrect: "The ZIP file structure is incorrect. Please ensure your ZIP file includes a 'metadata' folder",
+    metadataContextError: 'useMetadata must be used within a MetadataProvider',
   },
   modal: {
     details: 'See more',

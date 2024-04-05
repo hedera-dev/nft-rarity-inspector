@@ -17,26 +17,24 @@
  * limitations under the License.
  *
  */
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dropzone, FileMosaic } from '@dropzone-ui/react';
 import type { ExtFile } from '@dropzone-ui/react';
 import { calculateRarityFromData } from 'hedera-nft-utilities/src/rarity';
 import { SUPPORTED_FILE_TYPES_ARRAY, supportedFileTypes } from '@/components/pages/DropzonePage/utils/supportedFileTypes';
 import { dictionary } from '@/libs/en';
 import { NFTGallery } from '@/components/pages/DropzonePage/NFTGallery/NFTGallery';
-import { MetadataRow } from '@/utils/types/metadataRow';
 import { processZipFile } from '@/components/pages/DropzonePage/file-management/processZipFile';
 import SpinnerLoader from '@/components/ui/loader';
 import { NFTStatsDisplay } from '@/components/pages/DropzonePage/NFTStatsDisplay/NFTStatsDisplay';
-import { NFTSorting, SortingOptionsType } from '@/components/pages/DropzonePage/NFTGallery/NFTSorting';
+import { NFTSorting } from '@/components/pages/DropzonePage/NFTGallery/NFTSorting';
+import { useMetadata } from '@/utils/contexts/MetadataContext';
 
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
-  const [metadata, setMetadata] = useState<MetadataRow[]>([]);
   const [error, setError] = useState<string>('');
   const [loading, setIsLoading] = useState<boolean>(false);
-  const [sortingOpen, setSortingOpen] = useState<boolean>(false);
-  const [sorting, setSorting] = useState<SortingOptionsType>('Serial ASC');
+  const { metadata, setMetadata, sorting, sortedMetadata } = useMetadata();
 
   const readFile = async (extFile: ExtFile) => {
     setIsLoading(true);
@@ -89,44 +87,11 @@ export default function DropzonePage() {
     setFiles(incomingFiles);
   };
 
-  const handleSort = (selectedSorting: SortingOptionsType): void => {
-    setSorting(selectedSorting);
-    setSortingOpen(false);
-  };
-
   useEffect(() => {
     if (files.length > 0) {
       void readFile(files[0]);
     }
   }, [files]);
-
-  useEffect(() => {
-    console.log('metadata:', metadata);
-    console.log('sortedMetadata:', sortedMetadata);
-  }, [sorting]);
-
-  // TODO: refactor this component and create context for it
-  const sortedMetadata = useMemo(() => {
-    const sortedData = [...metadata];
-    switch (sorting) {
-      case 'Serial ASC':
-        sortedData.sort((a, b) => a.rarity.NFT - b.rarity.NFT);
-        break;
-      case 'Serial DESC':
-        sortedData.sort((a, b) => b.rarity.NFT - a.rarity.NFT);
-        break;
-      case 'Most Rare':
-        sortedData.sort((a, b) => parseFloat(b.rarity.totalRarity) - parseFloat(a.rarity.totalRarity));
-        break;
-      case 'Least Rare':
-        sortedData.sort((a, b) => parseFloat(a.rarity.totalRarity) - parseFloat(b.rarity.totalRarity));
-        break;
-      default:
-        [...metadata];
-        break;
-    }
-    return sortedData;
-  }, [metadata, sorting]);
 
   return (
     <div className="container mx-auto px-3 sm:px-5 lg:px-8">
@@ -170,7 +135,7 @@ export default function DropzonePage() {
             <h3 className="whitespace-nowrap">
               {dictionary.nftGallery.totalNftsNumber}: <span className="font-bold">{metadata.length}</span>
             </h3>
-            <NFTSorting sortingOpen={sortingOpen} setSortingOpen={setSortingOpen} handleSort={handleSort} sorting={sorting} />
+            <NFTSorting />
           </div>
           <NFTGallery key={sorting} metadataRows={sortedMetadata} />
         </div>

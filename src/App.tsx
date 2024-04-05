@@ -19,12 +19,15 @@
  */
 import DropzonePage from '@/components/pages/DropzonePage/DropzonePage';
 import { Layout } from '@/Layout';
+import { MetadataProvider } from '@/utils/contexts/MetadataContext';
 
 const App = () => {
   return (
-    <Layout>
-      <DropzonePage />
-    </Layout>
+    <MetadataProvider>
+      <Layout>
+        <DropzonePage />
+      </Layout>
+    </MetadataProvider>
   );
 };
 
