@@ -42,7 +42,7 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
     countLeastRare,
     countMostRare,
     attributesTraits,
-  } = useNFTRarityData(metadata);
+  } = useNFTRarityData();
 
   const [open, setOpen] = useState<boolean>(false);
   const [traitSelected, setTraitSelected] = useState<string>(attributesTraits[0]);
@@ -62,7 +62,6 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             totalRarity={mostRareNFT.rarity.totalRarity}
             fileName={mostRareNFT.fileName}
             metadataLength={metadata.length}
-            traitOccurrence={traitOccurrence}
             hasNextPrevButtons={false}
             metadataRows={metadata}
             rarityRank={mostRareNFT.rarityRank}
@@ -76,7 +75,6 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             totalRarity={leastRareNFT.rarity.totalRarity}
             fileName={leastRareNFT.fileName}
             metadataLength={metadata.length}
-            traitOccurrence={traitOccurrence}
             hasNextPrevButtons={false}
             metadataRows={metadata}
             rarityRank={leastRareNFT.rarityRank}
@@ -90,7 +88,6 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             totalRarity={nftsWithMostRareAttribute[0].rarity.totalRarity}
             fileName={nftsWithMostRareAttribute[0].fileName}
             metadataLength={metadata.length}
-            traitOccurrence={traitOccurrence}
             hasNextPrevButtons={false}
             metadataRows={metadata}
             rarityRank={nftsWithMostRareAttribute[0].rarityRank}
@@ -107,7 +104,6 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             totalRarity={nftsWithLeastRareAttribute[0].rarity.totalRarity}
             fileName={nftsWithLeastRareAttribute[0].fileName}
             metadataLength={metadata.length}
-            traitOccurrence={traitOccurrence}
             hasNextPrevButtons={false}
             metadataRows={metadata}
             rarityRank={nftsWithLeastRareAttribute[0].rarityRank}

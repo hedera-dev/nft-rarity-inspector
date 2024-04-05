@@ -18,7 +18,6 @@
  *
  */
 import { MetadataObject } from 'hedera-nft-utilities';
-import { calculateTraitOccurrenceFromData } from 'hedera-nft-utilities/src/rarity/index';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useCallback, useEffect, useState } from 'react';
 import { NFTItemWrapper } from '@/components/pages/DropzonePage/NFTGallery/NFTItemWrapper';
@@ -27,11 +26,9 @@ import { MetadataRow } from '@/utils/types/metadataRow';
 const BATCH_SIZE = 20;
 
 export const NFTGallery = ({ metadataRows }: { metadataRows: MetadataRow[] }) => {
-  const metadataObjects = metadataRows.map((m) => m.metadata);
+  const metadataObjects: MetadataObject[] = metadataRows.map((m) => m.metadata);
   const [visibleItems, setVisibleItems] = useState(metadataRows.slice(0, BATCH_SIZE));
   const [hasMore, setHasMore] = useState<boolean>(metadataObjects.length > BATCH_SIZE);
-  const metadataList: MetadataObject[] | undefined = metadataRows?.map((row) => row.metadata);
-  const traitOccurrence = metadataList ? calculateTraitOccurrenceFromData(metadataList) : [];
 
   useEffect(() => {
     setVisibleItems(metadataRows.slice(0, BATCH_SIZE));
@@ -51,7 +48,7 @@ export const NFTGallery = ({ metadataRows }: { metadataRows: MetadataRow[] }) =>
 
   return (
     <InfiniteScroll dataLength={visibleItems.length} next={fetchMoreData} hasMore={hasMore} loader={<></>}>
-      <div className="grid grid-cols-2 gap-4 px-0 py-4 sm:grid-cols-2 sm:px-4 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6">
+      <div className="grid w-full grid-cols-2 gap-4 border-2 border-blue-500 p-4 px-0 sm:grid-cols-2 sm:px-4 md:grid-cols-4 lg:grid-cols-5">
         {visibleItems.map((item, index) => (
           <NFTItemWrapper
             key={`${item.fileName}-${item.rarityRank}-${item.rarity.NFT}`}
@@ -61,7 +58,6 @@ export const NFTGallery = ({ metadataRows }: { metadataRows: MetadataRow[] }) =>
             totalRarity={metadataRows[index].rarity.totalRarity}
             fileName={metadataRows[index].fileName}
             metadataLength={metadataRows.length}
-            traitOccurrence={traitOccurrence}
             hasNextPrevButtons={true}
             rarityRank={metadataRows[index].rarityRank}
           />
