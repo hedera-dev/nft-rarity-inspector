@@ -29,6 +29,7 @@ import SpinnerLoader from '@/components/ui/loader';
 import { NFTStatsDisplay } from '@/components/pages/DropzonePage/NFTStatsDisplay/NFTStatsDisplay';
 import { NFTSorting } from '@/components/pages/DropzonePage/NFTGallery/NFTSorting';
 import { useMetadata } from '@/utils/contexts/MetadataContext';
+import { NFTFiltering } from '@/components/pages/DropzonePage/NFTGallery/NFTFiltering';
 
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
@@ -131,13 +132,16 @@ export default function DropzonePage() {
       {metadata.length > 0 && !loading && (
         <div className="my-10">
           <NFTStatsDisplay metadata={metadata} />
-          <div className="flex flex-col items-center justify-between gap-4 sm:mx-4 sm:flex-row">
+          <div className="flex flex-col items-center justify-between gap-4 pb-4 sm:mx-4 sm:flex-row">
             <h3 className="whitespace-nowrap">
               {dictionary.nftGallery.totalNftsNumber}: <span className="font-bold">{metadata.length}</span>
             </h3>
             <NFTSorting />
           </div>
-          <NFTGallery key={sorting} metadataRows={sortedMetadata} />
+          <div className="flex">
+            <NFTFiltering />
+            <NFTGallery key={sorting} metadataRows={sortedMetadata} />
+          </div>
         </div>
       )}
     </div>

@@ -18,13 +18,14 @@
  *
  */
 import { useMemo } from 'react';
-import { MetadataRow } from '@/utils/types/metadataRow';
 import { calculateTraitOccurrenceFromData } from 'hedera-nft-utilities/src/rarity';
 import { findNFTRarity } from '@/components/pages/DropzonePage/utils/findNFTRarity';
 import { findMostAndLeastRareAttribute } from '@/components/pages/DropzonePage/utils/findMostAndLeastRareAttribute';
 import { findNFTsWithAttribute } from '@/components/pages/DropzonePage/utils/findNFTsWithAttribute';
+import { useMetadata } from '@/utils/contexts/MetadataContext';
 
-export const useNFTRarityData = (metadata: MetadataRow[]) => {
+export const useNFTRarityData = () => {
+  const { metadata } = useMetadata();
   const traitOccurrence = useMemo(() => calculateTraitOccurrenceFromData(metadata.map((m) => m.metadata)), [metadata]);
   const mostRareNFT = findNFTRarity(metadata, 'most-rare');
   const leastRareNFT = findNFTRarity(metadata, 'least-rare');
@@ -33,6 +34,9 @@ export const useNFTRarityData = (metadata: MetadataRow[]) => {
   const { nftsWithAttribute: nftsWithMostRareAttribute, count: countMostRare } = findNFTsWithAttribute(metadata, mostRareAttribute);
 
   const attributesTraits = traitOccurrence.map((item) => item.trait);
+  const traitsWithValues = traitOccurrence.map((item) => {
+    return { trait: item.trait, values: item.values.map((value) => value.value) };
+  });
 
   return {
     traitOccurrence,
@@ -45,5 +49,6 @@ export const useNFTRarityData = (metadata: MetadataRow[]) => {
     countLeastRare,
     countMostRare,
     attributesTraits,
+    traitsWithValues,
   };
 };
