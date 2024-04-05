@@ -24,7 +24,7 @@ import { cn } from '@/utils/helpers/cn';
 interface ImageWithLoadingProps {
   src: string;
   alt: string;
-  parentRef: React.RefObject<HTMLDivElement>;
+  parentRef?: React.RefObject<HTMLDivElement>;
   className?: string;
 }
 

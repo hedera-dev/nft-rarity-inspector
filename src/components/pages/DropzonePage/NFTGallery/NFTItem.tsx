@@ -54,8 +54,8 @@ export const NFTItem = ({
   const { trait, value } = attribute || {};
   const { isMobile } = useBreakpoint();
 
-  const TRUNCATE_NAME_NUMBER = isMobile ? 50 : 13;
-  const TRUNCATE_ATTRIBUTE_VALUE = isMobile ? 50 : 7;
+  const TRUNCATE_NAME_NUMBER = isMobile ? 50 : 10;
+  const TRUNCATE_ATTRIBUTE_VALUE = isMobile ? 50 : 10;
 
   return (
     <div
