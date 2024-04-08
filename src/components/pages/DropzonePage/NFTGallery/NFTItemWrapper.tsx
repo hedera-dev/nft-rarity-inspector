@@ -18,7 +18,7 @@
  *
  */
 import { NFTItem } from '@/components/pages/DropzonePage/NFTGallery/NFTItem';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { NFTDetails } from '@/components/pages/NFTDetailsDialog/Dialog/NFTDetails';
 import { MetadataObject } from 'hedera-nft-utilities';
 import { MetadataRow } from '@/utils/types/metadataRow';
@@ -56,6 +56,12 @@ export const NFTItemWrapper = ({
 
   const handlePrevious = useCallback(() => setActiveId((oldId) => Math.max(oldId - 1, 0)), []);
   const handleNext = useCallback(() => setActiveId((oldId) => Math.min(oldId + 1, metadataLength - 1)), [metadataLength]);
+
+  useEffect(() => {
+    if (!isModalOpen) {
+      setActiveId(index);
+    }
+  }, [isModalOpen]);
 
   return (
     <>
