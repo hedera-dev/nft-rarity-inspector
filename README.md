@@ -11,15 +11,19 @@ npm install
 npm run dev
 ```
 
+Important: The `.zip` file must have a specific folder structure to work. It should contain a:
+
+- `metadata` folder with `.json` files or a `.csv` file,
+- `metadata` folder within which there's a `json` folder and then the `.json` files or `.csv` file.
+
+Optionally, a `media` folder can be placed in the main directory with images for the individual NFTs. The images should be named to match their JSON counterpart, e.g., if there's an NFT named `1.json`, the image should be named `1.png`.
+
+Allowed image extensions are: `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.svg`.
+
 ## Technologies
 
 This project was developed with React and Typescript, using some ready-made UI components from shadcn (https://ui.shadcn.com/).
 There's no need to set any `.env` variables.
-
-## Configuration
-
-Important: The `.zip` file must have a specific folder structure to work. It should contain a `metadata` folder with `.json` files, or a `metadata` folder within which there's a `json` folder and then the `.json` files. Optionally, a `media` folder can be placed in the main directory with images for the individual NFTs. The images should be named to match their JSON counterpart, e.g., if there's an NFT named `1.json`, the image should be named `1.png`.
-Allowed image extensions are: `.png`, `.jpg`, `.jpeg`, `.gif`, `.webp`, `.svg`.
 
 ## Contributing
 
