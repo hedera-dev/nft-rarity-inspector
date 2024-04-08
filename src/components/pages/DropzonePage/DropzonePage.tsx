@@ -100,11 +100,6 @@ export default function DropzonePage() {
     }
   }, [files]);
 
-  useEffect(() => {
-    console.log('metadata:', metadata);
-    console.log('sortedMetadata:', sortedMetadata);
-  }, [sorting]);
-
   // TODO: refactor this component and create context for it
   const sortedMetadata = useMemo(() => {
     const sortedData = [...metadata];

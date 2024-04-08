@@ -21,9 +21,17 @@ import { useEffect, useState } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
 import { cn } from '@/utils/helpers/cn';
 
-export const ImageWithLoading = ({ src, alt, className, minHeight = 400 }: { src: string; alt: string; className?: string; minHeight?: number }) => {
+interface ImageWithLoadingProps {
+  src: string;
+  alt: string;
+  parentRef?: React.RefObject<HTMLDivElement>;
+  className?: string;
+}
+
+export const ImageWithLoading = ({ src, alt, parentRef, className }: ImageWithLoadingProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
+  const parentHeight = parentRef?.current?.offsetHeight;
 
   useEffect(() => {
     setIsLoading(true);
@@ -51,17 +59,12 @@ export const ImageWithLoading = ({ src, alt, className, minHeight = 400 }: { src
 
   return (
     <>
-      {isLoading && !error ? (
-        // TODO: take the container height using useRef
-        <div style={{ height: `${minHeight}px`, width: '100%' }} className={cn('flex', 'flex-col', 'space-y-3', className)}>
-          <Skeleton className="h-full w-full rounded-xl" />
+      {isLoading && !error && parentHeight && parentHeight > 0 ? (
+        <div style={{ height: `${parentHeight}px`, width: '100%' }} className={cn('flex', 'flex-col', 'space-y-3', className)}>
+          <Skeleton className="h-full min-h-full w-full rounded-xl" />
         </div>
       ) : (
-        <img
-          className={`max-h-[400px] min-h-[${minHeight}px] ${className}`}
-          src={displayPlaceholderImage ? 'no-image-placeholder.webp' : src}
-          alt={alt}
-        />
+        <img className={`max-h-[400px] ${className}`} src={displayPlaceholderImage ? 'no-image-placeholder.webp' : src} alt={alt} />
       )}
     </>
   );
