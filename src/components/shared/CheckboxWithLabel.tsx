@@ -18,15 +18,21 @@
  *
  */
 import { Checkbox } from '@/components/ui/checkbox';
+import { useMetadata } from '@/utils/contexts/MetadataContext';
 
 interface CheckboxWithLabelProps {
   label: string;
+  trait: string;
 }
 
-export const CheckboxWithLabel = ({ label = '' }: CheckboxWithLabelProps) => {
+export const CheckboxWithLabel = ({ label = '', trait }: CheckboxWithLabelProps) => {
+  const { filters, handleFilter } = useMetadata();
+
+  const isChecked = filters[trait]?.includes(label) || false;
+
   return (
     <div className="flex items-center space-x-2">
-      <Checkbox id={label} />
+      <Checkbox id={label} onCheckedChange={(bool) => handleFilter(trait, label, bool as boolean)} checked={isChecked} />
       <label
         htmlFor={label}
         className="w-full cursor-pointer py-3 text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"

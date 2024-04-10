@@ -22,6 +22,9 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import { useCallback, useEffect, useState } from 'react';
 import { NFTItemWrapper } from '@/components/pages/DropzonePage/NFTGallery/NFTItemWrapper';
 import { MetadataRow } from '@/utils/types/metadataRow';
+import { dictionary } from '@/libs/en';
+import { Button } from '@/components/ui/button';
+import { useMetadata } from '@/utils/contexts/MetadataContext';
 
 const BATCH_SIZE = 20;
 
@@ -29,10 +32,13 @@ export const NFTGallery = ({ metadataRows }: { metadataRows: MetadataRow[] }) =>
   const metadataObjects: MetadataObject[] = metadataRows.map((m) => m.metadata);
   const [visibleItems, setVisibleItems] = useState(metadataRows.slice(0, BATCH_SIZE));
   const [hasMore, setHasMore] = useState<boolean>(metadataObjects.length > BATCH_SIZE);
+  const { setFilters } = useMetadata();
 
   useEffect(() => {
-    setVisibleItems(metadataRows.slice(0, BATCH_SIZE));
-    setHasMore(metadataRows.length > BATCH_SIZE);
+    if (metadataRows.length > 0) {
+      setVisibleItems(metadataRows.slice(0, BATCH_SIZE));
+      setHasMore(metadataRows.length > BATCH_SIZE);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [metadataRows.length]);
 
@@ -47,22 +53,33 @@ export const NFTGallery = ({ metadataRows }: { metadataRows: MetadataRow[] }) =>
   }, [visibleItems.length]);
 
   return (
-    <InfiniteScroll dataLength={visibleItems.length} next={fetchMoreData} hasMore={hasMore} loader={<></>}>
-      <div className="grid w-full grid-cols-2 gap-4 border-2 border-blue-500 p-4 px-0 sm:grid-cols-2 sm:px-4 md:grid-cols-4 lg:grid-cols-5">
-        {visibleItems.map((item, index) => (
-          <NFTItemWrapper
-            key={`${item.fileName}-${item.rarityRank}-${item.rarity.NFT}`}
-            metadataObject={item.metadata}
-            index={index}
-            metadataRows={metadataRows}
-            totalRarity={metadataRows[index].rarity.totalRarity}
-            fileName={metadataRows[index].fileName}
-            metadataLength={metadataRows.length}
-            hasNextPrevButtons={true}
-            rarityRank={metadataRows[index].rarityRank}
-          />
-        ))}
-      </div>
-    </InfiniteScroll>
+    <>
+      {metadataRows.length > 0 ? (
+        <InfiniteScroll dataLength={visibleItems.length} next={fetchMoreData} hasMore={hasMore} loader={<></>}>
+          <div className="grid w-full grid-cols-2 gap-4 p-4 px-0 sm:grid-cols-2 sm:px-4 lg:grid-cols-4 xl:grid-cols-5">
+            {visibleItems.map((item, index) => (
+              <NFTItemWrapper
+                key={`${item.fileName}-${item.rarityRank}-${item?.rarity.NFT}-${index}`}
+                metadataObject={item.metadata}
+                index={item.rarity.NFT}
+                metadataRows={metadataRows}
+                totalRarity={metadataRows[index]?.rarity?.totalRarity}
+                fileName={metadataRows[index]?.fileName}
+                metadataLength={metadataRows.length}
+                hasNextPrevButtons={true}
+                rarityRank={metadataRows[index]?.rarityRank}
+              />
+            ))}
+          </div>
+        </InfiniteScroll>
+      ) : (
+        <div className="w-full pt-4 text-center">
+          <p className="mb-6 text-4xl font-semibold">{dictionary.nftGallery.noResults}</p>
+          <Button onClick={() => setFilters({})} className="p-8 text-2xl">
+            {dictionary.nftGallery.clearFilters}
+          </Button>
+        </div>
+      )}
+    </>
   );
 };

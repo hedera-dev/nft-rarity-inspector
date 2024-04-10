@@ -35,7 +35,7 @@ export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [error, setError] = useState<string>('');
   const [loading, setIsLoading] = useState<boolean>(false);
-  const { metadata, setMetadata, sorting, sortedMetadata } = useMetadata();
+  const { metadata, setMetadata, sorting, filteredAndSortedMetadata } = useMetadata();
 
   const readFile = async (extFile: ExtFile) => {
     setIsLoading(true);
@@ -132,15 +132,12 @@ export default function DropzonePage() {
       {metadata.length > 0 && !loading && (
         <div className="my-10">
           <NFTStatsDisplay metadata={metadata} />
-          <div className="flex flex-col items-center justify-between gap-4 pb-4 sm:mx-4 sm:flex-row">
-            <h3 className="whitespace-nowrap">
-              {dictionary.nftGallery.totalNftsNumber}: <span className="font-bold">{metadata.length}</span>
-            </h3>
+          <div className="w-full pb-4 sm:mx-4">
             <NFTSorting />
           </div>
           <div className="flex">
             <NFTFiltering />
-            <NFTGallery key={sorting} metadataRows={sortedMetadata} />
+            <NFTGallery key={sorting} metadataRows={filteredAndSortedMetadata} />
           </div>
         </div>
       )}

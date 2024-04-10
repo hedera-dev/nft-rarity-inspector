@@ -24,8 +24,11 @@ export const dictionary = {
     detailsButton: 'Details',
     imageAltText: 'Image of',
     invalidFilesCount: 'Invalid files count',
-    totalNftsNumber: 'Total number of nfts',
+    results: 'Results',
     rarityRank: 'Rarity rank',
+    noResults: 'No items found for this search',
+    clearFilters: 'Clear filters',
+    traits: 'Traits',
     headers: {
       number: 'No.',
       image: 'Image',

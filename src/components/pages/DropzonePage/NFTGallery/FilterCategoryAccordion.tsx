@@ -17,7 +17,7 @@
  * limitations under the License.
  *
  */
-import { CheckboxWithLabel } from '@/components/shared/Checkbox';
+import { CheckboxWithLabel } from '@/components/shared/CheckboxWithLabel';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { truncateString } from '@/utils/helpers/truncateString';
 
@@ -36,7 +36,7 @@ export const FilterCategoryAccordion = ({ index, trait, values }: FilterCategory
         <AccordionTrigger className="px-2 text-left hover:no-underline">{truncateString(trait, CATEGORY_NAME_LENGTH)}</AccordionTrigger>
         {values.map((value) => (
           <AccordionContent key={value} className="cursor-pointer px-2 transition duration-200 hover:bg-slate-100">
-            <CheckboxWithLabel label={value} />
+            <CheckboxWithLabel label={value} trait={trait} />
           </AccordionContent>
         ))}
       </AccordionItem>
