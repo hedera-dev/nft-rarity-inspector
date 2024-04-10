@@ -80,7 +80,6 @@ export async function processZipFile(extFile: ExtFile): Promise<SimpleMetadataRo
       if (fileKey && mediaMap.has(fileKey)) {
         json.image = mediaMap.get(fileKey);
       }
-      // Użyj SimpleMetadataRow zamiast MetadataRow
       metadataRows.push({ metadata: json, fileName: `${fileKey}.json` } as SimpleMetadataRow);
     }
   }

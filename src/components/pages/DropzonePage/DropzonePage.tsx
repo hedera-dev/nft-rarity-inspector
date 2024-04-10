@@ -29,6 +29,7 @@ import { processZipFile } from '@/components/pages/DropzonePage/file-management/
 import SpinnerLoader from '@/components/ui/loader';
 import { NFTStatsDisplay } from '@/components/pages/DropzonePage/NFTStatsDisplay/NFTStatsDisplay';
 import { NFTSorting, SortingOptionsType } from '@/components/pages/DropzonePage/NFTGallery/NFTSorting';
+import { Button } from '@/components/ui/button';
 
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
@@ -127,9 +128,12 @@ export default function DropzonePage() {
     <div className="container mx-auto px-3 sm:px-5 lg:px-8">
       <div className="relative mx-auto flex max-w-[600px] flex-col items-center justify-center">
         <h1 className="mt-20 scroll-m-20 text-center text-[28px] font-extrabold tracking-tight sm:text-4xl md:text-5xl">{dictionary.header.title}</h1>
-        <p className="mb-10 text-center text-[12px] leading-7 sm:text-[14px] md:text-[16px] [&:not(:first-child)]:mt-6">
+        <p className="mb-6 text-center text-[12px] leading-7 sm:text-[14px] md:text-[16px] [&:not(:first-child)]:mt-6">
           {dictionary.header.description}
         </p>
+        <a href="/examples/example-collection.zip" download="example-collection.zip" className="mb-10">
+          <Button>{dictionary.header.downloadExampleCollection}</Button>
+        </a>
         <Dropzone
           onChange={updateFilesReplace}
           accept={supportedFileTypes()}
@@ -154,7 +158,7 @@ export default function DropzonePage() {
         {error && <span className="mt-2 text-center font-bold text-red-500">{error}</span>}
       </div>
       {metadata.length === 0 && loading && (
-        <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
+        <div className="absolute left-[50%] top-[65%] translate-x-[-50%] translate-y-[-50%]">
           <SpinnerLoader />
         </div>
       )}
