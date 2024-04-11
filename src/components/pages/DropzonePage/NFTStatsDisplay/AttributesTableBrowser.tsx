@@ -57,7 +57,7 @@ export const AttributesTableBrowser = ({ traitOccurrence, traitSelected }: Attri
           <TableRow key={index}>
             <TableCell className="border-r border-black px-2 py-4 text-center text-sm font-medium text-black sm:px-6">{value}</TableCell>
             <TableCell className="whitespace-nowrap border-l border-black px-2 py-4 text-center text-sm font-medium text-black sm:px-6">
-              {occurence}
+              {occurence}%
             </TableCell>
           </TableRow>
         ))}
