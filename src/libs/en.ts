@@ -18,7 +18,7 @@
  *
  */
 export const dictionary = {
-  header: { title: 'NFT Rarity Inspector', description: 'Upload either a CSV file or a directory of JSONs...' },
+  header: { title: 'NFT Rarity Inspector', description: 'Review all NFT attributes and rarity to ensure that it comes out exactly as you expect.' },
   dropzone: { description: 'Upload a file' },
   nftGallery: {
     detailsButton: 'Details',
