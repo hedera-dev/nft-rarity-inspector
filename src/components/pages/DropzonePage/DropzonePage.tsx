@@ -30,7 +30,6 @@ import { NFTStatsDisplay } from '@/components/pages/DropzonePage/NFTStatsDisplay
 import { NFTSorting } from '@/components/pages/DropzonePage/NFTGallery/NFTSorting';
 import { useMetadata } from '@/utils/contexts/MetadataContext';
 import { NFTFiltering } from '@/components/pages/DropzonePage/NFTGallery/NFTFiltering';
-import { SORTING_BAR_HEIGHT } from '@/utils/helpers/consts';
 
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
@@ -133,7 +132,7 @@ export default function DropzonePage() {
       {metadata.length > 0 && !fileLoading && (
         <div className="my-10">
           <NFTStatsDisplay metadata={metadata} />
-          <div className={`sticky top-0 z-30 flex h-[${SORTING_BAR_HEIGHT}px] w-full items-center bg-white`}>
+          <div className="sticky top-0 z-10 flex h-[50px] w-full items-center bg-white">
             <NFTSorting />
           </div>
           <div className="mt-4 flex">

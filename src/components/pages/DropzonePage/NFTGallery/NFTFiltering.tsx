@@ -24,14 +24,13 @@ import { dictionary } from '@/libs/en';
 import { ClearFiltersIcon } from '@/utils/assets/icons/ClearFiltersIcon';
 import { useMetadata } from '@/utils/contexts/MetadataContext';
 import { Tooltip } from 'react-tooltip';
-import { SORTING_BAR_HEIGHT } from '@/utils/helpers/consts';
 
 export const NFTFiltering = () => {
   const { setFilters, filteredAndSortedMetadataLength } = useMetadata();
   const { traitsWithValues } = useNFTRarityData();
 
   return (
-    <div className={`sticky top-[${SORTING_BAR_HEIGHT}px] max-h-screen min-w-[200px] lg:min-w-[250px] xl:min-w-[300px]`}>
+    <div className={`sticky top-[50px] max-h-screen min-w-[200px] lg:min-w-[250px] xl:min-w-[300px]`}>
       <div className="flex w-full justify-between bg-slate-100">
         <h3 className=" p-2 text-center">
           {dictionary.nftGallery.results}: <span className="font-bold">{filteredAndSortedMetadataLength}</span>
@@ -40,6 +39,7 @@ export const NFTFiltering = () => {
           data-tooltip-id="clear-filters"
           onClick={() => setFilters({})}
           className="flex w-[40px] justify-center rounded-none bg-slate-100 p-0 hover:bg-slate-200"
+          data-tooltip-place="left"
         >
           <ClearFiltersIcon className="w-1/3" />
         </Button>
