@@ -67,7 +67,7 @@ export const NFTItem = ({
       </div>
       <div className="flex w-full flex-col justify-between rounded-b-lg bg-white p-4 text-left sm:flex-col">
         <div className="flex w-full flex-col justify-between gap-4 text-[14px] sm:flex-row">
-          <span>{featuredCard ? truncateString(trait!, TRUNCATE_ATTRIBUTE_VALUE) : `${dictionary.nftGallery.headers.number} ${index + 1}`}</span>
+          <span>{featuredCard ? truncateString(trait!, TRUNCATE_ATTRIBUTE_VALUE) : `${dictionary.nftGallery.headers.number} ${index}`}</span>
           <span className="font-semibold">
             {featuredCard ? truncateString(value!, TRUNCATE_ATTRIBUTE_VALUE) : truncateString(name, TRUNCATE_NAME_NUMBER)}
           </span>
