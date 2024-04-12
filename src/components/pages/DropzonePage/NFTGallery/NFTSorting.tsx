@@ -29,7 +29,7 @@ export const NFTSorting = () => {
   const { sorting, sortingOpen, setSortingOpen, handleSort } = useMetadata();
 
   return (
-    <div className="ml-auto mr-4 w-full max-w-[300px] sm:w-[200px]">
+    <div className="ml-auto mr-8 w-full max-w-[300px] sm:w-[200px]">
       <Popover open={sortingOpen} onOpenChange={setSortingOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" role="combobox" aria-expanded={sortingOpen} className="w-full justify-between">

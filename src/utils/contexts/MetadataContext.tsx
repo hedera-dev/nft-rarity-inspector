@@ -20,6 +20,7 @@
 import { createContext, useContext, useState, ReactNode, useMemo, Dispatch, SetStateAction } from 'react';
 import { MetadataRow } from '@/utils/types/metadataRow';
 import { dictionary } from '@/libs/en';
+import { SORTING_BAR_HEIGHT } from '@/utils/helpers/consts';
 
 export const SERIAL_ASC = 'Serial ASC';
 export const SERIAL_DESC = 'Serial DESC';
@@ -88,6 +89,15 @@ export const MetadataProvider = ({ children }: { children: ReactNode }) => {
   const handleSort = (selectedSorting: SortingOptionsType): void => {
     setSorting(selectedSorting);
     setSortingOpen(false);
+
+    const galleryElement = document.getElementById('galleryStart');
+    if (galleryElement) {
+      const galleryPosition = galleryElement.getBoundingClientRect().top + window.pageYOffset;
+      window.scrollTo({
+        top: galleryPosition - SORTING_BAR_HEIGHT,
+        behavior: 'smooth',
+      });
+    }
   };
 
   const filteredAndSortedMetadata = useMemo(() => {

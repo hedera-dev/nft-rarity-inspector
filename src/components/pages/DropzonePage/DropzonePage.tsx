@@ -30,20 +30,21 @@ import { NFTStatsDisplay } from '@/components/pages/DropzonePage/NFTStatsDisplay
 import { NFTSorting } from '@/components/pages/DropzonePage/NFTGallery/NFTSorting';
 import { useMetadata } from '@/utils/contexts/MetadataContext';
 import { NFTFiltering } from '@/components/pages/DropzonePage/NFTGallery/NFTFiltering';
+import { SORTING_BAR_HEIGHT } from '@/utils/helpers/consts';
 
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [error, setError] = useState<string>('');
-  const [loading, setIsLoading] = useState<boolean>(false);
+  const [fileLoading, setIsFileLoading] = useState<boolean>(false);
   const { metadata, setMetadata, sorting, filteredAndSortedMetadata } = useMetadata();
 
   const readFile = async (extFile: ExtFile) => {
-    setIsLoading(true);
+    setIsFileLoading(true);
     setMetadata([]);
     setError('');
 
     if (!extFile.file) {
-      setIsLoading(false);
+      setIsFileLoading(false);
       return;
     }
 
@@ -73,13 +74,13 @@ export default function DropzonePage() {
         if (error instanceof Error) {
           setError(error.message);
         }
-        setIsLoading(false);
+        setIsFileLoading(false);
       } finally {
-        setIsLoading(false);
+        setIsFileLoading(false);
       }
     } else {
       setError(dictionary.errors.unsupportedFileType);
-      setIsLoading(false);
+      setIsFileLoading(false);
       return;
     }
   };
@@ -124,18 +125,18 @@ export default function DropzonePage() {
         </Dropzone>
         {error && <span className="mt-2 text-center font-bold text-red-500">{error}</span>}
       </div>
-      {metadata.length === 0 && loading && (
+      {metadata.length === 0 && fileLoading && (
         <div className="absolute left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%]">
           <SpinnerLoader />
         </div>
       )}
-      {metadata.length > 0 && !loading && (
+      {metadata.length > 0 && !fileLoading && (
         <div className="my-10">
           <NFTStatsDisplay metadata={metadata} />
-          <div className="w-full pb-4 sm:mx-4">
+          <div className={`sticky top-0 z-30 flex h-[${SORTING_BAR_HEIGHT}px] w-full items-center bg-white`}>
             <NFTSorting />
           </div>
-          <div className="flex">
+          <div className="mt-4 flex">
             <NFTFiltering />
             <NFTGallery key={sorting} metadataRows={filteredAndSortedMetadata} />
           </div>
