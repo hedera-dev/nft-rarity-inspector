@@ -28,10 +28,9 @@ interface ImageWithLoadingProps {
   className?: string;
 }
 
-export const ImageWithLoading = ({ src, alt, parentRef, className }: ImageWithLoadingProps) => {
+export const ImageWithLoading = ({ src, alt, className }: ImageWithLoadingProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(false);
-  const parentHeight = parentRef?.current?.offsetHeight;
 
   useEffect(() => {
     setIsLoading(true);
@@ -55,16 +54,14 @@ export const ImageWithLoading = ({ src, alt, parentRef, className }: ImageWithLo
     };
   }, [src]);
 
-  const displayPlaceholderImage = !isLoading && error;
-
   return (
     <>
-      {isLoading && !error && parentHeight && parentHeight > 0 ? (
-        <div style={{ height: `${parentHeight}px`, width: '100%' }} className={cn('flex', 'flex-col', 'space-y-3', className)}>
+      {isLoading ? (
+        <div style={{ height: `220px`, width: '100%' }} className={cn('flex', 'flex-col', 'space-y-3', className)}>
           <Skeleton className="h-full min-h-full w-full rounded-xl" />
         </div>
       ) : (
-        <img className={`max-h-[400px] ${className}`} src={displayPlaceholderImage ? 'no-image-placeholder.webp' : src} alt={alt} />
+        <img className={`max-h-[400px] ${className}`} src={error ? 'no-image-placeholder.webp' : src} alt={alt} />
       )}
     </>
   );
