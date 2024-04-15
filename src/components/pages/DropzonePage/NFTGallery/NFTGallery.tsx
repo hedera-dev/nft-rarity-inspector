@@ -53,10 +53,10 @@ export const NFTGallery = ({ metadataRows }: { metadataRows: MetadataRow[] }) =>
   }, [visibleItems.length]);
 
   return (
-    <div id="galleryStart" className="mx-auto flex justify-center pt-4">
+    <div id="galleryStart" className="mx-auto flex justify-center">
       {metadataRows.length > 0 ? (
         <InfiniteScroll dataLength={visibleItems.length} next={fetchMoreData} hasMore={hasMore} loader={<></>}>
-          <div className="grid w-full grid-cols-2 gap-4 px-0 pb-4 sm:grid-cols-2 sm:px-4 lg:grid-cols-4 xl:grid-cols-5">
+          <div className="grid w-full grid-cols-2 gap-4 px-0 py-4 pb-4 sm:grid-cols-2 sm:px-4 lg:grid-cols-4 xl:grid-cols-5">
             {visibleItems.map((item, index) => (
               <NFTItemWrapper
                 key={`${item.fileName}-${item.rarityRank}-${item?.rarity.NFT}-${index}`}
