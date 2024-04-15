@@ -71,7 +71,6 @@ export const NFTItemWrapper = ({
         metadataObject={activeId === index ? metadataObject : (metadataRows?.[activeId].metadata as MetadataObject)}
         totalRarity={activeId === index ? totalRarity : (metadataRows?.[activeId].rarity.totalRarity as string)}
         fileName={activeId === index ? fileName : (metadataRows?.[activeId].fileName as string)}
-        metadataLength={metadataLength}
         metadataRows={metadataRows}
         activeId={activeId}
         handlePrevious={handlePrevious}

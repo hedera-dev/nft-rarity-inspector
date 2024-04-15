@@ -35,7 +35,7 @@ interface MainContentProps {
   rarityRank: number;
   metadataRows?: MetadataRow[];
   metadataObject: MetadataObject;
-  metadataLength: number;
+  totalMetadataLength: number;
   traitOccurrence: TraitOccurrence[];
 }
 
@@ -45,14 +45,14 @@ export const MainContent = ({
   rarityRank,
   metadataRows,
   metadataObject,
-  metadataLength,
+  totalMetadataLength,
   traitOccurrence,
 }: MainContentProps) => {
   const name = metadataObject?.name as string;
   const description = metadataObject?.description as string;
   const image = getProperImageURL(metadataObject?.image as string);
   const creator = metadataObject?.creator as string;
-  const totalRarityRank = metadataRows ? `${rarityRank}/${metadataLength}` : '';
+  const totalRarityRank = metadataRows ? `${rarityRank}/${totalMetadataLength}` : '';
   const attributesWithTraitOccurrences = useMemo(() => processAttributes(metadataObject, traitOccurrence), [metadataObject, traitOccurrence]);
   const attributes = attributesWithTraitOccurrences.length > 0 ? attributesWithTraitOccurrences : (metadataObject?.attributes as Attribute[]);
 

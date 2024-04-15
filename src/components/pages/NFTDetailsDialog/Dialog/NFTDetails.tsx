@@ -23,13 +23,13 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Header } from '@/components/pages/NFTDetailsDialog/Dialog/Header';
 import { Footer } from '@/components/pages/NFTDetailsDialog/Dialog/Footer';
 import { MainContent } from '@/components/pages/NFTDetailsDialog/Dialog/MainContent';
+import { useMetadata } from '@/utils/contexts/MetadataContext';
 
 export const NFTDetails = ({
   metadataObject,
   totalRarity,
   fileName,
   activeId,
-  metadataLength,
   metadataRows,
   handlePrevious,
   handleNext,
@@ -44,7 +44,6 @@ export const NFTDetails = ({
   totalRarity: string;
   fileName: string;
   activeId: number;
-  metadataLength: number;
   metadataRows?: MetadataRow[];
   handlePrevious: () => void;
   handleNext: () => void;
@@ -55,6 +54,7 @@ export const NFTDetails = ({
   rarityRank: number;
   nftNumber: number;
 }) => {
+  const { totalMetadataLength, filteredAndSortedMetadataLength } = useMetadata();
   return (
     <Dialog onOpenChange={setIsModalOpen} open={isModalOpen}>
       <DialogContent className="flex max-h-screen max-w-[1600px] flex-col justify-center md:h-[900px]">
@@ -65,10 +65,17 @@ export const NFTDetails = ({
           rarityRank={rarityRank}
           metadataRows={metadataRows}
           metadataObject={metadataObject}
-          metadataLength={metadataLength}
           traitOccurrence={traitOccurrence}
+          totalMetadataLength={totalMetadataLength}
         />
-        {hasNextPrevButtons && <Footer activeId={activeId} handlePrevious={handlePrevious} handleNext={handleNext} metadataLength={metadataLength} />}
+        {hasNextPrevButtons && (
+          <Footer
+            activeId={activeId}
+            handlePrevious={handlePrevious}
+            handleNext={handleNext}
+            filteredAndSortedMetadataLength={filteredAndSortedMetadataLength}
+          />
+        )}
       </DialogContent>
     </Dialog>
   );
