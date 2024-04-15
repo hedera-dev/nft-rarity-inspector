@@ -18,7 +18,6 @@
  *
  */
 import { MetadataObject, TraitOccurrence } from 'hedera-nft-utilities';
-import { MetadataRow } from '@/utils/types/metadataRow';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Header } from '@/components/pages/NFTDetailsDialog/Dialog/Header';
 import { Footer } from '@/components/pages/NFTDetailsDialog/Dialog/Footer';
@@ -30,7 +29,6 @@ export const NFTDetails = ({
   totalRarity,
   fileName,
   activeId,
-  metadataRows,
   handlePrevious,
   handleNext,
   traitOccurrence,
@@ -44,7 +42,6 @@ export const NFTDetails = ({
   totalRarity: string;
   fileName: string;
   activeId: number;
-  metadataRows?: MetadataRow[];
   handlePrevious: () => void;
   handleNext: () => void;
   traitOccurrence: TraitOccurrence[];
@@ -54,7 +51,7 @@ export const NFTDetails = ({
   rarityRank: number;
   nftNumber: number;
 }) => {
-  const { totalMetadataLength, filteredAndSortedMetadataLength } = useMetadata();
+  const { totalMetadataLength, filteredAndSortedMetadataLength, metadata } = useMetadata();
   return (
     <Dialog onOpenChange={setIsModalOpen} open={isModalOpen}>
       <DialogContent className="flex max-h-screen max-w-[1600px] flex-col justify-center md:h-[900px]">
@@ -63,7 +60,7 @@ export const NFTDetails = ({
           activeId={nftNumber}
           totalRarity={totalRarity}
           rarityRank={rarityRank}
-          metadataRows={metadataRows}
+          metadataRows={metadata}
           metadataObject={metadataObject}
           traitOccurrence={traitOccurrence}
           totalMetadataLength={totalMetadataLength}
