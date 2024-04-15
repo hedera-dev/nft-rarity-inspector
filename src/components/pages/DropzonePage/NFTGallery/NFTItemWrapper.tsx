@@ -71,7 +71,6 @@ export const NFTItemWrapper = ({
         metadataObject={activeId === index ? metadataObject : (metadataRows?.[activeId].metadata as MetadataObject)}
         totalRarity={activeId === index ? totalRarity : (metadataRows?.[activeId].rarity.totalRarity as string)}
         fileName={activeId === index ? fileName : (metadataRows?.[activeId].fileName as string)}
-        metadataRows={metadataRows}
         activeId={activeId}
         handlePrevious={handlePrevious}
         handleNext={handleNext}
@@ -80,7 +79,7 @@ export const NFTItemWrapper = ({
         setIsModalOpen={setIsModalOpen}
         isModalOpen={isModalOpen}
         rarityRank={activeId === index ? rarityRank : (metadataRows?.[activeId].rarityRank as number)}
-        nftNumber={nftNumber}
+        nftNumber={metadataRows?.[activeId]?.rarity.NFT}
       />
       <NFTItem
         metadataObject={metadataObject}
