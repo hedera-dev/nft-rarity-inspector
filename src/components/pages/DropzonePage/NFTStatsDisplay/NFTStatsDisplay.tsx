@@ -54,7 +54,7 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
 
   return (
     <>
-      <div className="mt-6 grid grid-cols-1 gap-4 px-0 sm:grid-cols-2 sm:gap-0 md:grid-cols-2 lg:grid-cols-4">
+      <div className="mt-6 grid grid-cols-1 gap-4 px-3 sm:grid-cols-2 sm:gap-0 sm:px-5 md:grid-cols-2 lg:grid-cols-4 lg:px-8">
         <div className="mx-auto w-full text-center sm:w-3/4">
           <NFTItemWrapper
             index={mostRareNFT.rarity.NFT - 1}

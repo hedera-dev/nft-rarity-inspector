@@ -26,15 +26,13 @@ import { useMetadata } from '@/utils/contexts/MetadataContext';
 import { Tooltip } from 'react-tooltip';
 
 export const NFTFiltering = () => {
-  const { setFilters, filteredAndSortedMetadataLength } = useMetadata();
+  const { setFilters } = useMetadata();
   const { traitsWithValues } = useNFTRarityData();
 
   return (
-    <div className={`sticky top-[50px] max-h-screen min-w-[200px] lg:min-w-[250px] xl:min-w-[300px]`}>
+    <div className={`sticky top-[50px] max-h-screen min-w-[200px] pt-4 lg:min-w-[250px] xl:min-w-[300px]`}>
       <div className="flex w-full justify-between bg-slate-100">
-        <h3 className=" p-2 text-center">
-          {dictionary.nftGallery.results}: <span className="font-bold">{filteredAndSortedMetadataLength}</span>
-        </h3>
+        <h3 className="p-2 text-center font-semibold">{dictionary.nftGallery.filters}</h3>
         <Button
           data-tooltip-id="clear-filters"
           onClick={() => setFilters({})}

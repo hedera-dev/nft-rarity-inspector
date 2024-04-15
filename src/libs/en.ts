@@ -29,6 +29,7 @@ export const dictionary = {
     noResults: 'No items found for this search',
     clearFilters: 'Clear filters',
     traits: 'Traits',
+    filters: 'Filters',
     headers: {
       number: 'No.',
       image: 'Image',

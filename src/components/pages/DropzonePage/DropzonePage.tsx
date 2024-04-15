@@ -34,8 +34,9 @@ import { NFTFiltering } from '@/components/pages/DropzonePage/NFTGallery/NFTFilt
 export default function DropzonePage() {
   const [files, setFiles] = useState<ExtFile[]>([]);
   const [error, setError] = useState<string>('');
+  const [isSticky, setIsSticky] = useState(false);
   const [fileLoading, setIsFileLoading] = useState<boolean>(false);
-  const { metadata, setMetadata, sorting, filteredAndSortedMetadata } = useMetadata();
+  const { metadata, setMetadata, sorting, filteredAndSortedMetadata, filteredAndSortedMetadataLength } = useMetadata();
 
   const readFile = async (extFile: ExtFile) => {
     setIsFileLoading(true);
@@ -94,8 +95,21 @@ export default function DropzonePage() {
     }
   }, [files]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const sortingBar = document.querySelector('.sorting-bar');
+      if (sortingBar) setIsSticky(sortingBar.getBoundingClientRect().top <= 0);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <div className="container mx-auto px-3 sm:px-5 lg:px-8">
+    <div className="mx-auto">
       <div className="relative mx-auto flex max-w-[600px] flex-col items-center justify-center">
         <h1 className="mt-20 scroll-m-20 text-center text-[28px] font-extrabold tracking-tight sm:text-4xl md:text-5xl">{dictionary.header.title}</h1>
         <p className="mb-10 text-center text-[12px] leading-7 sm:text-[14px] md:text-[16px] [&:not(:first-child)]:mt-6">
@@ -132,10 +146,16 @@ export default function DropzonePage() {
       {metadata.length > 0 && !fileLoading && (
         <div className="my-10">
           <NFTStatsDisplay metadata={metadata} />
-          <div className="sticky top-0 z-10 flex h-[50px] w-full items-center bg-white">
+
+          <div
+            className={`sorting-bar sticky top-0 z-10 flex h-[50px] w-full items-center overflow-x-hidden bg-white transition duration-200 ${isSticky ? 'border-b-2 border-b-slate-500 shadow-md' : ''} pl-9 pr-12`}
+          >
+            <p>
+              {dictionary.nftGallery.results}: <span className="font-semibold">{filteredAndSortedMetadataLength}</span>
+            </p>
             <NFTSorting />
           </div>
-          <div className="mt-4 flex">
+          <div className="flex px-3 sm:px-5 lg:px-8">
             <NFTFiltering />
             <NFTGallery key={sorting} metadataRows={filteredAndSortedMetadata} />
           </div>
