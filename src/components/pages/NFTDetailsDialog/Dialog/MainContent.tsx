@@ -67,7 +67,7 @@ export const MainContent = ({
           </div>
         </div>
         <div className="mb-auto flex flex-col">
-          <p>#{activeId + 1}</p>
+          <p>#{activeId}</p>
           <h2 className="text-3xl font-semibold tracking-tight first:mt-0 ">{name || '-'}</h2>
           <p className="mb-10 scroll-m-20 border-b pb-2 md:mb-10">{creator || dictionary.nftPreviewPage.noCreator}</p>
           <div className="flex flex-col">
