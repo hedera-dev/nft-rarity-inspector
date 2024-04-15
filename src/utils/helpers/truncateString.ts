@@ -17,9 +17,10 @@
  * limitations under the License.
  *
  */
+
 export const truncateString = (str: string, num: number) => {
-  if (!str) return;
-  if (str.length > num) {
+  if (!str) return '';
+  if (str.length >= num + 3) {
     return str.slice(0, num) + '...';
   } else {
     return str;
