@@ -37,6 +37,7 @@ export const NFTItemWrapper = ({
   featuredCard = false,
   usesCount,
   attribute,
+  nftNumber,
 }: {
   index: number;
   metadataObject: MetadataObject;
@@ -49,6 +50,7 @@ export const NFTItemWrapper = ({
   featuredCard?: boolean;
   usesCount?: number;
   attribute?: AttributeOccurrence;
+  nftNumber: number;
 }) => {
   const [activeId, setActiveId] = useState(index);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -79,11 +81,12 @@ export const NFTItemWrapper = ({
         setIsModalOpen={setIsModalOpen}
         isModalOpen={isModalOpen}
         rarityRank={activeId === index ? rarityRank : (metadataRows?.[activeId].rarityRank as number)}
+        nftNumber={nftNumber}
       />
       <NFTItem
         metadataObject={metadataObject}
         metadataLength={metadataLength}
-        index={index}
+        index={nftNumber}
         setIsModalOpen={setIsModalOpen}
         featuredCard={featuredCard}
         attribute={attribute}

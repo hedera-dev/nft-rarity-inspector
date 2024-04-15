@@ -46,6 +46,7 @@ interface MetadataContextProps {
   handleFilter: (_trait: string, _value: string, _isSelected: boolean) => void;
   filteredAndSortedMetadata: MetadataRow[];
   filteredAndSortedMetadataLength: number;
+  totalMetadataLength: number;
 }
 
 const MetadataContext = createContext<MetadataContextProps | undefined>(undefined);
@@ -123,6 +124,7 @@ export const MetadataProvider = ({ children }: { children: ReactNode }) => {
   }, [filteredMetadata, sorting]);
 
   const filteredAndSortedMetadataLength = filteredAndSortedMetadata.length;
+  const totalMetadataLength = metadata.length;
 
   return (
     <MetadataContext.Provider
@@ -139,6 +141,7 @@ export const MetadataProvider = ({ children }: { children: ReactNode }) => {
         handleFilter,
         filteredAndSortedMetadata,
         filteredAndSortedMetadataLength,
+        totalMetadataLength,
       }}
     >
       {children}

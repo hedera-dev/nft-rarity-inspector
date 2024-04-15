@@ -61,13 +61,14 @@ export const NFTGallery = ({ metadataRows }: { metadataRows: MetadataRow[] }) =>
               <NFTItemWrapper
                 key={`${item.fileName}-${item.rarityRank}-${item?.rarity.NFT}-${index}`}
                 metadataObject={item.metadata}
-                index={item.rarity.NFT}
+                index={index}
                 metadataRows={metadataRows}
                 totalRarity={metadataRows[index]?.rarity?.totalRarity}
                 fileName={metadataRows[index]?.fileName}
                 metadataLength={metadataRows.length}
                 hasNextPrevButtons={true}
                 rarityRank={metadataRows[index]?.rarityRank}
+                nftNumber={item.rarity.NFT}
               />
             ))}
           </div>

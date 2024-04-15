@@ -38,6 +38,7 @@ export const NFTDetails = ({
   setIsModalOpen,
   isModalOpen,
   rarityRank,
+  nftNumber,
 }: {
   metadataObject: MetadataObject;
   totalRarity: string;
@@ -52,13 +53,14 @@ export const NFTDetails = ({
   setIsModalOpen: (_isOpen: boolean) => void;
   isModalOpen: boolean;
   rarityRank: number;
+  nftNumber: number;
 }) => {
   return (
     <Dialog onOpenChange={setIsModalOpen} open={isModalOpen}>
       <DialogContent className="flex max-h-screen max-w-[1600px] flex-col justify-center md:h-[900px]">
         <Header fileName={fileName} />
         <MainContent
-          activeId={activeId}
+          activeId={nftNumber}
           totalRarity={totalRarity}
           rarityRank={rarityRank}
           metadataRows={metadataRows}

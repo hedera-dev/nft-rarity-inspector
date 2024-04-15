@@ -65,6 +65,7 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             hasNextPrevButtons={false}
             metadataRows={metadata}
             rarityRank={mostRareNFT.rarityRank}
+            nftNumber={mostRareNFT.rarity.NFT}
           />
           <p className="mt-2 p-2 font-semibold uppercase xl:whitespace-nowrap">{dictionary.nftStatsDisplay.mostRareNFT}</p>
         </div>
@@ -78,6 +79,7 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             hasNextPrevButtons={false}
             metadataRows={metadata}
             rarityRank={leastRareNFT.rarityRank}
+            nftNumber={leastRareNFT.rarity.NFT}
           />
           <p className="mt-2 p-2 font-semibold uppercase xl:whitespace-nowrap">{dictionary.nftStatsDisplay.mostCommonNFT}</p>
         </div>
@@ -94,6 +96,7 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             attribute={mostRareAttribute}
             usesCount={countMostRare}
             featuredCard
+            nftNumber={nftsWithMostRareAttribute[0].rarity.NFT}
           />
           <p className="mt-2 p-2 font-semibold uppercase xl:whitespace-nowrap">{dictionary.nftStatsDisplay.mostRareAttribute}</p>
         </div>
@@ -110,6 +113,7 @@ export const NFTStatsDisplay: React.FC<NFTStatsDisplayProps> = ({ metadata }) =>
             attribute={leastRareAttribute}
             usesCount={countLeastRare}
             featuredCard
+            nftNumber={nftsWithLeastRareAttribute[0].rarity.NFT}
           />
           <p className="mt-2 p-2 font-semibold uppercase xl:whitespace-nowrap">{dictionary.nftStatsDisplay.mostCommonAttribute}</p>
         </div>
