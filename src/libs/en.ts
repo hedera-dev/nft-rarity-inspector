@@ -20,7 +20,7 @@
 export const dictionary = {
   header: {
     title: 'NFT Rarity Inspector',
-    description: 'Upload either a CSV file or a directory of JSONs...',
+    description: 'Review all NFT attributes and rarity to ensure that it comes out exactly as you expect.',
     downloadExampleCollection: 'Download example collection',
   },
   dropzone: { description: 'Upload a file' },
@@ -28,8 +28,12 @@ export const dictionary = {
     detailsButton: 'Details',
     imageAltText: 'Image of',
     invalidFilesCount: 'Invalid files count',
-    totalNftsNumber: 'Total number of nfts',
+    results: 'Results',
     rarityRank: 'Rarity rank',
+    noResults: 'No items found for this search',
+    clearFilters: 'Clear filters',
+    traits: 'Traits',
+    filters: 'Filters',
     headers: {
       number: 'No.',
       image: 'Image',
@@ -90,6 +94,7 @@ export const dictionary = {
     noFileProvided: 'No file provided',
     zipFileWithoutJsonFiles: "The ZIP file's 'metadata' folder is empty or does not contain any JSON or CSV files",
     zipFileStructureIncorrect: "The ZIP file structure is incorrect. Please ensure your ZIP file includes a 'metadata' folder",
+    metadataContextError: 'useMetadata must be used within a MetadataProvider',
   },
   modal: {
     details: 'See more',

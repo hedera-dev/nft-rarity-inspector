@@ -25,16 +25,16 @@ interface FooterProps {
   activeId: number;
   handlePrevious: () => void;
   handleNext: () => void;
-  metadataLength: number;
+  filteredAndSortedMetadataLength: number;
 }
 
-export const Footer = ({ activeId, handlePrevious, handleNext, metadataLength }: FooterProps) => {
+export const Footer = ({ activeId, handlePrevious, handleNext, filteredAndSortedMetadataLength }: FooterProps) => {
   return (
     <DialogFooter className="mt-4 flex flex-row items-center gap-1 px-7">
       <Button className="w-full md:w-[100px]" disabled={activeId === 0} onClick={handlePrevious}>
         {dictionary.modal.previousButton}
       </Button>
-      <Button className="w-full md:w-[100px]" disabled={activeId === metadataLength - 1} onClick={handleNext}>
+      <Button className="w-full md:w-[100px]" disabled={activeId === filteredAndSortedMetadataLength - 1} onClick={handleNext}>
         {dictionary.modal.nextButton}
       </Button>
     </DialogFooter>

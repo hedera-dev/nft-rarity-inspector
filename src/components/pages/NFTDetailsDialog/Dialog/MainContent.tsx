@@ -35,7 +35,7 @@ interface MainContentProps {
   rarityRank: number;
   metadataRows?: MetadataRow[];
   metadataObject: MetadataObject;
-  metadataLength: number;
+  totalMetadataLength: number;
   traitOccurrence: TraitOccurrence[];
 }
 
@@ -45,14 +45,14 @@ export const MainContent = ({
   rarityRank,
   metadataRows,
   metadataObject,
-  metadataLength,
+  totalMetadataLength,
   traitOccurrence,
 }: MainContentProps) => {
   const name = metadataObject?.name as string;
   const description = metadataObject?.description as string;
   const image = getProperImageURL(metadataObject?.image as string);
   const creator = metadataObject?.creator as string;
-  const totalRarityRank = metadataRows ? `${rarityRank}/${metadataLength}` : '';
+  const totalRarityRank = metadataRows ? `${rarityRank}/${totalMetadataLength}` : '';
   const attributesWithTraitOccurrences = useMemo(() => processAttributes(metadataObject, traitOccurrence), [metadataObject, traitOccurrence]);
   const attributes = attributesWithTraitOccurrences.length > 0 ? attributesWithTraitOccurrences : (metadataObject?.attributes as Attribute[]);
 
@@ -67,7 +67,7 @@ export const MainContent = ({
           </div>
         </div>
         <div className="mb-auto flex flex-col">
-          <p>#{activeId + 1}</p>
+          <p>#{activeId}</p>
           <h2 className="text-3xl font-semibold tracking-tight first:mt-0 ">{name || '-'}</h2>
           <p className="mb-10 scroll-m-20 border-b pb-2 md:mb-10">{creator || dictionary.nftPreviewPage.noCreator}</p>
           <div className="flex flex-col">

@@ -17,25 +17,19 @@
  * limitations under the License.
  *
  */
-import { Dispatch, SetStateAction } from 'react';
 import { Check, ChevronsUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Command, CommandGroup, CommandItem, CommandList } from '@/components/ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { LEAST_RARE, MOST_RARE, SERIAL_ASC, SERIAL_DESC, SortingOptionsType, useMetadata } from '@/utils/contexts/MetadataContext';
 
-export type SortingOptionsType = 'Serial ASC' | 'Serial DESC' | 'Most Rare' | 'Least Rare';
-const SORTING_OPTIONS: SortingOptionsType[] = ['Serial ASC', 'Serial DESC', 'Most Rare', 'Least Rare'];
+const SORTING_OPTIONS: SortingOptionsType[] = [SERIAL_ASC, SERIAL_DESC, MOST_RARE, LEAST_RARE];
 
-interface NFTSortingProps {
-  sortingOpen: boolean;
-  setSortingOpen: Dispatch<SetStateAction<boolean>>;
-  handleSort: (_sorting: SortingOptionsType) => void;
-  sorting: string;
-}
+export const NFTSorting = () => {
+  const { sorting, sortingOpen, setSortingOpen, handleSort } = useMetadata();
 
-export const NFTSorting = ({ sortingOpen, setSortingOpen, handleSort, sorting }: NFTSortingProps) => {
   return (
-    <div className="w-full max-w-[300px] sm:w-[200px]">
+    <div className="ml-auto w-full max-w-[300px] sm:w-[200px]">
       <Popover open={sortingOpen} onOpenChange={setSortingOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" role="combobox" aria-expanded={sortingOpen} className="w-full justify-between">

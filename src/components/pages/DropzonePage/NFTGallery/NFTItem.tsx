@@ -62,12 +62,12 @@ export const NFTItem = ({
       onClick={() => setIsModalOpen(true)}
       className="group relative flex cursor-pointer flex-col items-center overflow-hidden rounded-lg shadow-cardShadow transition duration-200 md:hover:scale-105"
     >
-      <div ref={ref} className="flex max-h-[220px] w-full items-center justify-center">
+      <div ref={ref} className="flex max-h-[300px] w-full items-center justify-center">
         <ImageWithLoading src={image} alt={name} className="max-w-full object-cover" parentRef={ref} />
       </div>
       <div className="flex w-full flex-col justify-between rounded-b-lg bg-white p-4 text-left sm:flex-col">
-        <div className="flex w-full flex-col justify-between gap-4 sm:flex-row">
-          <span>{featuredCard ? truncateString(trait!, TRUNCATE_ATTRIBUTE_VALUE) : `${dictionary.nftGallery.headers.number} ${index + 1}`}</span>
+        <div className="flex w-full flex-col justify-between gap-4 text-[14px] sm:flex-row">
+          <span>{featuredCard ? truncateString(trait!, TRUNCATE_ATTRIBUTE_VALUE) : `${dictionary.nftGallery.headers.number} ${index}`}</span>
           <span className="font-semibold">
             {featuredCard ? truncateString(value!, TRUNCATE_ATTRIBUTE_VALUE) : truncateString(name, TRUNCATE_NAME_NUMBER)}
           </span>
@@ -81,8 +81,8 @@ export const NFTItem = ({
               </span>
             </div>
           ) : (
-            <span>
-              {dictionary.nftGallery.rarityRank}: {rarityRank}
+            <span className="text-[14px]">
+              {dictionary.nftGallery.rarityRank}: <span className="font-semibold">{rarityRank}</span>
             </span>
           )}
         </div>
