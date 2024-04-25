@@ -28,6 +28,7 @@ import { Tooltip } from 'react-tooltip';
 export const NFTFiltering = () => {
   const { setFilters } = useMetadata();
   const { traitsWithValues } = useNFTRarityData();
+  const sortedTraits = traitsWithValues.sort((a, b) => a.trait.localeCompare(b.trait));
 
   return (
     <div className={`sticky top-[50px] max-h-screen min-w-[200px] pt-4 lg:min-w-[250px] xl:min-w-[300px]`}>
@@ -44,7 +45,7 @@ export const NFTFiltering = () => {
         <Tooltip id="clear-filters">{dictionary.nftGallery.clearFilters}</Tooltip>
       </div>
       <div className="max-h-screen overflow-y-scroll">
-        {traitsWithValues.map(({ trait, values }, index) => (
+        {sortedTraits.map(({ trait, values }, index) => (
           <FilterCategoryAccordion key={trait} index={index} trait={trait} values={values} />
         ))}
       </div>

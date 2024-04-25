@@ -30,11 +30,13 @@ interface FilterCategoryAccordionProps {
 }
 
 export const FilterCategoryAccordion = ({ index, trait, values }: FilterCategoryAccordionProps) => {
+  const sortedValues = [...values].sort();
+
   return (
     <Accordion type="single" collapsible className="w-full">
       <AccordionItem value={`${trait}-${index}`}>
         <AccordionTrigger className="px-2 text-left hover:no-underline">{truncateString(trait, CATEGORY_NAME_LENGTH)}</AccordionTrigger>
-        {values.map((value) => (
+        {sortedValues.map((value) => (
           <AccordionContent key={value} className="cursor-pointer px-2 transition duration-200 hover:bg-slate-100">
             <CheckboxWithLabel label={value} trait={trait} />
           </AccordionContent>
