@@ -96,12 +96,9 @@
     border-radius: 0.5rem;
   }
 
-  .dialog-scrollbar::-webkit-scrollbar-track {
-    border-radius: 0 0.5rem 0.5rem 0;
-  }
 
-  .dialog-scrollbar::-webkit-scrollbar-thumb {
-    border-radius: 0 0.5rem 0.5rem 0;
+  .dialog-scrollbar::-webkit-scrollbar {
+    width: 8px;
   }
 }
 
