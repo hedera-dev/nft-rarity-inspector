@@ -31,7 +31,7 @@ export const NFTFiltering = () => {
   const sortedTraits = traitsWithValues.sort((a, b) => a.trait.localeCompare(b.trait));
 
   return (
-    <div className={`sticky top-[50px] max-h-screen min-w-[200px] pt-4 lg:min-w-[250px] xl:min-w-[300px]`}>
+    <div className={`sticky top-[50px] max-h-screen min-w-[200px] pt-4 lg:min-w-[250px] xl:min-w-[300px] mb-4`}>
       <div className="flex w-full justify-between bg-slate-100">
         <h3 className="p-2 text-center font-semibold">{dictionary.nftGallery.filters}</h3>
         <Button
