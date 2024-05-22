@@ -17,7 +17,7 @@
  * limitations under the License.
  *
  */
-import { MetadataObject } from 'hedera-nft-utilities';
+import { MetadataObject } from '@hashgraph/hedera-nft-sdk';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useCallback, useEffect, useState } from 'react';
 import { NFTItemWrapper } from '@/components/pages/DropzonePage/NFTGallery/NFTItemWrapper';

@@ -18,7 +18,7 @@
  *
  */
 import { AttributeWithOccurrence } from '@/utils/types/attributes';
-import { MetadataObject, TraitOccurrence } from 'hedera-nft-utilities';
+import { MetadataObject, TraitOccurrence } from '@hashgraph/hedera-nft-sdk';
 import { Attribute } from '@/utils/types/nftDetails';
 
 export const processAttributes = (metadataObject: MetadataObject, traitOccurrence: TraitOccurrence[]): AttributeWithOccurrence[] => {

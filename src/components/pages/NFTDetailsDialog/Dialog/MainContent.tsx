@@ -26,7 +26,7 @@ import { dictionary } from '@/libs/en';
 import { getProperImageURL } from '@/utils/helpers/getProperImageURL';
 import { MetadataRow } from '@/utils/types/metadataRow';
 import { Attribute } from '@/utils/types/nftDetails';
-import { MetadataObject, TraitOccurrence } from 'hedera-nft-utilities';
+import { MetadataObject, TraitOccurrence } from '@hashgraph/hedera-nft-sdk';
 import { useMemo } from 'react';
 
 interface MainContentProps {

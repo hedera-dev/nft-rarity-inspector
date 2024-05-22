@@ -20,7 +20,7 @@
 import { useMemo } from 'react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { dictionary } from '@/libs/en';
-import { TraitOccurrence } from 'hedera-nft-utilities';
+import { TraitOccurrence } from '@hashgraph/hedera-nft-sdk';
 
 interface AttributesTableBrowserProps {
   traitOccurrence: TraitOccurrence[];

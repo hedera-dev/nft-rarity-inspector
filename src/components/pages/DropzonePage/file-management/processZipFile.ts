@@ -20,7 +20,7 @@
 import JSZip from 'jszip';
 import { dictionary } from '@/libs/en';
 import type { ExtFile } from '@dropzone-ui/react';
-import { MetadataObject } from 'hedera-nft-utilities';
+import { MetadataObject } from '@hashgraph/hedera-nft-sdk';
 import { processCsvFile } from '@/components/pages/DropzonePage/file-management/processCSVFile';
 import { SUPPORTED_IMAGE_TYPES } from '@/components/pages/DropzonePage/utils/supportedFileTypes';
 import { SimpleMetadataRow } from '@/utils/types/metadataRow';
