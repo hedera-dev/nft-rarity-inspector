@@ -43,7 +43,7 @@ const SpinnerLoader: FC<SpinnerLoaderProps> = ({ className }) => {
 
 export default SpinnerLoader;
 
-import { ValidateArrayOfObjectsResult } from 'hedera-nft-utilities';
+import { ValidateArrayOfObjectsResult } from '@hashgraph/hedera-nft-sdk';
 
 export const countInvalidObjects = (validationResponse: ValidateArrayOfObjectsResult): number => {
   return Object.values(validationResponse.results).reduce((acc, current) => {

@@ -18,7 +18,7 @@
  *
  */
 import { useRef } from 'react';
-import { MetadataObject } from 'hedera-nft-utilities';
+import { MetadataObject } from '@hashgraph/hedera-nft-sdk';
 import { truncateString } from '@/utils/helpers/truncateString';
 import { dictionary } from '@/libs/en';
 import { Button } from '@/components/ui/button';

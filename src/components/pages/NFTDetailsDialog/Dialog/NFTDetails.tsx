@@ -17,7 +17,7 @@
  * limitations under the License.
  *
  */
-import { MetadataObject, TraitOccurrence } from 'hedera-nft-utilities';
+import { MetadataObject, TraitOccurrence } from '@hashgraph/hedera-nft-sdk';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { Header } from '@/components/pages/NFTDetailsDialog/Dialog/Header';
 import { Footer } from '@/components/pages/NFTDetailsDialog/Dialog/Footer';

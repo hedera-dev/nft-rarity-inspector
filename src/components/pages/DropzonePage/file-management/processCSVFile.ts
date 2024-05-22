@@ -18,7 +18,7 @@
  *
  */
 import type { ExtFile } from '@dropzone-ui/react';
-import type { MetadataObject } from 'hedera-nft-utilities';
+import type { MetadataObject } from '@hashgraph/hedera-nft-sdk';
 import { convertCSVRowsToMetadataObjects } from '@/utils/helpers/csv-file-reader';
 import { dictionary } from '@/libs/en';
 import { SimpleMetadataRow } from '@/utils/types/metadataRow';

@@ -18,7 +18,7 @@
  *
  */
 import { useMemo } from 'react';
-import { calculateTraitOccurrenceFromData } from 'hedera-nft-utilities/src/rarity';
+import { calculateTraitOccurrenceFromData } from '@hashgraph/hedera-nft-sdk';
 import { findNFTRarity } from '@/components/pages/DropzonePage/utils/findNFTRarity';
 import { findMostAndLeastRareAttribute } from '@/components/pages/DropzonePage/utils/findMostAndLeastRareAttribute';
 import { findNFTsWithAttribute } from '@/components/pages/DropzonePage/utils/findNFTsWithAttribute';

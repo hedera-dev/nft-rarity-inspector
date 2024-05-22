@@ -20,7 +20,7 @@
 import { useEffect, useState } from 'react';
 import { Dropzone, FileMosaic } from '@dropzone-ui/react';
 import type { ExtFile } from '@dropzone-ui/react';
-import { calculateRarityFromData } from 'hedera-nft-utilities/src/rarity';
+import { calculateRarityFromData } from '@hashgraph/hedera-nft-sdk';
 import { SUPPORTED_FILE_TYPES_ARRAY, supportedFileTypes } from '@/components/pages/DropzonePage/utils/supportedFileTypes';
 import { dictionary } from '@/libs/en';
 import { NFTGallery } from '@/components/pages/DropzonePage/NFTGallery/NFTGallery';
