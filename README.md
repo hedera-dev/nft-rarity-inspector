@@ -1,4 +1,4 @@
-# NFT Rarity Inspector
+# Rarity Inspector
 
 This project allows users to upload a `.zip` file through a dropzone to check how NFTs are presented (displayed in a gallery as cards that can be clicked to read detailed information about them) and their "rarity". The project presents charts showing these data and several other features. Additionally, sorting and filtering options are available to simplify data browsing.
 
